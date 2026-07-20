@@ -18,7 +18,7 @@ Required keys:
 | Key | Type | Notes |
 | --- | --- | --- |
 | `model_name` | string | Unique across the composition tree |
-| `encoder` | object | `{ "model_type": "ConvEncoder", "model_config": {...} }` |
+| `encoder` | object | `{ "model_type": "ConvEncoder"\|"ConvSelfAttEncoder", "model_config": {...} }` |
 | `predictor` | object | Map of head name → `{ "model_type": "ClassPredictor", "model_config": {...} }` |
 | `embedding_trimming` | integer ≥ 0 | Trim applied to encoder embedding |
 

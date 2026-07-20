@@ -56,3 +56,10 @@ For each predictor head, `pred_model` writes:
 ```
 
 under `--opath`.
+
+When `--attribution` is set (`ig`, `saliency`, or `deepshap`), it also writes
+per-head float32 arrays shaped `(N, 4, L)`:
+
+```text
+{job_name}.{encoder_predictor_model_name}.{head_model_name}.attr_{method}.npy
+```

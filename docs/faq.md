@@ -11,11 +11,11 @@ Each W&B agent worker is pinned to one device token from that variable. The
 token list must be non-empty, comma-separated, and free of duplicates. If you
 pass `--num-agents`, it must equal the token count.
 
-## Can I use ConvEncoder or ClassPredictor as the top-level model_type?
+## Can I use ConvEncoder, ConvSelfAttEncoder, or ClassPredictor as the top-level model_type?
 
-No. In **0.1.0a2** only `EncoderPredictor` is a top-level CLI model type.
-`ConvEncoder` and `ClassPredictor` are nestable components inside
-`model_config`.
+No. In **0.1.0a3** only `EncoderPredictor` is a top-level CLI model type.
+`ConvEncoder`, `ConvSelfAttEncoder`, and `ClassPredictor` are nestable
+components inside `model_config`.
 
 ## Where do prediction files go?
 
@@ -25,7 +25,13 @@ Under `--opath`, named:
 {job_name}.{encoder_predictor_model_name}.{head_model_name}.pred_class.npy
 ```
 
+With `--attribution METHOD`, also:
+
+```text
+{job_name}.{encoder_predictor_model_name}.{head_model_name}.attr_{METHOD}.npy
+```
+
 ## Is there a PyPI package?
 
-Not for this alpha. Install from the `v0.1.0a2` git tag as described in
+Not for this alpha. Install from the `v0.1.0a3` git tag as described in
 [Install](install.md).
