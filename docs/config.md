@@ -44,6 +44,7 @@ Forbidden at top level: `optimizer`, `loss`.
 | `max_epochs` | Integer ≥ 1 |
 | `early_stopping` | `{ "grace_epochs": <int ≥ 1> }` |
 | `wandb` | Requires `project` and `mode` (`online` \| `offline` \| `disabled`). Optional: `entity`, `tags`, `notes`. Do not set `name`, `sweep_id`, or `sweep_name`. |
+| `init_checkpoint` | Optional. Load selected module weights before training (see below). |
 
 ## Tune config (`tune_model --config`)
 
@@ -56,6 +57,32 @@ Forbidden at top level: `optimizer`, `loss`, `job_name`, `num_agents`,
 | Key | Notes |
 | --- | --- |
 | `wandb` | Requires `project` and `mode` (`online` \| `offline` only). Optional: `entity`, `tags`, `notes`, `sweep_id`, `sweep_name`. If `sweep_id` is empty, `sweep_name` is required. |
+| `init_checkpoint` | Optional. Same shape as train; applied at the start of each trial. |
+
+<a id="init_checkpoint-train--tune"></a>
+### init_checkpoint (train and tune)
+
+Optional object on the train or tune config (not in hparams or tune-space):
+
+```json
+{
+  "init_checkpoint": {
+    "path": "/path/to/checkpoint.pth",
+    "modules": ["encoder_model_name"]
+  }
+}
+```
+
+| Key | Type | Notes |
+| --- | --- | --- |
+| `path` | non-empty string | Path to a `seq2func_ckpt_v1` `.pth` (parent or submodule artifact) |
+| `modules` | non-empty string array | Catalogued `model_name` values to load; no duplicates |
+
+Each entry in `modules` must match a `model_name` in the constructed tree
+(top-level, encoder, or a predictor head). The checkpoint must contain
+`states` for those names; other modules keep random init. Shape / key
+mismatches fail with a clear error. Combine with nested `learning_rate: 0` to
+freeze loaded modules.
 
 ## Test / pred config (`pred_model --config`)
 

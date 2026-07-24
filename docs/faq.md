@@ -13,7 +13,7 @@ pass `--num-agents`, it must equal the token count.
 
 ## Can I use ConvEncoder, ConvSelfAttEncoder, ClassPredictor, or RegressPredictor as the top-level model_type?
 
-No. In **0.1.0a5** only `EncoderPredictor` is a top-level CLI model type.
+No. In **0.1.0a6** only `EncoderPredictor` is a top-level CLI model type.
 `ConvEncoder`, `ConvSelfAttEncoder`, `ClassPredictor`, and `RegressPredictor`
 are nestable components inside `model_config`.
 
@@ -41,7 +41,15 @@ tune-space leaf for that path). The module's parameters are frozen and left
 out of Adam. Top-level `learning_rate` must remain `> 0`. See
 [Concepts](concepts.md#learning-rates-and-freezing).
 
+## Can I initialize from a pretrained encoder (or other module)?
+
+Yes. On the train or tune config, set optional `init_checkpoint` with `path`
+(to a `.pth`) and `modules` (catalogued `model_name` strings to load). Other
+modules stay randomly initialized. Combine with nested `learning_rate: 0` to
+freeze the loaded modules. See
+[Config](config.md#init_checkpoint-train--tune).
+
 ## Is there a PyPI package?
 
-Not for this alpha. Install from the `v0.1.0a5` git tag as described in
+Not for this alpha. Install from the `v0.1.0a6` git tag as described in
 [Install](install.md).

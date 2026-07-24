@@ -2,7 +2,7 @@
 
 ## EncoderPredictor
 
-The only top-level model type in **0.1.0a5** is `EncoderPredictor`.
+The only top-level model type in **0.1.0a6** is `EncoderPredictor`.
 
 It composes:
 
@@ -30,6 +30,14 @@ encoder and each predictor head.
 Distinct positive rates become separate Adam param groups. Freezing every
 trainable module fails closed when building the optimizer.
 
+## Init from a checkpoint (transfer learning)
+
+Train and tune configs may include optional `init_checkpoint` to load selected
+catalogued modules from an existing `.pth` before training (for example, reuse
+an encoder while randomly initializing a new head). Pair with nested
+`learning_rate: 0` to freeze those modules. See
+[Config](config.md#init_checkpoint-train--tune).
+
 ## Workflows
 
 | Workflow | CLI | Typical inputs |
@@ -38,10 +46,11 @@ trainable module fails closed when building the optimizer.
 | Sweep / search | `tune_model` | tune config JSON + tune-space JSON |
 | Inference | `pred_model` | test config JSON + checkpoint + hparams JSON |
 
-Train and tune both write checkpoints under `--opath`. Prediction loads a
-parent `.pth` checkpoint and writes per-head arrays (`.pred_class.npy` for
-`ClassPredictor`, `.pred.npy` for `RegressPredictor`). With `--attribution`,
-it also writes per-head attribution arrays.
+Train and tune both write checkpoints under `--opath` (parent and per-module
+artifacts). Prediction loads a parent `.pth` checkpoint and writes per-head
+arrays (`.pred_class.npy` for `ClassPredictor`, `.pred.npy` for
+`RegressPredictor`). With `--attribution`, it also writes per-head attribution
+arrays.
 
 ## Weights & Biases
 

@@ -30,10 +30,13 @@ unique device tokens. Each agent worker pins to one token.
 1. Validates the tune config and tune-space against `model_config`
 2. Creates or resumes a W&B sweep from `wandb.sweep_id` / `wandb.sweep_name`
 3. Launches one agent process per device token
-4. Each trial samples hparams, trains with early stopping, and logs metrics
-   (including `val_loss` with a `min` summary for sweep optimization)
+4. Each trial samples hparams, builds the model (applying `init_checkpoint` when
+   set), trains with early stopping, and logs metrics (including `val_loss`
+   with a `min` summary for sweep optimization)
 
 `job_name`, `num_agents`, and `max_trials` are not allowed inside the tune
-config JSON — use the CLI flags for agent/trial controls.
+config JSON — use the CLI flags for agent/trial controls. Do not put
+`init_checkpoint` in the tune-space file; it belongs only on the tune config.
 
-See [Config](../config.md) and [Formats](../formats.md) for JSON layouts.
+See [Config](../config.md#init_checkpoint-train--tune) and
+[Formats](../formats.md) for JSON layouts.

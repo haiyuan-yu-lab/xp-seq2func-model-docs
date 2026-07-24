@@ -25,8 +25,13 @@ Prediction (`pred_model`) does not require labels.
 
 ## Checkpoints (`.pth`)
 
-Training and tuning write PyTorch checkpoints under `--opath`. `pred_model`
-loads the **top-level / parent** checkpoint via `--checkpoint`.
+Training and tuning write PyTorch checkpoints under `--opath` (a parent file
+plus per-catalogued-module files such as `{stem}.{encoder_model_name}.pth`).
+`pred_model` loads the **top-level / parent** checkpoint via `--checkpoint`.
+
+Train/tune configs may set optional `init_checkpoint` to load listed modules
+from a parent or submodule `.pth` before training. See
+[Config](config.md#init_checkpoint-train--tune).
 
 ## Hparams JSON
 
@@ -57,6 +62,9 @@ Leaf forms:
 The same learning-rate rules apply inside `parameters`: top-level
 `learning_rate` leaves must be `> 0`; nested `.learning_rate` leaves may be
 `≥ 0` (including fixed `{"value": 0}`).
+
+`init_checkpoint` is not allowed in the tune-space file (put it on the tune
+config instead).
 
 ## Prediction outputs
 
