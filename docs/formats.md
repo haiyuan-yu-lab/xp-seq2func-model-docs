@@ -35,6 +35,10 @@ Pre-inheritance hyperparameter objects used by `train_model` and
 `{stem}.{top_level_model_name}.hparam.json` is the usual artifact to pass back
 into prediction.
 
+Nested encoder/head `learning_rate` values may be `0` to freeze that module;
+the top-level `learning_rate` must stay strictly positive. See
+[Concepts](concepts.md#learning-rates-and-freezing).
+
 ## Tune-space JSON
 
 Envelope for `tune_model`:
@@ -49,6 +53,10 @@ Leaf forms:
 | `{"value": ...}` | Fixed value |
 | `{"values": [...]}` | Discrete choices |
 | `{"distribution": "uniform"\|"log_uniform", "min": ..., "max": ...}` | Continuous range (`log_uniform` requires `min > 0`) |
+
+The same learning-rate rules apply inside `parameters`: top-level
+`learning_rate` leaves must be `> 0`; nested `.learning_rate` leaves may be
+`≥ 0` (including fixed `{"value": 0}`).
 
 ## Prediction outputs
 

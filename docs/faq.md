@@ -13,7 +13,7 @@ pass `--num-agents`, it must equal the token count.
 
 ## Can I use ConvEncoder, ConvSelfAttEncoder, ClassPredictor, or RegressPredictor as the top-level model_type?
 
-No. In **0.1.0a4** only `EncoderPredictor` is a top-level CLI model type.
+No. In **0.1.0a5** only `EncoderPredictor` is a top-level CLI model type.
 `ConvEncoder`, `ConvSelfAttEncoder`, `ClassPredictor`, and `RegressPredictor`
 are nestable components inside `model_config`.
 
@@ -34,7 +34,14 @@ With `--attribution METHOD`, also:
 {job_name}.{encoder_predictor_model_name}.{head_model_name}.attr_{METHOD}.npy
 ```
 
+## Can I freeze an encoder or head during training?
+
+Yes. Set that module's nested `learning_rate` to `0` in hparams (or in the
+tune-space leaf for that path). The module's parameters are frozen and left
+out of Adam. Top-level `learning_rate` must remain `> 0`. See
+[Concepts](concepts.md#learning-rates-and-freezing).
+
 ## Is there a PyPI package?
 
-Not for this alpha. Install from the `v0.1.0a4` git tag as described in
+Not for this alpha. Install from the `v0.1.0a5` git tag as described in
 [Install](install.md).

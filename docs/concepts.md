@@ -2,7 +2,7 @@
 
 ## EncoderPredictor
 
-The only top-level model type in **0.1.0a4** is `EncoderPredictor`.
+The only top-level model type in **0.1.0a5** is `EncoderPredictor`.
 
 It composes:
 
@@ -16,6 +16,19 @@ It composes:
 Nested components (`ConvEncoder`, `ConvSelfAttEncoder`, `ClassPredictor`,
 `RegressPredictor`) are nestable-only: they cannot be set as the top-level
 `model_type` on a CLI config.
+
+## Learning rates and freezing
+
+Hyperparameters include a top-level `learning_rate` and nested rates on the
+encoder and each predictor head.
+
+| Location | Allowed values | Effect of `0` |
+| --- | --- | --- |
+| Top-level `learning_rate` | number **> 0** | Not allowed |
+| Nested module `learning_rate` (encoder or head) | number **≥ 0** | Freezes that module (`requires_grad=False`); it is omitted from Adam |
+
+Distinct positive rates become separate Adam param groups. Freezing every
+trainable module fails closed when building the optimizer.
 
 ## Workflows
 
