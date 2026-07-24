@@ -7,12 +7,12 @@
 - Runtime dependencies install with the package: `numpy`, `torch`, `wandb`,
   `captum`
 
-## Install from the v0.1.0a3 tag
+## Install from the v0.1.0a4 tag
 
 There is no PyPI publish for this alpha. Install from the tagged code repository:
 
 ```bash
-pip install "git+https://github.com/haiyuan-yu-lab/xp-seq2func-model.git@v0.1.0a3"
+pip install "git+https://github.com/haiyuan-yu-lab/xp-seq2func-model.git@v0.1.0a4"
 ```
 
 Editable install from a local clone:
@@ -20,7 +20,7 @@ Editable install from a local clone:
 ```bash
 git clone https://github.com/haiyuan-yu-lab/xp-seq2func-model.git
 cd xp-seq2func-model
-git checkout v0.1.0a3
+git checkout v0.1.0a4
 pip install -e .
 ```
 

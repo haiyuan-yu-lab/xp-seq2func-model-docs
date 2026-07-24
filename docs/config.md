@@ -19,10 +19,17 @@ Required keys:
 | --- | --- | --- |
 | `model_name` | string | Unique across the composition tree |
 | `encoder` | object | `{ "model_type": "ConvEncoder"\|"ConvSelfAttEncoder", "model_config": {...} }` |
-| `predictor` | object | Map of head name → `{ "model_type": "ClassPredictor", "model_config": {...} }` |
+| `predictor` | object | Map of head name → `{ "model_type": "ClassPredictor"\|"RegressPredictor", "model_config": {...} }` |
 | `embedding_trimming` | integer ≥ 0 | Trim applied to encoder embedding |
 
 All `model_name` values in the tree must be unique.
+
+Head loss objects live in hparams (not the CLI config). Supported loss types:
+
+| `type` | Typical head | `params` |
+| --- | --- | --- |
+| `categorical_cross_entropy` | `ClassPredictor` | must be `{}` |
+| `mse` | `RegressPredictor` | must be `{}` |
 
 ## Train config (`train_model --config`)
 
@@ -72,3 +79,5 @@ Common required keys: `encoder`, `shuffle`, `num_workers`, `pin_memory`,
 | `prefetch_factor` | Optional int ≥ 1 or null |
 
 Train/val require labels for every head declared in `model_config.predictor`.
+`RegressPredictor` labels must have trailing width 1 (shape `(N, 1)` per
+source array).

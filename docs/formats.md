@@ -18,6 +18,9 @@ Row order must stay aligned with any label arrays for the same source.
 Train and validation configs supply per-head label arrays under
 `predictor.<head>.label` (path or path array matching the OHE sources).
 
+- `ClassPredictor`: class label layout expected by that head
+- `RegressPredictor`: arrays with trailing width 1 (`(N, 1)`)
+
 Prediction (`pred_model`) does not require labels.
 
 ## Checkpoints (`.pth`)
@@ -49,13 +52,17 @@ Leaf forms:
 
 ## Prediction outputs
 
-For each predictor head, `pred_model` writes:
+For each predictor head, `pred_model` writes under `--opath`:
+
+| Head type | Filename suffix |
+| --- | --- |
+| `ClassPredictor` | `.pred_class.npy` |
+| `RegressPredictor` | `.pred.npy` |
 
 ```text
 {job_name}.{encoder_predictor_model_name}.{head_model_name}.pred_class.npy
+{job_name}.{encoder_predictor_model_name}.{head_model_name}.pred.npy
 ```
-
-under `--opath`.
 
 When `--attribution` is set (`ig`, `saliency`, or `deepshap`), it also writes
 per-head float32 arrays shaped `(N, 4, L)`:

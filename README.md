@@ -1,10 +1,10 @@
 # xp-seq2func-model docs
 
-Public user documentation for **xp-seq2func-model** release **0.1.0a3**.
+Public user documentation for **xp-seq2func-model** release **0.1.0a4**.
 
 Covers the `train_model`, `tune_model`, and `pred_model` CLIs from the
 [code repository](https://github.com/haiyuan-yu-lab/xp-seq2func-model) tag
-`v0.1.0a3`.
+`v0.1.0a4`.
 
 ## Local preview
 

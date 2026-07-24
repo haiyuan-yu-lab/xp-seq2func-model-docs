@@ -27,11 +27,15 @@ pred_model --config CONFIG --opath OPATH --checkpoint CHECKPOINT \
 2. Requires CUDA
 3. Builds the model, loads `--checkpoint`, and runs `predict` over `test_data`
    (labels not required)
-4. Writes one `.pred_class.npy` per head under `--opath`:
+4. Writes one prediction array per head under `--opath`:
 
 ```text
 {job_name}.{encoder_predictor_model_name}.{head_model_name}.pred_class.npy
+{job_name}.{encoder_predictor_model_name}.{head_model_name}.pred.npy
 ```
+
+`ClassPredictor` heads use `.pred_class.npy`; `RegressPredictor` heads use
+`.pred.npy`.
 
 5. If `--attribution` is set, also writes one attribution array per head:
 
@@ -40,7 +44,9 @@ pred_model --config CONFIG --opath OPATH --checkpoint CHECKPOINT \
 ```
 
 Attribution arrays are float32 with shape `(N, 4, L)` (same layout as the
-one-hot input). The target class per sample is the argmax of that head's class
-probabilities.
+one-hot input). Targets differ by head type:
+
+- `ClassPredictor`: argmax of that head's class probabilities
+- `RegressPredictor`: output channel 0 on the `(B, 1)` scalar head
 
 See [Config](../config.md) and [Formats](../formats.md) for details.
