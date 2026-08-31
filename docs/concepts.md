@@ -2,7 +2,7 @@
 
 ## EncoderPredictor
 
-The only top-level model type in **0.1.0a6** is `EncoderPredictor`.
+The only top-level model type in **0.1.0a7** is `EncoderPredictor`.
 
 It composes:
 

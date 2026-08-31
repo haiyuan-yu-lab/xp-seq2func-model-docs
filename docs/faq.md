@@ -13,7 +13,7 @@ pass `--num-agents`, it must equal the token count.
 
 ## Can I use ConvEncoder, ConvSelfAttEncoder, ClassPredictor, or RegressPredictor as the top-level model_type?
 
-No. In **0.1.0a6** only `EncoderPredictor` is a top-level CLI model type.
+No. In **0.1.0a7** only `EncoderPredictor` is a top-level CLI model type.
 `ConvEncoder`, `ConvSelfAttEncoder`, `ClassPredictor`, and `RegressPredictor`
 are nestable components inside `model_config`.
 
@@ -55,5 +55,5 @@ freeze the loaded modules. See
 
 ## Is there a PyPI package?
 
-Not for this alpha. Install from the `v0.1.0a6` git tag as described in
+Not for this alpha. Install from the `v0.1.0a7` git tag as described in
 [Install](install.md).
