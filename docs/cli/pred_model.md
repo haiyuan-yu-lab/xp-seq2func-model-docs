@@ -7,7 +7,8 @@ arrays. Optionally compute Captum input attributions.
 
 ```bash
 pred_model --config CONFIG --opath OPATH --checkpoint CHECKPOINT \
-  --hparams HPARAMS [--attribution METHOD] [--verbosity N]
+  --hparams HPARAMS [--attribution METHOD] \
+  [--attribution-target TARGET] [--verbosity N]
 ```
 
 ## Flags
@@ -19,7 +20,25 @@ pred_model --config CONFIG --opath OPATH --checkpoint CHECKPOINT \
 | `--checkpoint` | yes | Path to top-level / parent `.pth` checkpoint |
 | `--hparams` | yes | Top-level pre-inheritance hparams JSON (`{stem}.{top_level_model_name}.hparam.json`) |
 | `--attribution` | no | Captum method: `ig`, `saliency`, or `deepshap`. Omitted = off. |
+| `--attribution-target` | no | Explicit `ClassPredictor` target (requires `--attribution`). Exactly one value. |
 | `--verbosity` | no | `0`, `1`, or `2` (default `1`) |
+
+## Attribution targets
+
+`--attribution-target` selects one classification head and scalar. Forms:
+
+```text
+<head-key>:probability:<class-index>
+<head-key>:logit:<class-index>
+<head-key>:logit-difference:<positive-index>,<negative-index>
+<head-key>:logit:predicted
+```
+
+- `probability` / fixed `logit` / `logit-difference` use the same scalar meaning for every row
+- `logit:predicted` attributes each row's argmax-class logit
+- Predictor map keys must not contain `:` (validated for every `EncoderPredictor` config)
+
+With an explicit target, `pred_model` writes **one** target-qualified attribution file for that head. Ordinary prediction arrays for all heads are unchanged.
 
 ## Behavior
 
@@ -37,16 +56,27 @@ pred_model --config CONFIG --opath OPATH --checkpoint CHECKPOINT \
 `ClassPredictor` heads use `.pred_class.npy`; `RegressPredictor` heads use
 `.pred.npy`.
 
-5. If `--attribution` is set, also writes one attribution array per head:
+5. If `--attribution` is set without `--attribution-target`, writes one legacy
+   attribution array per head and emits a deprecation warning at verbosity ≥ 1:
 
 ```text
 {job_name}.{encoder_predictor_model_name}.{head_model_name}.attr_{method}.npy
 ```
 
-Attribution arrays are float32 with shape `(N, 4, L)` (same layout as the
-one-hot input). Targets differ by head type:
+Legacy `ClassPredictor` targets are per-row predicted-class logits (arrays may
+mix class meanings). `RegressPredictor` targets channel 0.
 
-- `ClassPredictor`: argmax of that head's class probabilities
-- `RegressPredictor`: output channel 0 on the `(B, 1)` scalar head
+6. If `--attribution-target` is also set, writes one explicit file instead:
+
+```text
+{job_name}.{encoder_predictor_model_name}.{head_model_name}.attr_{method}.probability_{k}.npy
+{job_name}.{encoder_predictor_model_name}.{head_model_name}.attr_{method}.logit_{k}.npy
+{job_name}.{encoder_predictor_model_name}.{head_model_name}.attr_{method}.logit-difference_{p}_{n}.npy
+{job_name}.{encoder_predictor_model_name}.{head_model_name}.attr_{method}.logit_predicted.npy
+```
+
+Attribution arrays are float32 with shape `(N, 4, L)` (same layout as the
+one-hot input). At verbosity ≥ 1, explicit runs log the resolved method, head,
+domain, and target.
 
 See [Config](../config.md) and [Formats](../formats.md) for details.

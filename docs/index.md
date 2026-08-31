@@ -14,6 +14,13 @@ This site documents release **0.1.0a6**.
 | `EncoderPredictor` | Model | Top-level model: encoder (`ConvEncoder` or `ConvSelfAttEncoder`) + one or more `ClassPredictor` / `RegressPredictor` heads |
 | `init_checkpoint` | Config | Optional train/tune key to load selected module weights before training |
 
+!!! note "Attribution targets (on `dev`)"
+    `pred_model` accepts optional `--attribution-target` for fixed
+    `ClassPredictor` scalars (`probability` / `logit` / `logit-difference` /
+    `logit:predicted`). Omitting it keeps legacy all-head filenames and prints
+    a deprecation notice. Predictor map keys must not contain `:`. See
+    [pred_model](cli/pred_model.md).
+
 !!! warning "Alpha release"
     **0.1.0a6** is a pre-release. Config schemas and CLI flags may change. Pin
     the tag if you need a fixed cut.

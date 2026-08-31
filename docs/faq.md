@@ -34,6 +34,10 @@ With `--attribution METHOD`, also:
 {job_name}.{encoder_predictor_model_name}.{head_model_name}.attr_{METHOD}.npy
 ```
 
+Add `--attribution-target` to select one `ClassPredictor` scalar (probability,
+logit, logit-difference, or predicted logit) and write a single target-qualified
+`attr_*.npy` instead. See [pred_model](cli/pred_model.md).
+
 ## Can I freeze an encoder or head during training?
 
 Yes. Set that module's nested `learning_rate` to `0` in hparams (or in the

@@ -80,9 +80,23 @@ For each predictor head, `pred_model` writes under `--opath`:
 {job_name}.{encoder_predictor_model_name}.{head_model_name}.pred.npy
 ```
 
-When `--attribution` is set (`ig`, `saliency`, or `deepshap`), it also writes
-per-head float32 arrays shaped `(N, 4, L)`:
+When `--attribution` is set (`ig`, `saliency`, or `deepshap`) **without**
+`--attribution-target`, it also writes per-head float32 arrays shaped
+`(N, 4, L)` (legacy predicted-class / regress targets):
 
 ```text
 {job_name}.{encoder_predictor_model_name}.{head_model_name}.attr_{method}.npy
 ```
+
+With `--attribution-target`, it writes one target-qualified float32 array
+`(N, 4, L)` for the selected `ClassPredictor` head:
+
+```text
+{job_name}.{encoder_predictor_model_name}.{head_model_name}.attr_{method}.probability_{k}.npy
+{job_name}.{encoder_predictor_model_name}.{head_model_name}.attr_{method}.logit_{k}.npy
+{job_name}.{encoder_predictor_model_name}.{head_model_name}.attr_{method}.logit-difference_{p}_{n}.npy
+{job_name}.{encoder_predictor_model_name}.{head_model_name}.attr_{method}.logit_predicted.npy
+```
+
+Predictor map keys must not contain `:`. Prediction `.pred_class.npy` /
+`.pred.npy` files are unchanged by attribution targeting.

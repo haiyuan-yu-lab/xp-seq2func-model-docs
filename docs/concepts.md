@@ -49,8 +49,8 @@ an encoder while randomly initializing a new head). Pair with nested
 Train and tune both write checkpoints under `--opath` (parent and per-module
 artifacts). Prediction loads a parent `.pth` checkpoint and writes per-head
 arrays (`.pred_class.npy` for `ClassPredictor`, `.pred.npy` for
-`RegressPredictor`). With `--attribution`, it also writes per-head attribution
-arrays.
+`RegressPredictor`). With `--attribution`, it also writes attribution arrays
+(legacy per-head files, or one explicit `--attribution-target` file).
 
 ## Weights & Biases
 
