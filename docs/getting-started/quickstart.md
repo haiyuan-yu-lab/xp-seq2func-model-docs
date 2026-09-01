@@ -50,11 +50,10 @@ Exact flags and defaults for the installed build are authoritative via
 
 ## Next reading
 
-- [Train to predict](../workflows/train-to-predict.md)
+- [Train to predict](../workflows/train-to-predict.md) — full train →
+  checkpoint → `pred_model` → output arrays path
+- [Tuning workflow](../workflows/tuning.md)
+- [`pred_model`](../cli/pred_model.md)
+- [Prediction configuration](../configuration/prediction.md)
 - [Core concepts](../concepts.md)
 - [Compatibility](../reference/compatibility.md)
-
-!!! note "Later slices"
-    Expanded quickstart examples with complete JSON documents arrive in later
-    documentation slices. Until then, use [Config](../config.md) and the CLI
-    pages for field-level detail.

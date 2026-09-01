@@ -50,6 +50,10 @@ Forbidden at top level: `optimizer`, `loss`.
 
 ## Tune config (`tune_model --config`)
 
+Canonical field tables, complete examples, and schema snapshots:
+[Tune configuration](configuration/tune.md). Search-space envelope:
+[Tuning spaces](configuration/tuning-spaces.md).
+
 Required: `model_type`, `model_config`, `train_data`, `val_data`,
 `random_seed`, `max_epochs`, `early_stopping`, `wandb`.
 
@@ -92,15 +96,21 @@ freeze loaded modules.
 
 ## Test / pred config (`pred_model --config`)
 
+Canonical field tables, complete examples, and schema snapshots:
+[Prediction configuration](configuration/prediction.md).
+
 Required: `model_type`, `model_config`, `test_data`, `job_name`,
 `random_seed`.
 
-Forbidden: `wandb`, `loss`, `optimizer`, `max_epochs`, `early_stopping`.
+Forbidden at top level: `wandb`, `loss`, `optimizer`, `max_epochs`,
+`early_stopping`, `init_checkpoint`, and keys matching `attribution*`
+(attribution is CLI-only).
 
 ## Data blocks (`train_data` / `val_data` / `test_data`)
 
-Canonical train/val split tables: [Splits](data/splits.md). Array and label
-geometry: [Arrays](data/arrays.md), [Labels](data/labels.md).
+Canonical train/val split tables: [Splits](data/splits.md). Test / prediction
+split tables: [Prediction configuration](configuration/prediction.md). Array
+and label geometry: [Arrays](data/arrays.md), [Labels](data/labels.md).
 
 Common required keys: `encoder`, `shuffle`, `num_workers`, `pin_memory`,
 `source_fracs`. Train/val also require `predictor`.
@@ -118,11 +128,12 @@ Common required keys: `encoder`, `shuffle`, `num_workers`, `pin_memory`,
 
 Predictor payload fields by head type:
 
-| Head type | Train/val payload |
-| --- | --- |
-| `ClassPredictor` / `RegressPredictor` | `{ "label_npy": <path or path array> }` |
-| `ProfilePredictor` | `{ "profile_npy": ..., "count_npy": ..., "mask_npy"?: ... }` |
+| Head type | Train/val payload | Test notes |
+| --- | --- | --- |
+| `ClassPredictor` / `RegressPredictor` | `{ "label_npy": <path or path array> }` | Optional; omit for unlabeled inference |
+| `ProfilePredictor` | `{ "profile_npy": ..., "count_npy": ..., "mask_npy"?: ... }` | Both profile and count required together when supplied; `mask_npy` forbidden |
 
 Train/val require labels for every head declared in `model_config.predictor`.
-Classification labels are `(N, n_class)`; regression labels are `(N, 1)`
-(rank-1 fails). Profile payload details: [Profiles](profiles.md).
+Prediction may omit labels. Classification labels are `(N, n_class)`;
+regression labels are `(N, 1)` (rank-1 fails). Profile payload details:
+[Profiles](profiles.md).

@@ -55,7 +55,8 @@ the top-level `learning_rate` must stay strictly positive. See
 
 ## Tune-space JSON
 
-Envelope for `tune_model`:
+Envelope for `tune_model`. Full contract:
+[Tuning spaces](configuration/tuning-spaces.md).
 
 - `method`: `grid`, `random`, or `bayes`
 - `parameters`: nested tree of leaf descriptors
@@ -73,20 +74,24 @@ The same learning-rate rules apply inside `parameters`: top-level
 `≥ 0` (including fixed `{"value": 0}`).
 
 `init_checkpoint` is not allowed in the tune-space file (put it on the tune
-config instead).
+config instead). Do not put `track_names` or `bin_size` in the tune-space.
 
 ## Prediction outputs
 
-For each prediction head, `pred_model` writes under `--opath`:
+Canonical tables: [Predictions](artifacts/predictions.md). For each prediction
+head, `pred_model` writes under `--opath`:
 
-| Head type | Filename suffix |
-| --- | --- |
-| `ClassPredictor` | `.pred_class.npy` |
-| `RegressPredictor` | `.pred.npy` |
+| Head type | Filename suffix | Shape | dtype |
+| --- | --- | --- | --- |
+| `ClassPredictor` | `.pred_class.npy` | `(N, n_class)` | float32 |
+| `RegressPredictor` | `.pred.npy` | `(N, 1)` | float32 |
+| `ProfilePredictor` | `.profile.npy` / `.count.npy` | `(N, T, P)` / `(N, T)` | float32 |
 
 ```text
 {job_name}.{encoder_predictor_model_name}.{head_model_name}.pred_class.npy
 {job_name}.{encoder_predictor_model_name}.{head_model_name}.pred.npy
+{job_name}.{encoder_predictor_model_name}.{head_model_name}.profile.npy
+{job_name}.{encoder_predictor_model_name}.{head_model_name}.count.npy
 ```
 
 When `--attribution` is set (`ig`, `saliency`, or `deepshap`) **without**

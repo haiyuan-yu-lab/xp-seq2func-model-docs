@@ -22,8 +22,13 @@ behavior JSON Schema cannot express.
 | [`init-checkpoint.schema.json`](../schemas/v0.1.0a8/init-checkpoint.schema.json) | Optional train/tune `init_checkpoint` object |
 | [`early-stopping.schema.json`](../schemas/v0.1.0a8/early-stopping.schema.json) | Train/tune `early_stopping` object |
 | [`wandb-train.schema.json`](../schemas/v0.1.0a8/wandb-train.schema.json) | Train-config `wandb` block |
+| [`wandb-tune.schema.json`](../schemas/v0.1.0a8/wandb-tune.schema.json) | Tune-config `wandb` block |
 | [`data-source.schema.json`](../schemas/v0.1.0a8/data-source.schema.json) | Train/val split data block (`train_data` / `val_data`) |
+| [`test-data.schema.json`](../schemas/v0.1.0a8/test-data.schema.json) | Prediction `test_data` block (labels optional; no `mask_npy`) |
 | [`train-config.schema.json`](../schemas/v0.1.0a8/train-config.schema.json) | Complete `train_model --config` JSON |
+| [`tune-config.schema.json`](../schemas/v0.1.0a8/tune-config.schema.json) | Complete `tune_model --config` JSON |
+| [`tune-space.schema.json`](../schemas/v0.1.0a8/tune-space.schema.json) | Complete `tune_model --tune-space` JSON |
+| [`pred-config.schema.json`](../schemas/v0.1.0a8/pred-config.schema.json) | Complete `pred_model --config` JSON |
 | [`encoder-predictor-model-config.schema.json`](../schemas/v0.1.0a8/encoder-predictor-model-config.schema.json) | Top-level `EncoderPredictor` `model_config` tree |
 | [`encoder-predictor-hparams.schema.json`](../schemas/v0.1.0a8/encoder-predictor-hparams.schema.json) | Top-level pre-inheritance fixed hyperparameters |
 | [`scalar-head-hparams-wrapper.schema.json`](../schemas/v0.1.0a8/scalar-head-hparams-wrapper.schema.json) | `ClassPredictor` / `RegressPredictor` hparams wrapper |
@@ -82,3 +87,11 @@ Complete train-config examples live on
 [train-config.schema.json](../schemas/v0.1.0a8/train-config.schema.json).
 Split-only examples validate against
 [data-source.schema.json](../schemas/v0.1.0a8/data-source.schema.json).
+
+## Example: prediction config (excerpt association)
+
+Complete prediction-config examples live on
+[Prediction configuration](../configuration/prediction.md) and validate against
+[pred-config.schema.json](../schemas/v0.1.0a8/pred-config.schema.json).
+Test-data-only examples validate against
+[test-data.schema.json](../schemas/v0.1.0a8/test-data.schema.json).

@@ -10,6 +10,9 @@ Train, validation, and test split contracts for **v0.1.0a8**.
 
 This page focuses on the train/val block used by training. Schema snapshot:
 [data-source.schema.json](../schemas/v0.1.0a8/data-source.schema.json).
+Prediction `test_data` (label-optional, no `mask_npy`):
+[Prediction configuration](../configuration/prediction.md) and
+[test-data.schema.json](../schemas/v0.1.0a8/test-data.schema.json).
 
 ## Required keys
 

@@ -279,6 +279,125 @@
       },
       "description": "Train-config Weights & Biases block. name / sweep_id / sweep_name are forbidden."
     },
+    "wandbTune": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["project", "mode"],
+      "properties": {
+        "project": { "type": "string" },
+        "mode": {
+          "type": "string",
+          "enum": ["online", "offline"]
+        },
+        "entity": { "type": "string" },
+        "tags": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "notes": { "type": "string" },
+        "sweep_id": { "type": "string" },
+        "sweep_name": { "type": "string" }
+      },
+      "description": "Tune-config Weights & Biases block. mode is online|offline only. name / num_agents / max_trials are forbidden. Runtime requires sweep_name when sweep_id is empty."
+    },
+    "tuneSpaceLeafFixed": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["value"],
+      "properties": {
+        "value": true
+      },
+      "description": "Fixed tune-space leaf: exactly { value }."
+    },
+    "tuneSpaceLeafValues": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["values"],
+      "properties": {
+        "values": {
+          "type": "array",
+          "minItems": 1
+        }
+      },
+      "description": "Discrete tune-space leaf: exactly { values } with a non-empty array."
+    },
+    "tuneSpaceLeafDistribution": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["distribution", "min", "max"],
+      "properties": {
+        "distribution": {
+          "type": "string",
+          "enum": ["uniform", "log_uniform"]
+        },
+        "min": { "type": "number" },
+        "max": { "type": "number" }
+      },
+      "description": "Continuous tune-space leaf. Runtime also requires min < max and log_uniform min > 0."
+    },
+    "tuneSpaceLeaf": {
+      "oneOf": [
+        { "$ref": "#/$defs/tuneSpaceLeafFixed" },
+        { "$ref": "#/$defs/tuneSpaceLeafValues" },
+        { "$ref": "#/$defs/tuneSpaceLeafDistribution" }
+      ],
+      "description": "One of the three public tune-space leaf forms."
+    },
+    "tuneSpaceNode": {
+      "oneOf": [
+        { "$ref": "#/$defs/tuneSpaceLeaf" },
+        {
+          "type": "object",
+          "minProperties": 1,
+          "propertyNames": {
+            "type": "string",
+            "minLength": 1,
+            "not": {
+              "enum": ["init_checkpoint", "track_names", "bin_size"]
+            }
+          },
+          "additionalProperties": { "$ref": "#/$defs/tuneSpaceNode" }
+        }
+      ],
+      "description": "Recursive tune-space node: a leaf or a nested object of nodes. Documentation schema rejects reserved keys init_checkpoint / track_names / bin_size as property names."
+    },
+    "tuneSpaceParameters": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "batch_size",
+        "learning_rate",
+        "n_channels",
+        "encoder",
+        "predictor"
+      ],
+      "properties": {
+        "batch_size": { "$ref": "#/$defs/tuneSpaceNode" },
+        "learning_rate": { "$ref": "#/$defs/tuneSpaceNode" },
+        "n_channels": { "$ref": "#/$defs/tuneSpaceNode" },
+        "encoder": { "$ref": "#/$defs/tuneSpaceNode" },
+        "predictor": {
+          "type": "object",
+          "minProperties": 1,
+          "propertyNames": { "$ref": "#/$defs/predictorMapKey" },
+          "additionalProperties": { "$ref": "#/$defs/tuneSpaceNode" }
+        }
+      },
+      "description": "Tune-space parameters tree. Runtime also validates composition alignment and learning-rate leaf rules."
+    },
+    "tuneSpaceEnvelope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["method", "parameters"],
+      "properties": {
+        "method": {
+          "type": "string",
+          "enum": ["grid", "random", "bayes"]
+        },
+        "parameters": { "$ref": "#/$defs/tuneSpaceParameters" }
+      },
+      "description": "Tune-space file envelope for tune_model --tune-space."
+    },
     "encoderDataBlock": {
       "type": "object",
       "additionalProperties": false,
@@ -308,6 +427,55 @@
         "mask_npy": { "$ref": "#/$defs/pathOrPathArray" }
       },
       "description": "ProfilePredictor train/val payload. mask_npy is optional on train/val and forbidden on test."
+    },
+    "profileTestLabelPayload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["profile_npy", "count_npy"],
+      "properties": {
+        "profile_npy": { "$ref": "#/$defs/pathOrPathArray" },
+        "count_npy": { "$ref": "#/$defs/pathOrPathArray" }
+      },
+      "description": "ProfilePredictor test payload when labels are supplied. Both profile_npy and count_npy are required together. mask_npy is not allowed."
+    },
+    "testDataBlock": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "encoder",
+        "shuffle",
+        "num_workers",
+        "pin_memory",
+        "source_fracs"
+      ],
+      "properties": {
+        "encoder": { "$ref": "#/$defs/encoderDataBlock" },
+        "predictor": {
+          "type": "object",
+          "propertyNames": { "$ref": "#/$defs/predictorMapKey" },
+          "additionalProperties": {
+            "oneOf": [
+              { "$ref": "#/$defs/scalarLabelPayload" },
+              { "$ref": "#/$defs/profileTestLabelPayload" }
+            ]
+          },
+          "description": "Optional on test. Omit for unlabeled inference. Profile payloads must not include mask_npy."
+        },
+        "shuffle": { "type": "boolean" },
+        "num_workers": { "$ref": "#/$defs/nonNegativeInteger" },
+        "pin_memory": { "type": "boolean" },
+        "source_fracs": { "$ref": "#/$defs/sourceFracs" },
+        "persistent_workers": {
+          "type": ["boolean", "null"]
+        },
+        "prefetch_factor": {
+          "oneOf": [
+            { "$ref": "#/$defs/positiveInteger" },
+            { "type": "null" }
+          ]
+        }
+      },
+      "description": "Prediction test_data block. Labels optional; batch_size lives in hparams. Runtime also enforces S alignment and array geometry."
     },
     "splitDataBlock": {
       "type": "object",
