@@ -74,3 +74,11 @@ prediction head, where `true` marks a position as eligible for position-wise
 losses and metrics.
 
 Avoid: mappability mask, positional mask.
+
+## Regular embedding
+
+A length-preserving latent representation whose channels are organized in
+reverse-complement pairs. The embedding reverse-complement transform reverses
+both channel order and sequence-position order.
+
+Avoid: equivariant tensor (when referring to this specific representation).
