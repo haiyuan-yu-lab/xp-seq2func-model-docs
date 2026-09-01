@@ -19,10 +19,12 @@ Required keys:
 | --- | --- | --- |
 | `model_name` | string | Unique across the composition tree |
 | `encoder` | object | `{ "model_type": "ConvEncoder"\|"ConvSelfAttEncoder", "model_config": {...} }` |
-| `predictor` | object | Map of head name → `{ "model_type": "ClassPredictor"\|"RegressPredictor", "model_config": {...} }` |
+| `predictor` | object | Map of head name → `{ "model_type": "ClassPredictor"\|"RegressPredictor"\|"ProfilePredictor", "model_config": {...} }` |
 | `embedding_trimming` | integer ≥ 0 | Trim applied to encoder embedding |
 
-All `model_name` values in the tree must be unique.
+All `model_name` values in the tree must be unique. `ProfilePredictor`
+`model_config` also requires ordered `track_names` and `bin_size` (≥ 1). See
+[Profiles](profiles.md).
 
 Head loss objects live in hparams (not the CLI config). Supported loss types:
 
@@ -30,6 +32,8 @@ Head loss objects live in hparams (not the CLI config). Supported loss types:
 | --- | --- | --- |
 | `categorical_cross_entropy` | `ClassPredictor` | must be `{}` |
 | `mse` | `RegressPredictor` | must be `{}` |
+| `profile_cross_entropy` | `ProfilePredictor` profile component | must be `{}` |
+| `log1p_mse` | `ProfilePredictor` count component | must be `{}` |
 
 ## Train config (`train_model --config`)
 

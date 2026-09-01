@@ -11,11 +11,11 @@ Each W&B agent worker is pinned to one device token from that variable. The
 token list must be non-empty, comma-separated, and free of duplicates. If you
 pass `--num-agents`, it must equal the token count.
 
-## Can I use ConvEncoder, ConvSelfAttEncoder, ClassPredictor, or RegressPredictor as the top-level model_type?
+## Can I use ConvEncoder, ConvSelfAttEncoder, ClassPredictor, RegressPredictor, or ProfilePredictor as the top-level model_type?
 
-No. In **0.1.0a7** only `EncoderPredictor` is a top-level CLI model type.
-`ConvEncoder`, `ConvSelfAttEncoder`, `ClassPredictor`, and `RegressPredictor`
-are nestable components inside `model_config`.
+No. In **0.1.0a8** only `EncoderPredictor` is a top-level CLI model type.
+`ConvEncoder`, `ConvSelfAttEncoder`, `ClassPredictor`, `RegressPredictor`, and
+`ProfilePredictor` are nestable components inside `model_config`.
 
 ## Where do prediction files go?
 
@@ -24,9 +24,12 @@ Under `--opath`, named by head type:
 ```text
 {job_name}.{encoder_predictor_model_name}.{head_model_name}.pred_class.npy
 {job_name}.{encoder_predictor_model_name}.{head_model_name}.pred.npy
+{job_name}.{encoder_predictor_model_name}.{head_model_name}.profile.npy
+{job_name}.{encoder_predictor_model_name}.{head_model_name}.count.npy
 ```
 
-(`ClassPredictor` → `.pred_class.npy`; `RegressPredictor` → `.pred.npy`.)
+(`ClassPredictor` → `.pred_class.npy`; `RegressPredictor` → `.pred.npy`;
+`ProfilePredictor` → paired `.profile.npy` / `.count.npy`.)
 
 With `--attribution METHOD`, also:
 
@@ -34,9 +37,12 @@ With `--attribution METHOD`, also:
 {job_name}.{encoder_predictor_model_name}.{head_model_name}.attr_{METHOD}.npy
 ```
 
-Add `--attribution-target` to select one `ClassPredictor` scalar (probability,
-logit, logit-difference, or predicted logit) and write a single target-qualified
-`attr_*.npy` instead. See [pred_model](cli/pred_model.md).
+Add `--attribution-target` to select one scalar and write a single
+target-qualified `attr_*.npy` instead: a `ClassPredictor` probability, logit,
+logit-difference, or predicted logit, or a `ProfilePredictor` profile bin
+(`profile-probability` / `profile-logit`) or track count (`count` /
+`log1p-count`). Models containing a profile head require an explicit target.
+See [pred_model](cli/pred_model.md) and [Profiles](profiles.md).
 
 ## Can I freeze an encoder or head during training?
 
@@ -55,5 +61,5 @@ freeze the loaded modules. See
 
 ## Is there a PyPI package?
 
-Not for this alpha. Install from the `v0.1.0a7` git tag as described in
+Not for this alpha. Install from the `v0.1.0a8` git tag as described in
 [Install](install.md).

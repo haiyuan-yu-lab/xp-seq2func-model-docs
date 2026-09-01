@@ -15,13 +15,16 @@ Row order must stay aligned with any label arrays for the same source.
 
 ## Labels (`.npy`)
 
-Train and validation configs supply per-head label arrays under
-`predictor.<head>.label` (path or path array matching the OHE sources).
+Train and validation configs supply per-head label arrays under each
+predictor payload (path or path array matching the OHE sources).
 
-- `ClassPredictor`: class label layout expected by that head
-- `RegressPredictor`: arrays with trailing width 1 (`(N, 1)`)
+- `ClassPredictor` / `RegressPredictor`: `label_npy`
+- `ProfilePredictor`: paired `profile_npy` `(N, T, P)` and `count_npy`
+  `(N, T)`, plus optional boolean `mask_npy` `(N, L_embed)` on train/val
 
-Prediction (`pred_model`) does not require labels.
+Prediction (`pred_model`) does not require labels. Profile test payloads, when
+present, must include both profile and count arrays and must not include a
+mask.
 
 ## Checkpoints (`.pth`)
 
@@ -89,14 +92,19 @@ When `--attribution` is set (`ig`, `saliency`, or `deepshap`) **without**
 ```
 
 With `--attribution-target`, it writes one target-qualified float32 array
-`(N, 4, L)` for the selected `ClassPredictor` head:
+`(N, 4, L)` for the selected `ClassPredictor` or `ProfilePredictor` head:
 
 ```text
 {job_name}.{encoder_predictor_model_name}.{head_model_name}.attr_{method}.probability_{k}.npy
 {job_name}.{encoder_predictor_model_name}.{head_model_name}.attr_{method}.logit_{k}.npy
 {job_name}.{encoder_predictor_model_name}.{head_model_name}.attr_{method}.logit-difference_{p}_{n}.npy
 {job_name}.{encoder_predictor_model_name}.{head_model_name}.attr_{method}.logit_predicted.npy
+{job_name}.{encoder_predictor_model_name}.{head_model_name}.attr_{method}.profile-probability_{track}_{bin}.npy
+{job_name}.{encoder_predictor_model_name}.{head_model_name}.attr_{method}.profile-logit_{track}_{bin}.npy
+{job_name}.{encoder_predictor_model_name}.{head_model_name}.attr_{method}.count_{track}.npy
+{job_name}.{encoder_predictor_model_name}.{head_model_name}.attr_{method}.log1p-count_{track}.npy
 ```
 
 Predictor map keys must not contain `:`. Prediction `.pred_class.npy` /
-`.pred.npy` files are unchanged by attribution targeting.
+`.pred.npy` / `.profile.npy` / `.count.npy` files are unchanged by attribution
+targeting.

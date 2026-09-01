@@ -2,20 +2,23 @@
 
 ## EncoderPredictor
 
-The only top-level model type in **0.1.0a7** is `EncoderPredictor`.
+The only top-level model type in **0.1.0a8** is `EncoderPredictor`.
 
 It composes:
 
 1. An **encoder** — either `ConvEncoder` or `ConvSelfAttEncoder` — that maps
    one-hot sequence tensors to an embedding
 2. Optional **embedding trimming** (integer ≥ 0) applied to that embedding
-3. One or more **predictor heads** — each head is either `ClassPredictor`
-   (classification) or `RegressPredictor` (scalar regression), with its own
-   loss weight (`alpha`) and loss object
+3. One or more **predictor heads** — each head is a `ClassPredictor`
+   (classification), `RegressPredictor` (scalar regression), or
+   `ProfilePredictor` (named track distributions plus paired counts)
 
 Nested components (`ConvEncoder`, `ConvSelfAttEncoder`, `ClassPredictor`,
-`RegressPredictor`) are nestable-only: they cannot be set as the top-level
-`model_type` on a CLI config.
+`RegressPredictor`, `ProfilePredictor`) are nestable-only: they cannot be set
+as the top-level `model_type` on a CLI config.
+
+Profile heads use component weights (`profile_alpha`, `count_alpha`) instead
+of a single `alpha`. See [Profiles](profiles.md).
 
 ## Learning rates and freezing
 
@@ -49,7 +52,8 @@ an encoder while randomly initializing a new head). Pair with nested
 Train and tune both write checkpoints under `--opath` (parent and per-module
 artifacts). Prediction loads a parent `.pth` checkpoint and writes per-head
 arrays (`.pred_class.npy` for `ClassPredictor`, `.pred.npy` for
-`RegressPredictor`). With `--attribution`, it also writes attribution arrays
+`RegressPredictor`, paired `.profile.npy` / `.count.npy` for
+`ProfilePredictor`). With `--attribution`, it also writes attribution arrays
 (legacy per-head files, or one explicit `--attribution-target` file).
 
 ## Weights & Biases
