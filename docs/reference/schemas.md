@@ -88,6 +88,21 @@ Complete train-config examples live on
 Split-only examples validate against
 [data-source.schema.json](../schemas/v0.1.0a8/data-source.schema.json).
 
+## Example: multi-source data nesting
+
+Single-source and multi-source nesting, `source_fracs`, and parallel path lists
+are documented on [Multi-source](../data/multi-source.md). Complete train,
+tune, and prediction examples live on
+[Multi-source data workflow](../workflows/multi-source-data.md). Those
+examples validate against `data-source.schema.json`, `test-data.schema.json`,
+`train-config.schema.json`, `tune-config.schema.json`, and
+`pred-config.schema.json` as associated.
+
+Reusable nested definitions (`pathOrPathArray`, `sourceFracs`,
+`encoderDataBlock`, `splitDataBlock`, `testDataBlock`, scalar and profile label
+payloads) live in
+[defs.schema.json](../schemas/v0.1.0a8/defs.schema.json).
+
 ## Example: prediction config (excerpt association)
 
 Complete prediction-config examples live on

@@ -158,6 +158,71 @@ schema:
 }
 ```
 
+## Multi-source `test_data`
+
+Unlabeled multi-source inference. With `shuffle: false`, prediction rows follow
+sources concatenated in list order. Full command example:
+[Multi-source data workflow](../workflows/multi-source-data.md).
+
+<!-- schema: schemas/v0.1.0a8/test-data.schema.json -->
+```json
+{
+  "encoder": {
+    "ohe_npy": [
+      "/path/to/src0_test_ohe.npy",
+      "/path/to/src1_test_ohe.npy"
+    ],
+    "label": null
+  },
+  "shuffle": false,
+  "num_workers": 0,
+  "pin_memory": true,
+  "source_fracs": [0.5, 0.5]
+}
+```
+
+Labeled multi-source fragment (illustrative; omit unused heads as needed):
+
+```json
+{
+  "encoder": {
+    "ohe_npy": [
+      "/path/to/src0_test_ohe.npy",
+      "/path/to/src1_test_ohe.npy"
+    ],
+    "label": null
+  },
+  "predictor": {
+    "cls": {
+      "label_npy": [
+        "/path/to/src0_test_cls_labels.npy",
+        "/path/to/src1_test_cls_labels.npy"
+      ]
+    },
+    "reg": {
+      "label_npy": [
+        "/path/to/src0_test_reg_labels.npy",
+        "/path/to/src1_test_reg_labels.npy"
+      ]
+    },
+    "prof": {
+      "profile_npy": [
+        "/path/to/src0_test_profile.npy",
+        "/path/to/src1_test_profile.npy"
+      ],
+      "count_npy": [
+        "/path/to/src0_test_count.npy",
+        "/path/to/src1_test_count.npy"
+      ]
+    }
+  },
+  "shuffle": false,
+  "num_workers": 0,
+  "pin_memory": true,
+  "source_fracs": [0.5, 0.5]
+}
+```
+
 ## Invalid fragments (illustrative)
 
 Forbidden training key on a prediction config:
@@ -202,5 +267,7 @@ pred_model \
 - [`pred_model` CLI](../cli/pred_model.md)
 - [Config overview](../config.md)
 - [Predictions](../artifacts/predictions.md)
+- [Multi-source](../data/multi-source.md)
+- [Multi-source data workflow](../workflows/multi-source-data.md)
 - [Train to predict](../workflows/train-to-predict.md)
 - [Schemas](../reference/schemas.md)

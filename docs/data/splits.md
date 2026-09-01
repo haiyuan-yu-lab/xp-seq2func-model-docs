@@ -55,7 +55,8 @@ heads, no extras).
 | `ProfilePredictor` | `{ "profile_npy": ..., "count_npy": ..., "mask_npy"?: ... }` |
 
 Scalar heads use the released field name **`label_npy`** (not `label`).
-Profile details: [Profiles](../profiles.md) and [Labels](labels.md).
+Profile details: [Profiles](../profiles.md), [Labels](labels.md), and
+[Masks](masks.md).
 
 ## `source_fracs` invariants
 
@@ -89,8 +90,12 @@ Path arrays for labels must use the same `S` and the same source order as
 }
 ```
 
-## Multi-source fragment (illustrative)
+## Multi-source fragment
 
+Complete multi-source train/val block (schema-validated). Cross-source
+invariants: [Multi-source](multi-source.md).
+
+<!-- schema: schemas/v0.1.0a8/data-source.schema.json -->
 ```json
 {
   "encoder": {

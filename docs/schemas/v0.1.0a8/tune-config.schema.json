@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://haiyuan-yu-lab.github.io/xp-seq2func-model-docs/schemas/v0.1.0a8/tune-config.schema.json",
   "title": "tune_model config JSON (v0.1.0a8 documentation snapshot)",
-  "description": "Documentation-owned schema snapshot for the tune_model --config JSON in exact release v0.1.0a8. Not a canonical runtime definition. Forbidden top-level keys include optimizer, loss, job_name, num_agents, and max_trials. Runtime also validates CUDA_VISIBLE_DEVICES, array contents, init_checkpoint module names, and composition uniqueness.",
+  "description": "Documentation-owned schema snapshot for the tune_model --config JSON in exact release v0.1.0a8. train_data and val_data reuse the nested data-source contract (single-source or multi-source). Not a canonical runtime definition. Forbidden top-level keys include optimizer, loss, job_name, num_agents, and max_trials. Runtime also validates CUDA_VISIBLE_DEVICES, array contents, init_checkpoint module names, and composition uniqueness.",
   "type": "object",
   "additionalProperties": false,
   "required": [

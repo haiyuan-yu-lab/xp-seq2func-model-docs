@@ -175,6 +175,43 @@ tune_model \
   --verbosity 1
 ```
 
+## Multi-source data fragment
+
+Additive multi-source `train_data` nesting for tune configs. Complete
+multi-source tune example:
+[Multi-source data workflow](../workflows/multi-source-data.md).
+
+<!-- schema: schemas/v0.1.0a8/data-source.schema.json -->
+```json
+{
+  "encoder": {
+    "ohe_npy": [
+      "/path/to/src0_train_ohe.npy",
+      "/path/to/src1_train_ohe.npy"
+    ],
+    "label": null
+  },
+  "predictor": {
+    "cls": {
+      "label_npy": [
+        "/path/to/src0_train_cls_labels.npy",
+        "/path/to/src1_train_cls_labels.npy"
+      ]
+    },
+    "reg": {
+      "label_npy": [
+        "/path/to/src0_train_reg_labels.npy",
+        "/path/to/src1_train_reg_labels.npy"
+      ]
+    }
+  },
+  "shuffle": true,
+  "num_workers": 0,
+  "pin_memory": true,
+  "source_fracs": [0.6, 0.4]
+}
+```
+
 ## Invalid fragments (illustrative)
 
 Forbidden `job_name` and CLI-only controls:
@@ -213,5 +250,7 @@ Missing `sweep_name` when `sweep_id` is empty:
 - [Tuning spaces](tuning-spaces.md)
 - [Tuning workflow](../workflows/tuning.md)
 - [Train configuration](train.md) (shared early stopping and data blocks)
+- [Multi-source](../data/multi-source.md)
+- [Multi-source data workflow](../workflows/multi-source-data.md)
 - [Config overview](../config.md)
 - [Schemas](../reference/schemas.md)

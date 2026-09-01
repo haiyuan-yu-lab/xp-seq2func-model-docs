@@ -159,6 +159,43 @@ train_model \
   --verbosity 1
 ```
 
+## Multi-source data fragment
+
+Additive multi-source `train_data` / `val_data` nesting. Full train/tune/pred
+command examples: [Multi-source data workflow](../workflows/multi-source-data.md).
+Invariants: [Multi-source](../data/multi-source.md).
+
+<!-- schema: schemas/v0.1.0a8/data-source.schema.json -->
+```json
+{
+  "encoder": {
+    "ohe_npy": [
+      "/path/to/src0_train_ohe.npy",
+      "/path/to/src1_train_ohe.npy"
+    ],
+    "label": null
+  },
+  "predictor": {
+    "cls": {
+      "label_npy": [
+        "/path/to/src0_train_cls_labels.npy",
+        "/path/to/src1_train_cls_labels.npy"
+      ]
+    },
+    "reg": {
+      "label_npy": [
+        "/path/to/src0_train_reg_labels.npy",
+        "/path/to/src1_train_reg_labels.npy"
+      ]
+    }
+  },
+  "shuffle": true,
+  "num_workers": 0,
+  "pin_memory": true,
+  "source_fracs": [0.7, 0.3]
+}
+```
+
 ## Invalid fragments (illustrative)
 
 Forbidden optimizer key:
@@ -184,4 +221,6 @@ Forbidden W&B run name override:
 - [`train_model` CLI](../cli/train_model.md)
 - [Config overview](../config.md)
 - [Hyperparameters](hyperparameters.md)
+- [Multi-source](../data/multi-source.md)
+- [Multi-source data workflow](../workflows/multi-source-data.md)
 - [Schemas](../reference/schemas.md)

@@ -21,7 +21,8 @@
           "minItems": 1,
           "items": { "$ref": "#/$defs/pathString" }
         }
-      ]
+      ],
+      "description": "Single path string (S=1) or non-empty parallel path array (length S). Empty arrays fail. Multi-source path lists must share S and source order with encoder.ohe_npy."
     },
     "positiveNumber": {
       "type": "number",
@@ -249,7 +250,7 @@
       "type": "array",
       "minItems": 1,
       "items": { "$ref": "#/$defs/positiveNumber" },
-      "description": "Positive source weights. Length must equal the number of OHE sources S. When S=1 the only valid value is [1]."
+      "description": "Positive source weights. Length must equal the number of OHE sources S (string ohe_npy ⇒ S=1; path array ⇒ S=length). When S=1 the only valid value is [1]. With shuffle=true fracs reweight mixture draws; with shuffle=false fracs are validated but do not reweight (full-draw concat order)."
     },
     "earlyStopping": {
       "type": "object",
@@ -406,7 +407,7 @@
         "ohe_npy": { "$ref": "#/$defs/pathOrPathArray" },
         "label": { "type": "null" }
       },
-      "description": "Encoder split payload: ohe_npy path(s) and label must be null."
+      "description": "Encoder split payload. ohe_npy defines source identity (string⇒S=1; array⇒S). label must be null. Nested label/mask path lists must match that S and order."
     },
     "scalarLabelPayload": {
       "type": "object",
@@ -415,7 +416,7 @@
       "properties": {
         "label_npy": { "$ref": "#/$defs/pathOrPathArray" }
       },
-      "description": "ClassPredictor / RegressPredictor train/val label payload. Field name is label_npy."
+      "description": "ClassPredictor / RegressPredictor label payload. Field name is label_npy. Path list length must equal encoder.ohe_npy source count S."
     },
     "profileLabelPayload": {
       "type": "object",
@@ -426,7 +427,7 @@
         "count_npy": { "$ref": "#/$defs/pathOrPathArray" },
         "mask_npy": { "$ref": "#/$defs/pathOrPathArray" }
       },
-      "description": "ProfilePredictor train/val payload. mask_npy is optional on train/val and forbidden on test."
+      "description": "ProfilePredictor train/val payload. profile_npy, count_npy, and optional mask_npy path lists must each have length S matching encoder.ohe_npy. mask_npy is forbidden on test."
     },
     "profileTestLabelPayload": {
       "type": "object",
@@ -436,7 +437,7 @@
         "profile_npy": { "$ref": "#/$defs/pathOrPathArray" },
         "count_npy": { "$ref": "#/$defs/pathOrPathArray" }
       },
-      "description": "ProfilePredictor test payload when labels are supplied. Both profile_npy and count_npy are required together. mask_npy is not allowed."
+      "description": "ProfilePredictor test payload when labels are supplied. Both profile_npy and count_npy are required together with parallel path lists of length S. mask_npy is not allowed."
     },
     "testDataBlock": {
       "type": "object",
@@ -459,7 +460,7 @@
               { "$ref": "#/$defs/profileTestLabelPayload" }
             ]
           },
-          "description": "Optional on test. Omit for unlabeled inference. Profile payloads must not include mask_npy."
+          "description": "Optional on test. Omit for unlabeled inference. When present, each labeled head must cover all S sources. Profile payloads must not include mask_npy."
         },
         "shuffle": { "type": "boolean" },
         "num_workers": { "$ref": "#/$defs/nonNegativeInteger" },
@@ -475,7 +476,7 @@
           ]
         }
       },
-      "description": "Prediction test_data block. Labels optional; batch_size lives in hparams. Runtime also enforces S alignment and array geometry."
+      "description": "Prediction test_data block supporting single-source or multi-source nesting. Labels optional; batch_size lives in hparams. With shuffle=false, prediction rows concatenate sources in list order. Runtime also enforces S alignment and array geometry."
     },
     "splitDataBlock": {
       "type": "object",
@@ -499,7 +500,8 @@
               { "$ref": "#/$defs/scalarLabelPayload" },
               { "$ref": "#/$defs/profileLabelPayload" }
             ]
-          }
+          },
+          "description": "Required on train/val. Every model_config.predictor head must appear, and every labeled head must cover all S sources with parallel path lists."
         },
         "shuffle": { "type": "boolean" },
         "num_workers": { "$ref": "#/$defs/nonNegativeInteger" },
@@ -515,7 +517,7 @@
           ]
         }
       },
-      "description": "Train/val split data block. batch_size lives in hparams, not here. Runtime also enforces S alignment and array geometry."
+      "description": "Train/val split data block supporting single-source or multi-source nesting. batch_size lives in hparams, not here. Heads share one index stream. Runtime also enforces S alignment and array geometry."
     }
   }
 }
