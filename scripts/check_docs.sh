@@ -23,6 +23,9 @@ echo "==> Schema checks"
 echo "==> Inline JSON example checks"
 "$PYTHON" scripts/check_inline_json.py --docs-dir docs
 
+echo "==> LLM corpus drift check"
+"$PYTHON" scripts/generate_llms.py --check
+
 echo "==> Strict MkDocs build"
 "$PYTHON" -m mkdocs build --strict
 

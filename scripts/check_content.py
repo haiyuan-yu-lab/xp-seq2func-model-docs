@@ -151,6 +151,68 @@ def check_no_binaries(docs_dir: Path, errors: list[str]) -> None:
             )
 
 
+def check_cli_provenance(docs_dir: Path, errors: list[str]) -> None:
+    """Command pages must caption committed CLI help as release-specific."""
+    caption_re = re.compile(
+        rf"CLI help snapshot for \*\*{re.escape(VERSION)}\*\*"
+        r".*?documentation build does\s+not import the package or regenerate this text\)\.",
+        flags=re.DOTALL,
+    )
+    for rel in (
+        "cli/train_model.md",
+        "cli/tune_model.md",
+        "cli/pred_model.md",
+    ):
+        path = docs_dir / rel
+        if not path.is_file():
+            errors.append(f"missing required page: {rel}")
+            continue
+        text = read(path)
+        if VERSION not in text:
+            errors.append(f"{rel}: must identify release {VERSION}")
+        if not caption_re.search(text):
+            errors.append(f"{rel}: missing CLI provenance caption")
+
+
+def check_schema_discoverability(docs_dir: Path, errors: list[str]) -> None:
+    """Every schema snapshot must be linked from at least one Markdown page."""
+    schemas_root = docs_dir / "schemas"
+    if not schemas_root.is_dir():
+        errors.append("missing schemas/ under docs/")
+        return
+    md_texts = [
+        (path, read(path))
+        for path in docs_dir.rglob("*.md")
+        if path.is_file()
+    ]
+    for schema_path in sorted(schemas_root.rglob("*.schema.json")):
+        name = schema_path.name
+        linked = False
+        for md_path, text in md_texts:
+            if name not in text:
+                continue
+            # Require a Markdown link target, not only an HTML schema comment.
+            if f"](" in text and name in text:
+                # Cheap but sufficient: filename appears inside a Markdown link.
+                if re.search(
+                    rf"\[[^\]]*\]\([^)]*{re.escape(name)}[^)]*\)",
+                    text,
+                ):
+                    linked = True
+                    break
+        if not linked:
+            rel = schema_path.relative_to(docs_dir).as_posix()
+            errors.append(
+                f"{rel}: not linked from any Markdown page "
+                "(add a link on a contract page or reference/schemas.md)"
+            )
+
+
+def check_no_llm_alias(docs_dir: Path, errors: list[str]) -> None:
+    if (docs_dir / "llm.txt").is_file():
+        errors.append("docs/llm.txt must not exist (no singular alias)")
+
+
 def check_preserved_urls(docs_dir: Path, errors: list[str]) -> None:
     required = [
         "index.md",
@@ -189,7 +251,10 @@ def main(argv: list[str] | None = None) -> int:
     check_version_markers(docs_dir, errors)
     check_install_wording(docs_dir, errors)
     check_public_interface(docs_dir, errors)
+    check_cli_provenance(docs_dir, errors)
+    check_schema_discoverability(docs_dir, errors)
     check_no_binaries(docs_dir, errors)
+    check_no_llm_alias(docs_dir, errors)
 
     if errors:
         print(f"Content check failed ({len(errors)} issue(s)):", file=sys.stderr)

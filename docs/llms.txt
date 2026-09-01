@@ -1,0 +1,65 @@
+# xp-seq2func-model
+
+> Exact-release **v0.1.0a8** documentation for the `train_model`, `tune_model`, and `pred_model` CLIs and their configuration, data, and artifact contracts. Python imports are not a supported API.
+
+Site: https://haiyuan-yu-lab.github.io/xp-seq2func-model-docs/
+
+## Getting Started
+
+- [Home](https://haiyuan-yu-lab.github.io/xp-seq2func-model-docs/): Release scope and supported public interface for the CLIs
+- [Installation](https://haiyuan-yu-lab.github.io/xp-seq2func-model-docs/install/): Authenticated source install for the exact release tag
+- [Quickstart](https://haiyuan-yu-lab.github.io/xp-seq2func-model-docs/getting-started/quickstart/): Text-only train-to-predict command shapes with placeholder paths
+- [Core concepts](https://haiyuan-yu-lab.github.io/xp-seq2func-model-docs/concepts/): EncoderPredictor composition, freezing, init, and W&B roles
+
+## CLI Reference
+
+- [CLI overview](https://haiyuan-yu-lab.github.io/xp-seq2func-model-docs/cli/): The three console commands and shared flags
+- [train_model](https://haiyuan-yu-lab.github.io/xp-seq2func-model-docs/cli/train_model/): Fixed-hparam training flags, inputs, outputs, and failures
+- [tune_model](https://haiyuan-yu-lab.github.io/xp-seq2func-model-docs/cli/tune_model/): W&B sweep tuning flags, agents, trials, and failures
+- [pred_model](https://haiyuan-yu-lab.github.io/xp-seq2func-model-docs/cli/pred_model/): Prediction and optional Captum attribution flags and outputs
+
+## Workflows
+
+- [Train to predict](https://haiyuan-yu-lab.github.io/xp-seq2func-model-docs/workflows/train-to-predict/): Connect train artifacts to prediction
+- [Tuning](https://haiyuan-yu-lab.github.io/xp-seq2func-model-docs/workflows/tuning/): Sweep creation, GPU pinning, and W&B requirements
+- [Initialization and freezing](https://haiyuan-yu-lab.github.io/xp-seq2func-model-docs/workflows/initialization-and-freezing/): Selective checkpoint init and nested learning-rate freezing
+- [Multi-source data](https://haiyuan-yu-lab.github.io/xp-seq2func-model-docs/workflows/multi-source-data/): Parallel sources, source_fracs, and alignment invariants
+- [Profile masks](https://haiyuan-yu-lab.github.io/xp-seq2func-model-docs/workflows/profile-masks/): Positional validity masks for profile loss and Pearson
+- [Attribution](https://haiyuan-yu-lab.github.io/xp-seq2func-model-docs/workflows/attribution/): Attribution methods, target grammar, and legacy mode
+
+## Models
+
+- [Model composition](https://haiyuan-yu-lab.github.io/xp-seq2func-model-docs/models/composition/): Top-level EncoderPredictor and nestable encoders/heads
+- [Profile reconstruction](https://haiyuan-yu-lab.github.io/xp-seq2func-model-docs/profiles/): ProfilePredictor tracks, bins, counts, masks, and artifacts
+
+## Data Contracts
+
+- [Arrays](https://haiyuan-yu-lab.github.io/xp-seq2func-model-docs/data/arrays/): One-hot sequence array shapes, dtypes, and alignment
+- [Labels](https://haiyuan-yu-lab.github.io/xp-seq2func-model-docs/data/labels/): Classification, regression, and profile label payloads
+- [Formats overview](https://haiyuan-yu-lab.github.io/xp-seq2func-model-docs/formats/): Short cross-cutting array and artifact format summary
+
+## Configuration
+
+- [Configuration overview](https://haiyuan-yu-lab.github.io/xp-seq2func-model-docs/config/): Shared keys and pointers to command-specific configs
+- [Train config](https://haiyuan-yu-lab.github.io/xp-seq2func-model-docs/configuration/train/): Complete train_model --config contract
+- [Tune config](https://haiyuan-yu-lab.github.io/xp-seq2func-model-docs/configuration/tune/): Complete tune_model --config contract
+- [Prediction config](https://haiyuan-yu-lab.github.io/xp-seq2func-model-docs/configuration/prediction/): Complete pred_model --config contract
+- [Hyperparameters](https://haiyuan-yu-lab.github.io/xp-seq2func-model-docs/configuration/hyperparameters/): Fixed hparams, inheritance, and head wrappers
+- [Tuning spaces](https://haiyuan-yu-lab.github.io/xp-seq2func-model-docs/configuration/tuning-spaces/): tune-space method and leaf parameter forms
+
+## Artifacts
+
+- [Checkpoints](https://haiyuan-yu-lab.github.io/xp-seq2func-model-docs/artifacts/checkpoints/): Parent and module .pth contracts
+- [Predictions](https://haiyuan-yu-lab.github.io/xp-seq2func-model-docs/artifacts/predictions/): Per-head prediction array filenames and shapes
+- [Attributions](https://haiyuan-yu-lab.github.io/xp-seq2func-model-docs/artifacts/attributions/): Legacy and target-qualified attribution filenames
+
+## Reference
+
+- [Validation and errors](https://haiyuan-yu-lab.github.io/xp-seq2func-model-docs/reference/validation-and-errors/): Fail-closed validation behavior without stable error strings
+- [Schemas](https://haiyuan-yu-lab.github.io/xp-seq2func-model-docs/reference/schemas/): Index of release-specific JSON Schema snapshots
+- [Compatibility](https://haiyuan-yu-lab.github.io/xp-seq2func-model-docs/reference/compatibility/): Exact-release accuracy promise and non-goals
+- [FAQ](https://haiyuan-yu-lab.github.io/xp-seq2func-model-docs/faq/): Short answers for common CLI and contract questions
+
+## Optional
+
+- [Full documentation corpus](https://haiyuan-yu-lab.github.io/xp-seq2func-model-docs/llms-full.txt): Navigation-ordered concatenation of canonical Markdown sources

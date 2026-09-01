@@ -47,5 +47,11 @@ release. Prefer the CLIs and file contracts documented on this site.
 3. Review [CLI Reference](cli/index.md) and [Configuration](config.md)
 4. Browse [Data Contracts](data/arrays.md) and [Artifacts](artifacts/checkpoints.md) as needed
 
+## LLM resources
+
+- [`llms.txt`](llms.txt) — curated map of key pages with one-line descriptions
+- [`llms-full.txt`](llms-full.txt) — navigation-ordered concatenation of
+  canonical Markdown sources
+
 Code repository: [haiyuan-yu-lab/xp-seq2func-model](https://github.com/haiyuan-yu-lab/xp-seq2func-model)
 (tag `v0.1.0a8`).

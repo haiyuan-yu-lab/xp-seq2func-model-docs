@@ -18,13 +18,23 @@ python3 -m venv .venv
 ## Checks
 
 Docs-only validation (strict MkDocs build, internal links, Draft 2020-12
-schemas, inline JSON examples, and content markers):
+schemas, inline JSON examples, LLM corpus drift, and content markers):
 
 ```bash
 make check
 # or
 ./scripts/check_docs.sh
 ```
+
+Regenerate the published LLM artifacts after nav or curated-map edits:
+
+```bash
+make llms
+# or
+.venv/bin/python scripts/generate_llms.py --write
+```
+
+Published site paths: `/llms.txt` and `/llms-full.txt` (no singular `/llm.txt`).
 
 ## Build
 

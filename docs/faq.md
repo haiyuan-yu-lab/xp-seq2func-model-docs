@@ -13,7 +13,7 @@ pass `--num-agents`, it must equal the token count.
 
 ## Can I use ConvEncoder, ConvSelfAttEncoder, ClassPredictor, RegressPredictor, or ProfilePredictor as the top-level model_type?
 
-No. In **0.1.0a8** only `EncoderPredictor` is a top-level CLI model type.
+No. In **v0.1.0a8** only `EncoderPredictor` is a top-level CLI model type.
 `ConvEncoder`, `ConvSelfAttEncoder`, `ClassPredictor`, `RegressPredictor`, and
 `ProfilePredictor` are nestable components inside `model_config`.
 
