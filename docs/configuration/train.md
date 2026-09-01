@@ -33,7 +33,7 @@ Unknown top-level keys fail closed.
 
 | Key | Type | Notes |
 | --- | --- | --- |
-| `init_checkpoint` | object | `{ "path", "modules" }`; see [Config: init_checkpoint](../config.md#init_checkpoint-train--tune) |
+| `init_checkpoint` | object | `{ "path", "modules" }`; see [Config: init_checkpoint](../config.md#init_checkpoint-train--tune) and [Initialization and freezing](../workflows/initialization-and-freezing.md) |
 
 ## `early_stopping`
 

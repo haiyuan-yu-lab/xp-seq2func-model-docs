@@ -89,10 +89,12 @@ Documentation schema:
 | `modules` | non-empty string array | Catalogued `model_name` values to load; no duplicates |
 
 Each entry in `modules` must match a `model_name` in the constructed tree
-(top-level, encoder, or a prediction head). The checkpoint must contain
-`states` for those names; other modules keep random init. Shape / key
-mismatches fail with a clear error. Combine with nested `learning_rate: 0` to
-freeze loaded modules.
+(top-level, encoder, or a prediction head)—not predictor map keys. The
+checkpoint must contain `states` for those names; other modules keep random
+init. Shape / key mismatches fail with a clear error. Combine with nested
+`learning_rate: 0` to freeze loaded modules. Workflow examples and the
+selective-init vs full-restore distinction:
+[Initialization and freezing](workflows/initialization-and-freezing.md).
 
 ## Test / pred config (`pred_model --config`)
 

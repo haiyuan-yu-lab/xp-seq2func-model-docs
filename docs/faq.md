@@ -48,15 +48,19 @@ See [pred_model](cli/pred_model.md) and [Profiles](profiles.md).
 
 Yes. Set that module's nested `learning_rate` to `0` in hparams (or in the
 tune-space leaf for that path). The module's parameters are frozen and left
-out of Adam. Top-level `learning_rate` must remain `> 0`. See
-[Concepts](concepts.md#learning-rates-and-freezing).
+out of Adam. Top-level `learning_rate` must remain `> 0`. Freezing a
+`ProfilePredictor` freezes both branches. See
+[Concepts](concepts.md#learning-rates-and-freezing) and
+[Initialization and freezing](workflows/initialization-and-freezing.md).
 
 ## Can I initialize from a pretrained encoder (or other module)?
 
 Yes. On the train or tune config, set optional `init_checkpoint` with `path`
 (to a `.pth`) and `modules` (catalogued `model_name` strings to load). Other
 modules stay randomly initialized. Combine with nested `learning_rate: 0` to
-freeze the loaded modules. See
+freeze the loaded modules. This is selective weight init, not
+`pred_model --checkpoint` full restore and not optimizer-state resume. See
+[Initialization and freezing](workflows/initialization-and-freezing.md) and
 [Config](config.md#init_checkpoint-train--tune).
 
 ## Is there a PyPI package?

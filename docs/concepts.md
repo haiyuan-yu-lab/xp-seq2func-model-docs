@@ -47,7 +47,9 @@ trainable module fails closed when building the optimizer.
 Train and tune configs may include optional `init_checkpoint` to load selected
 catalogued modules from an existing `.pth` before training (for example, reuse
 an encoder while randomly initializing a new head). Pair with nested
-`learning_rate: 0` to freeze those modules. See
+`learning_rate: 0` to freeze those modules. Selective init is not prediction
+full restore and does not resume optimizer state. See
+[Initialization and freezing](workflows/initialization-and-freezing.md) and
 [Config](config.md#init_checkpoint-train--tune).
 
 ## Workflows

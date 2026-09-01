@@ -55,5 +55,6 @@ text is not stabilized here.
 - [`train_model`](../cli/train_model.md)
 - [Sidecars](sidecars.md)
 - [Config: init_checkpoint](../config.md#init_checkpoint-train--tune)
+- [Initialization and freezing](../workflows/initialization-and-freezing.md)
 - [Formats overview](../formats.md)
 - [Train to predict](../workflows/train-to-predict.md)

@@ -92,7 +92,8 @@ trainable module fails when the optimizer is built. Adam itself is not
 configurable beyond these learning rates (no top-level `optimizer` key).
 
 Pair freezing with optional `init_checkpoint` to warm-start then hold modules.
-See [Initialization and freezing](../workflows/initialization-and-freezing.md)
+Freezing a `ProfilePredictor` freezes both of its branches. See
+[Initialization and freezing](../workflows/initialization-and-freezing.md)
 and [Config: init_checkpoint](../config.md#init_checkpoint-train--tune).
 
 ## Complete example

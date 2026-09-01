@@ -40,7 +40,7 @@ artifact stems use each trial's W&B `run_id`.
 
 | Key | Type | Notes |
 | --- | --- | --- |
-| `init_checkpoint` | object | `{ "path", "modules" }`; applied at the start of **each** trial; see [Config: init_checkpoint](../config.md#init_checkpoint-train--tune) |
+| `init_checkpoint` | object | `{ "path", "modules" }`; applied at the start of **each** trial; see [Config: init_checkpoint](../config.md#init_checkpoint-train--tune) and [Initialization and freezing](../workflows/initialization-and-freezing.md) |
 
 Do not put `init_checkpoint` in the tune-space file.
 
