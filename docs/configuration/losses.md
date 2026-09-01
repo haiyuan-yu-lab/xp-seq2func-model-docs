@@ -35,8 +35,11 @@ non-empty `params` is rejected.
 
 Recommendations for scalar heads: use `categorical_cross_entropy` with
 `ClassPredictor` and `mse` with `RegressPredictor`. Profile component losses
-are mandatory for their respective profile / count branches; see
-[Profile reconstruction](../profiles.md).
+are mandatory for their respective branches: `profile_cross_entropy` for the
+profile distribution and `log1p_mse` for the profile count. See
+[ProfilePredictor](../models/profile-predictor.md) and
+[Profile reconstruction](../profiles.md). Masked profile-loss behavior:
+[Profile masks](../workflows/profile-masks.md).
 
 ## Invalid examples (illustrative)
 
@@ -70,4 +73,5 @@ are mandatory for their respective profile / count branches; see
 - [Hyperparameters](hyperparameters.md)
 - [ClassPredictor](../models/class-predictor.md)
 - [RegressPredictor](../models/regress-predictor.md)
+- [ProfilePredictor](../models/profile-predictor.md)
 - [Schemas](../reference/schemas.md)

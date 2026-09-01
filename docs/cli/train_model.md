@@ -41,7 +41,7 @@ optional process environment and is not a CLI flag.
 | --- | --- |
 | Train config | [Train configuration](../configuration/train.md) |
 | Hparams JSON | [Hyperparameters](../configuration/hyperparameters.md) |
-| Arrays named by the config | [Arrays](../data/arrays.md), [Labels](../data/labels.md), [Splits](../data/splits.md) |
+| Arrays named by the config | [Arrays](../data/arrays.md), [Labels](../data/labels.md), [Masks](../data/masks.md), [Splits](../data/splits.md) |
 
 ## Outputs
 
@@ -82,6 +82,7 @@ Failures include (described without stabilizing exact exception text):
 - No CUDA device available to the process
 - Invalid `init_checkpoint` path, modules, or state mismatch
 - Data shape, dtype, or alignment failures
+- Profile label/mask geometry failures (`profile_npy` / `count_npy` / optional `mask_npy`)
 - Empty path lists
 - Invalid `source_fracs`
 - Every trainable module frozen
@@ -116,5 +117,6 @@ train_model \
 
 - [Train configuration](../configuration/train.md)
 - [Hyperparameters](../configuration/hyperparameters.md)
+- [Profiles](../profiles.md)
 - [Train to predict](../workflows/train-to-predict.md)
 - [Config overview](../config.md)

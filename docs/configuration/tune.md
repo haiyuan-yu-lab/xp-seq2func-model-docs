@@ -98,6 +98,14 @@ come from W&B; agent and trial caps are CLI flags.
 `parameters` tree (see [Tuning spaces](tuning-spaces.md) and
 [Hyperparameters](hyperparameters.md)).
 
+### Profile-specific validation
+
+Tune configs reuse the same train/val profile label and optional-mask rules as
+training. Resolved trials must still validate profile geometry
+(`P = L_embed / bin_size`), paired `profile_npy` / `count_npy`, and the profile
+hparams wrapper. Do not put `track_names` or `bin_size` in the tune-space file.
+See [Profiles](../profiles.md) and [Tuning spaces](tuning-spaces.md).
+
 ## Complete example
 
 Placeholder paths only. Pair with a tune-space document from
@@ -250,6 +258,7 @@ Missing `sweep_name` when `sweep_id` is empty:
 - [Tuning spaces](tuning-spaces.md)
 - [Tuning workflow](../workflows/tuning.md)
 - [Train configuration](train.md) (shared early stopping and data blocks)
+- [Profiles](../profiles.md)
 - [Multi-source](../data/multi-source.md)
 - [Multi-source data workflow](../workflows/multi-source-data.md)
 - [Config overview](../config.md)

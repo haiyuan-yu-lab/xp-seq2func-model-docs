@@ -32,6 +32,10 @@ behavior JSON Schema cannot express.
 | [`encoder-predictor-model-config.schema.json`](../schemas/v0.1.0a8/encoder-predictor-model-config.schema.json) | Top-level `EncoderPredictor` `model_config` tree |
 | [`encoder-predictor-hparams.schema.json`](../schemas/v0.1.0a8/encoder-predictor-hparams.schema.json) | Top-level pre-inheritance fixed hyperparameters |
 | [`scalar-head-hparams-wrapper.schema.json`](../schemas/v0.1.0a8/scalar-head-hparams-wrapper.schema.json) | `ClassPredictor` / `RegressPredictor` hparams wrapper |
+| [`profile-predictor-model-config.schema.json`](../schemas/v0.1.0a8/profile-predictor-model-config.schema.json) | Nestable `ProfilePredictor` `model_config` |
+| [`profile-head-hparams-wrapper.schema.json`](../schemas/v0.1.0a8/profile-head-hparams-wrapper.schema.json) | `ProfilePredictor` hparams wrapper |
+| [`profile-label-payload.schema.json`](../schemas/v0.1.0a8/profile-label-payload.schema.json) | Train/val profile payload (`profile_npy` / `count_npy` / optional `mask_npy`) |
+| [`profile-test-label-payload.schema.json`](../schemas/v0.1.0a8/profile-test-label-payload.schema.json) | Test profile payload (no `mask_npy`) |
 | [`loss.schema.json`](../schemas/v0.1.0a8/loss.schema.json) | Loss object `{ type, params }` |
 
 ## Example association convention
@@ -44,6 +48,47 @@ to the MkDocs `docs/` directory, for example:
 
 Docs-only checks validate those complete examples structurally. Illustrative
 fragments omit the comment and are skipped.
+
+
+## Example: profile configuration fragments
+
+<!-- schema: schemas/v0.1.0a8/profile-predictor-model-config.schema.json -->
+```json
+{
+  "model_name": "atac_profile",
+  "track_names": ["short", "mono", "di"],
+  "bin_size": 10
+}
+```
+
+<!-- schema: schemas/v0.1.0a8/profile-head-hparams-wrapper.schema.json -->
+```json
+{
+  "profile_alpha": 1.0,
+  "profile_loss": { "type": "profile_cross_entropy", "params": {} },
+  "count_alpha": 1.0,
+  "count_loss": { "type": "log1p_mse", "params": {} },
+  "predictor_config": {
+    "n_fc_layers": 1,
+    "fc_hidden_dims": [],
+    "dropout": 0.0,
+    "activation": "relu",
+    "pooling_methods": "GAP"
+  }
+}
+```
+
+<!-- schema: schemas/v0.1.0a8/profile-label-payload.schema.json -->
+```json
+{
+  "profile_npy": "/path/to/train_profile.npy",
+  "count_npy": "/path/to/train_count.npy",
+  "mask_npy": "/path/to/train_mask.npy"
+}
+```
+
+See [ProfilePredictor](../models/profile-predictor.md),
+[Profiles](../profiles.md), and [Masks](../data/masks.md).
 
 ## Example: init_checkpoint
 

@@ -63,7 +63,7 @@ optional process environment (same idea as training) and is not a CLI flag.
 | Prediction config | [Prediction configuration](../configuration/prediction.md) |
 | Parent checkpoint | [Checkpoints](../artifacts/checkpoints.md) |
 | Parent hparams sidecar | [Sidecars](../artifacts/sidecars.md), [Hyperparameters](../configuration/hyperparameters.md) |
-| Arrays named by `test_data` | [Arrays](../data/arrays.md); labels optional per [Labels](../data/labels.md) |
+| Arrays named by `test_data` | [Arrays](../data/arrays.md); labels optional per [Labels](../data/labels.md); profile masks forbidden per [Masks](../data/masks.md) |
 
 ## Outputs
 
@@ -173,6 +173,7 @@ pred_model \
 
 - [Prediction configuration](../configuration/prediction.md)
 - [Predictions](../artifacts/predictions.md)
+- [Profiles](../profiles.md)
 - [Train to predict](../workflows/train-to-predict.md)
 - [Config overview](../config.md)
 - [Attribution](../workflows/attribution.md)

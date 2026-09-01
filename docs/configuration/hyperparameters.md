@@ -49,15 +49,36 @@ for classification, `mse` for regression.
 `ProfilePredictor` entries use component weights and losses instead of scalar
 `alpha` / `loss`:
 
-| Key | Notes |
-| --- | --- |
-| `profile_alpha` | Finite real ≥ 0 |
-| `count_alpha` | Finite real ≥ 0 |
-| `profile_loss` | Loss object (mandatory profile type) |
-| `count_loss` | Loss object (mandatory count type) |
-| `predictor_config` | Count-branch FC settings |
+| Key | Type | Notes |
+| --- | --- | --- |
+| `profile_alpha` | finite number ≥ 0 | Weight on the profile-distribution component |
+| `count_alpha` | finite number ≥ 0 | Weight on the profile-count component |
+| `profile_loss` | `{ "type", "params" }` | Must be `profile_cross_entropy` with `params: {}` |
+| `count_loss` | `{ "type", "params" }` | Must be `log1p_mse` with `params: {}` |
+| `predictor_config` | object | Count-branch FC settings (same FC fields as scalar heads) |
 
-Full profile geometry and examples: [Profile reconstruction](../profiles.md).
+Mixing scalar wrapper keys with profile wrapper keys fails closed.
+`track_names` and `bin_size` stay in model config and must not appear in a tune
+space. Full geometry and count pairing:
+[ProfilePredictor](../models/profile-predictor.md) and
+[Profile reconstruction](../profiles.md).
+
+<!-- schema: schemas/v0.1.0a8/profile-head-hparams-wrapper.schema.json -->
+```json
+{
+  "profile_alpha": 1.0,
+  "profile_loss": { "type": "profile_cross_entropy", "params": {} },
+  "count_alpha": 1.0,
+  "count_loss": { "type": "log1p_mse", "params": {} },
+  "predictor_config": {
+    "n_fc_layers": 1,
+    "fc_hidden_dims": [],
+    "dropout": 0.0,
+    "activation": "relu",
+    "pooling_methods": "GAP"
+  }
+}
+```
 
 ## Combined weights
 
@@ -175,13 +196,15 @@ Scalar wrappers reject unknown keys:
 
 ## Schema snapshot
 
-[`encoder-predictor-hparams.schema.json`](../schemas/v0.1.0a8/encoder-predictor-hparams.schema.json)
+[`encoder-predictor-hparams.schema.json`](../schemas/v0.1.0a8/encoder-predictor-hparams.schema.json),
+[`scalar-head-hparams-wrapper.schema.json`](../schemas/v0.1.0a8/scalar-head-hparams-wrapper.schema.json),
 and
-[`scalar-head-hparams-wrapper.schema.json`](../schemas/v0.1.0a8/scalar-head-hparams-wrapper.schema.json).
+[`profile-head-hparams-wrapper.schema.json`](../schemas/v0.1.0a8/profile-head-hparams-wrapper.schema.json).
 
 ## Related pages
 
 - [Losses](losses.md)
 - [Model composition](../models/composition.md)
+- [ProfilePredictor](../models/profile-predictor.md)
 - [Concepts: learning rates and freezing](../concepts.md#learning-rates-and-freezing)
 - [Schemas](../reference/schemas.md)

@@ -15,11 +15,15 @@
     },
     "pathOrPathArray": {
       "oneOf": [
-        { "$ref": "#/$defs/pathString" },
+        {
+          "$ref": "#/$defs/pathString"
+        },
         {
           "type": "array",
           "minItems": 1,
-          "items": { "$ref": "#/$defs/pathString" }
+          "items": {
+            "$ref": "#/$defs/pathString"
+          }
         }
       ],
       "description": "Single path string (S=1) or non-empty parallel path array (length S). Empty arrays fail. Multi-source path lists must share S and source order with encoder.ohe_npy."
@@ -43,8 +47,10 @@
     "oddPositiveInteger": {
       "type": "integer",
       "minimum": 1,
-      "not": { "multipleOf": 2 },
-      "description": "Odd integer ≥ 1 (for example kernel_size)."
+      "not": {
+        "multipleOf": 2
+      },
+      "description": "Odd integer \u2265 1 (for example kernel_size)."
     },
     "unitIntervalHalfOpen": {
       "type": "number",
@@ -54,11 +60,18 @@
     },
     "activation": {
       "type": "string",
-      "enum": ["relu", "gelu", "silu"]
+      "enum": [
+        "relu",
+        "gelu",
+        "silu"
+      ]
     },
     "poolingMethods": {
       "type": "string",
-      "enum": ["GAP", "GMP"]
+      "enum": [
+        "GAP",
+        "GMP"
+      ]
     },
     "predictorMapKey": {
       "type": "string",
@@ -73,10 +86,17 @@
     "nestedModelRef": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["model_type", "model_config"],
+      "required": [
+        "model_type",
+        "model_config"
+      ],
       "properties": {
-        "model_type": { "$ref": "#/$defs/nonEmptyString" },
-        "model_config": { "type": "object" }
+        "model_type": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "model_config": {
+          "type": "object"
+        }
       },
       "description": "Nestable component reference: exactly model_type and model_config."
     },
@@ -97,28 +117,44 @@
     "lossObject": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["type", "params"],
+      "required": [
+        "type",
+        "params"
+      ],
       "properties": {
-        "type": { "$ref": "#/$defs/lossType" },
-        "params": { "$ref": "#/$defs/emptyParams" }
+        "type": {
+          "$ref": "#/$defs/lossType"
+        },
+        "params": {
+          "$ref": "#/$defs/emptyParams"
+        }
       },
       "description": "Loss object shape { type, params }. Unknown keys fail closed at runtime."
     },
     "identityModelConfig": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["model_name"],
+      "required": [
+        "model_name"
+      ],
       "properties": {
-        "model_name": { "$ref": "#/$defs/modelName" }
+        "model_name": {
+          "$ref": "#/$defs/modelName"
+        }
       },
       "description": "Identity-only nested model_config (encoder or RegressPredictor)."
     },
     "classPredictorModelConfig": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["model_name", "n_class"],
+      "required": [
+        "model_name",
+        "n_class"
+      ],
       "properties": {
-        "model_name": { "$ref": "#/$defs/modelName" },
+        "model_name": {
+          "$ref": "#/$defs/modelName"
+        },
         "n_class": {
           "type": "integer",
           "minimum": 2
@@ -128,36 +164,62 @@
     "profilePredictorModelConfig": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["model_name", "track_names", "bin_size"],
+      "required": [
+        "model_name",
+        "track_names",
+        "bin_size"
+      ],
       "properties": {
-        "model_name": { "$ref": "#/$defs/modelName" },
+        "model_name": {
+          "$ref": "#/$defs/modelName"
+        },
         "track_names": {
           "type": "array",
           "minItems": 1,
           "uniqueItems": true,
-          "items": { "$ref": "#/$defs/nonEmptyString" }
+          "items": {
+            "$ref": "#/$defs/profileTrackName"
+          }
         },
-        "bin_size": { "$ref": "#/$defs/positiveInteger" }
+        "bin_size": {
+          "$ref": "#/$defs/positiveInteger"
+        }
       },
-      "description": "Composition hook for ProfilePredictor. Full profile contracts are documented separately."
+      "description": "Nestable ProfilePredictor model_config: ordered track_names and bin_size \u2265 1."
     },
     "convEncoderHparams": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["n_layers", "kernel_size", "dilation"],
+      "required": [
+        "n_layers",
+        "kernel_size",
+        "dilation"
+      ],
       "properties": {
-        "n_layers": { "$ref": "#/$defs/positiveInteger" },
-        "kernel_size": { "$ref": "#/$defs/oddPositiveInteger" },
+        "n_layers": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "kernel_size": {
+          "$ref": "#/$defs/oddPositiveInteger"
+        },
         "dilation": {
           "type": "array",
           "minItems": 1,
-          "items": { "$ref": "#/$defs/positiveInteger" }
+          "items": {
+            "$ref": "#/$defs/positiveInteger"
+          }
         },
-        "batch_size": { "$ref": "#/$defs/positiveInteger" },
-        "learning_rate": { "$ref": "#/$defs/nonNegativeNumber" },
-        "n_channels": { "$ref": "#/$defs/positiveInteger" }
+        "batch_size": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "learning_rate": {
+          "$ref": "#/$defs/nonNegativeNumber"
+        },
+        "n_channels": {
+          "$ref": "#/$defs/positiveInteger"
+        }
       },
-      "description": "Pre-inheritance ConvEncoder hparams. dilation length must be ≥ n_layers (prefix used). Inheritable keys may be omitted."
+      "description": "Pre-inheritance ConvEncoder hparams. dilation length must be \u2265 n_layers (prefix used). Inheritable keys may be omitted."
     },
     "convSelfAttEncoderHparams": {
       "type": "object",
@@ -173,21 +235,43 @@
         "activation"
       ],
       "properties": {
-        "n_layers": { "$ref": "#/$defs/positiveInteger" },
-        "kernel_size": { "$ref": "#/$defs/oddPositiveInteger" },
+        "n_layers": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "kernel_size": {
+          "$ref": "#/$defs/oddPositiveInteger"
+        },
         "dilation": {
           "type": "array",
           "minItems": 1,
-          "items": { "$ref": "#/$defs/positiveInteger" }
+          "items": {
+            "$ref": "#/$defs/positiveInteger"
+          }
         },
-        "n_attn_layers": { "$ref": "#/$defs/nonNegativeInteger" },
-        "n_heads": { "$ref": "#/$defs/positiveInteger" },
-        "dropout": { "$ref": "#/$defs/unitIntervalHalfOpen" },
-        "ffn_mult": { "$ref": "#/$defs/positiveInteger" },
-        "activation": { "$ref": "#/$defs/activation" },
-        "batch_size": { "$ref": "#/$defs/positiveInteger" },
-        "learning_rate": { "$ref": "#/$defs/nonNegativeNumber" },
-        "n_channels": { "$ref": "#/$defs/positiveInteger" }
+        "n_attn_layers": {
+          "$ref": "#/$defs/nonNegativeInteger"
+        },
+        "n_heads": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "dropout": {
+          "$ref": "#/$defs/unitIntervalHalfOpen"
+        },
+        "ffn_mult": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "activation": {
+          "$ref": "#/$defs/activation"
+        },
+        "batch_size": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "learning_rate": {
+          "$ref": "#/$defs/nonNegativeNumber"
+        },
+        "n_channels": {
+          "$ref": "#/$defs/positiveInteger"
+        }
       },
       "description": "Pre-inheritance ConvSelfAttEncoder hparams. Runtime also requires n_channels % n_heads == 0 after inheritance."
     },
@@ -202,28 +286,54 @@
         "pooling_methods"
       ],
       "properties": {
-        "n_fc_layers": { "$ref": "#/$defs/positiveInteger" },
+        "n_fc_layers": {
+          "$ref": "#/$defs/positiveInteger"
+        },
         "fc_hidden_dims": {
           "type": "array",
-          "items": { "$ref": "#/$defs/positiveInteger" }
+          "items": {
+            "$ref": "#/$defs/positiveInteger"
+          }
         },
-        "dropout": { "$ref": "#/$defs/unitIntervalHalfOpen" },
-        "activation": { "$ref": "#/$defs/activation" },
-        "pooling_methods": { "$ref": "#/$defs/poolingMethods" },
-        "batch_size": { "$ref": "#/$defs/positiveInteger" },
-        "learning_rate": { "$ref": "#/$defs/nonNegativeNumber" },
-        "n_channels": { "$ref": "#/$defs/positiveInteger" }
+        "dropout": {
+          "$ref": "#/$defs/unitIntervalHalfOpen"
+        },
+        "activation": {
+          "$ref": "#/$defs/activation"
+        },
+        "pooling_methods": {
+          "$ref": "#/$defs/poolingMethods"
+        },
+        "batch_size": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "learning_rate": {
+          "$ref": "#/$defs/nonNegativeNumber"
+        },
+        "n_channels": {
+          "$ref": "#/$defs/positiveInteger"
+        }
       },
-      "description": "FC stack settings for ClassPredictor / RegressPredictor. fc_hidden_dims length must be ≥ n_fc_layers - 1 (prefix used)."
+      "description": "FC stack settings for ClassPredictor / RegressPredictor. fc_hidden_dims length must be \u2265 n_fc_layers - 1 (prefix used)."
     },
     "scalarHeadHparamsWrapper": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["alpha", "loss", "predictor_config"],
+      "required": [
+        "alpha",
+        "loss",
+        "predictor_config"
+      ],
       "properties": {
-        "alpha": { "$ref": "#/$defs/nonNegativeInteger" },
-        "loss": { "$ref": "#/$defs/lossObject" },
-        "predictor_config": { "$ref": "#/$defs/scalarPredictorConfig" }
+        "alpha": {
+          "$ref": "#/$defs/nonNegativeInteger"
+        },
+        "loss": {
+          "$ref": "#/$defs/lossObject"
+        },
+        "predictor_config": {
+          "$ref": "#/$defs/scalarPredictorConfig"
+        }
       },
       "description": "Exact keys for ClassPredictor / RegressPredictor entries under hparams.predictor."
     },
@@ -238,73 +348,124 @@
         "predictor_config"
       ],
       "properties": {
-        "profile_alpha": { "$ref": "#/$defs/nonNegativeNumber" },
-        "count_alpha": { "$ref": "#/$defs/nonNegativeNumber" },
-        "profile_loss": { "$ref": "#/$defs/lossObject" },
-        "count_loss": { "$ref": "#/$defs/lossObject" },
-        "predictor_config": { "$ref": "#/$defs/scalarPredictorConfig" }
+        "profile_alpha": {
+          "$ref": "#/$defs/nonNegativeNumber"
+        },
+        "count_alpha": {
+          "$ref": "#/$defs/nonNegativeNumber"
+        },
+        "profile_loss": {
+          "$ref": "#/$defs/profileCrossEntropyLoss"
+        },
+        "count_loss": {
+          "$ref": "#/$defs/log1pMseLoss"
+        },
+        "predictor_config": {
+          "$ref": "#/$defs/scalarPredictorConfig"
+        }
       },
-      "description": "Composition hook for ProfilePredictor hparams wrappers. Full profile contracts are documented separately."
+      "description": "Exact keys for ProfilePredictor entries under hparams.predictor. profile_loss must be profile_cross_entropy; count_loss must be log1p_mse."
     },
     "sourceFracs": {
       "type": "array",
       "minItems": 1,
-      "items": { "$ref": "#/$defs/positiveNumber" },
-      "description": "Positive source weights. Length must equal the number of OHE sources S (string ohe_npy ⇒ S=1; path array ⇒ S=length). When S=1 the only valid value is [1]. With shuffle=true fracs reweight mixture draws; with shuffle=false fracs are validated but do not reweight (full-draw concat order)."
+      "items": {
+        "$ref": "#/$defs/positiveNumber"
+      },
+      "description": "Positive source weights. Length must equal the number of OHE sources S (string ohe_npy \u21d2 S=1; path array \u21d2 S=length). When S=1 the only valid value is [1]. With shuffle=true fracs reweight mixture draws; with shuffle=false fracs are validated but do not reweight (full-draw concat order)."
     },
     "earlyStopping": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["grace_epochs"],
+      "required": [
+        "grace_epochs"
+      ],
       "properties": {
-        "grace_epochs": { "$ref": "#/$defs/positiveInteger" }
+        "grace_epochs": {
+          "$ref": "#/$defs/positiveInteger"
+        }
       },
-      "description": "Early-stopping object. grace_epochs is the patience (≥ 1)."
+      "description": "Early-stopping object. grace_epochs is the patience (\u2265 1)."
     },
     "wandbTrain": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["project", "mode"],
+      "required": [
+        "project",
+        "mode"
+      ],
       "properties": {
-        "project": { "type": "string" },
+        "project": {
+          "type": "string"
+        },
         "mode": {
           "type": "string",
-          "enum": ["online", "offline", "disabled"]
+          "enum": [
+            "online",
+            "offline",
+            "disabled"
+          ]
         },
-        "entity": { "type": "string" },
+        "entity": {
+          "type": "string"
+        },
         "tags": {
           "type": "array",
-          "items": { "type": "string" }
+          "items": {
+            "type": "string"
+          }
         },
-        "notes": { "type": "string" }
+        "notes": {
+          "type": "string"
+        }
       },
       "description": "Train-config Weights & Biases block. name / sweep_id / sweep_name are forbidden."
     },
     "wandbTune": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["project", "mode"],
+      "required": [
+        "project",
+        "mode"
+      ],
       "properties": {
-        "project": { "type": "string" },
+        "project": {
+          "type": "string"
+        },
         "mode": {
           "type": "string",
-          "enum": ["online", "offline"]
+          "enum": [
+            "online",
+            "offline"
+          ]
         },
-        "entity": { "type": "string" },
+        "entity": {
+          "type": "string"
+        },
         "tags": {
           "type": "array",
-          "items": { "type": "string" }
+          "items": {
+            "type": "string"
+          }
         },
-        "notes": { "type": "string" },
-        "sweep_id": { "type": "string" },
-        "sweep_name": { "type": "string" }
+        "notes": {
+          "type": "string"
+        },
+        "sweep_id": {
+          "type": "string"
+        },
+        "sweep_name": {
+          "type": "string"
+        }
       },
       "description": "Tune-config Weights & Biases block. mode is online|offline only. name / num_agents / max_trials are forbidden. Runtime requires sweep_name when sweep_id is empty."
     },
     "tuneSpaceLeafFixed": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["value"],
+      "required": [
+        "value"
+      ],
       "properties": {
         "value": true
       },
@@ -313,7 +474,9 @@
     "tuneSpaceLeafValues": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["values"],
+      "required": [
+        "values"
+      ],
       "properties": {
         "values": {
           "type": "array",
@@ -325,28 +488,47 @@
     "tuneSpaceLeafDistribution": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["distribution", "min", "max"],
+      "required": [
+        "distribution",
+        "min",
+        "max"
+      ],
       "properties": {
         "distribution": {
           "type": "string",
-          "enum": ["uniform", "log_uniform"]
+          "enum": [
+            "uniform",
+            "log_uniform"
+          ]
         },
-        "min": { "type": "number" },
-        "max": { "type": "number" }
+        "min": {
+          "type": "number"
+        },
+        "max": {
+          "type": "number"
+        }
       },
       "description": "Continuous tune-space leaf. Runtime also requires min < max and log_uniform min > 0."
     },
     "tuneSpaceLeaf": {
       "oneOf": [
-        { "$ref": "#/$defs/tuneSpaceLeafFixed" },
-        { "$ref": "#/$defs/tuneSpaceLeafValues" },
-        { "$ref": "#/$defs/tuneSpaceLeafDistribution" }
+        {
+          "$ref": "#/$defs/tuneSpaceLeafFixed"
+        },
+        {
+          "$ref": "#/$defs/tuneSpaceLeafValues"
+        },
+        {
+          "$ref": "#/$defs/tuneSpaceLeafDistribution"
+        }
       ],
       "description": "One of the three public tune-space leaf forms."
     },
     "tuneSpaceNode": {
       "oneOf": [
-        { "$ref": "#/$defs/tuneSpaceLeaf" },
+        {
+          "$ref": "#/$defs/tuneSpaceLeaf"
+        },
         {
           "type": "object",
           "minProperties": 1,
@@ -354,10 +536,16 @@
             "type": "string",
             "minLength": 1,
             "not": {
-              "enum": ["init_checkpoint", "track_names", "bin_size"]
+              "enum": [
+                "init_checkpoint",
+                "track_names",
+                "bin_size"
+              ]
             }
           },
-          "additionalProperties": { "$ref": "#/$defs/tuneSpaceNode" }
+          "additionalProperties": {
+            "$ref": "#/$defs/tuneSpaceNode"
+          }
         }
       ],
       "description": "Recursive tune-space node: a leaf or a nested object of nodes. Documentation schema rejects reserved keys init_checkpoint / track_names / bin_size as property names."
@@ -373,15 +561,27 @@
         "predictor"
       ],
       "properties": {
-        "batch_size": { "$ref": "#/$defs/tuneSpaceNode" },
-        "learning_rate": { "$ref": "#/$defs/tuneSpaceNode" },
-        "n_channels": { "$ref": "#/$defs/tuneSpaceNode" },
-        "encoder": { "$ref": "#/$defs/tuneSpaceNode" },
+        "batch_size": {
+          "$ref": "#/$defs/tuneSpaceNode"
+        },
+        "learning_rate": {
+          "$ref": "#/$defs/tuneSpaceNode"
+        },
+        "n_channels": {
+          "$ref": "#/$defs/tuneSpaceNode"
+        },
+        "encoder": {
+          "$ref": "#/$defs/tuneSpaceNode"
+        },
         "predictor": {
           "type": "object",
           "minProperties": 1,
-          "propertyNames": { "$ref": "#/$defs/predictorMapKey" },
-          "additionalProperties": { "$ref": "#/$defs/tuneSpaceNode" }
+          "propertyNames": {
+            "$ref": "#/$defs/predictorMapKey"
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/tuneSpaceNode"
+          }
         }
       },
       "description": "Tune-space parameters tree. Runtime also validates composition alignment and learning-rate leaf rules."
@@ -389,53 +589,89 @@
     "tuneSpaceEnvelope": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["method", "parameters"],
+      "required": [
+        "method",
+        "parameters"
+      ],
       "properties": {
         "method": {
           "type": "string",
-          "enum": ["grid", "random", "bayes"]
+          "enum": [
+            "grid",
+            "random",
+            "bayes"
+          ]
         },
-        "parameters": { "$ref": "#/$defs/tuneSpaceParameters" }
+        "parameters": {
+          "$ref": "#/$defs/tuneSpaceParameters"
+        }
       },
       "description": "Tune-space file envelope for tune_model --tune-space."
     },
     "encoderDataBlock": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["ohe_npy", "label"],
+      "required": [
+        "ohe_npy",
+        "label"
+      ],
       "properties": {
-        "ohe_npy": { "$ref": "#/$defs/pathOrPathArray" },
-        "label": { "type": "null" }
+        "ohe_npy": {
+          "$ref": "#/$defs/pathOrPathArray"
+        },
+        "label": {
+          "type": "null"
+        }
       },
-      "description": "Encoder split payload. ohe_npy defines source identity (string⇒S=1; array⇒S). label must be null. Nested label/mask path lists must match that S and order."
+      "description": "Encoder split payload. ohe_npy defines source identity (string\u21d2S=1; array\u21d2S). label must be null. Nested label/mask path lists must match that S and order."
     },
     "scalarLabelPayload": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["label_npy"],
+      "required": [
+        "label_npy"
+      ],
       "properties": {
-        "label_npy": { "$ref": "#/$defs/pathOrPathArray" }
+        "label_npy": {
+          "$ref": "#/$defs/pathOrPathArray"
+        }
       },
       "description": "ClassPredictor / RegressPredictor label payload. Field name is label_npy. Path list length must equal encoder.ohe_npy source count S."
     },
     "profileLabelPayload": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["profile_npy", "count_npy"],
+      "required": [
+        "profile_npy",
+        "count_npy"
+      ],
       "properties": {
-        "profile_npy": { "$ref": "#/$defs/pathOrPathArray" },
-        "count_npy": { "$ref": "#/$defs/pathOrPathArray" },
-        "mask_npy": { "$ref": "#/$defs/pathOrPathArray" }
+        "profile_npy": {
+          "$ref": "#/$defs/pathOrPathArray"
+        },
+        "count_npy": {
+          "$ref": "#/$defs/pathOrPathArray"
+        },
+        "mask_npy": {
+          "$ref": "#/$defs/pathOrPathArray"
+        }
       },
       "description": "ProfilePredictor train/val payload. profile_npy, count_npy, and optional mask_npy path lists must each have length S matching encoder.ohe_npy. mask_npy is forbidden on test."
     },
     "profileTestLabelPayload": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["profile_npy", "count_npy"],
+      "required": [
+        "profile_npy",
+        "count_npy"
+      ],
       "properties": {
-        "profile_npy": { "$ref": "#/$defs/pathOrPathArray" },
-        "count_npy": { "$ref": "#/$defs/pathOrPathArray" }
+        "profile_npy": {
+          "$ref": "#/$defs/pathOrPathArray"
+        },
+        "count_npy": {
+          "$ref": "#/$defs/pathOrPathArray"
+        }
       },
       "description": "ProfilePredictor test payload when labels are supplied. Both profile_npy and count_npy are required together with parallel path lists of length S. mask_npy is not allowed."
     },
@@ -450,29 +686,52 @@
         "source_fracs"
       ],
       "properties": {
-        "encoder": { "$ref": "#/$defs/encoderDataBlock" },
+        "encoder": {
+          "$ref": "#/$defs/encoderDataBlock"
+        },
         "predictor": {
           "type": "object",
-          "propertyNames": { "$ref": "#/$defs/predictorMapKey" },
+          "propertyNames": {
+            "$ref": "#/$defs/predictorMapKey"
+          },
           "additionalProperties": {
             "oneOf": [
-              { "$ref": "#/$defs/scalarLabelPayload" },
-              { "$ref": "#/$defs/profileTestLabelPayload" }
+              {
+                "$ref": "#/$defs/scalarLabelPayload"
+              },
+              {
+                "$ref": "#/$defs/profileTestLabelPayload"
+              }
             ]
           },
           "description": "Optional on test. Omit for unlabeled inference. When present, each labeled head must cover all S sources. Profile payloads must not include mask_npy."
         },
-        "shuffle": { "type": "boolean" },
-        "num_workers": { "$ref": "#/$defs/nonNegativeInteger" },
-        "pin_memory": { "type": "boolean" },
-        "source_fracs": { "$ref": "#/$defs/sourceFracs" },
+        "shuffle": {
+          "type": "boolean"
+        },
+        "num_workers": {
+          "$ref": "#/$defs/nonNegativeInteger"
+        },
+        "pin_memory": {
+          "type": "boolean"
+        },
+        "source_fracs": {
+          "$ref": "#/$defs/sourceFracs"
+        },
         "persistent_workers": {
-          "type": ["boolean", "null"]
+          "type": [
+            "boolean",
+            "null"
+          ]
         },
         "prefetch_factor": {
           "oneOf": [
-            { "$ref": "#/$defs/positiveInteger" },
-            { "type": "null" }
+            {
+              "$ref": "#/$defs/positiveInteger"
+            },
+            {
+              "type": "null"
+            }
           ]
         }
       },
@@ -490,34 +749,96 @@
         "source_fracs"
       ],
       "properties": {
-        "encoder": { "$ref": "#/$defs/encoderDataBlock" },
+        "encoder": {
+          "$ref": "#/$defs/encoderDataBlock"
+        },
         "predictor": {
           "type": "object",
           "minProperties": 1,
-          "propertyNames": { "$ref": "#/$defs/predictorMapKey" },
+          "propertyNames": {
+            "$ref": "#/$defs/predictorMapKey"
+          },
           "additionalProperties": {
             "oneOf": [
-              { "$ref": "#/$defs/scalarLabelPayload" },
-              { "$ref": "#/$defs/profileLabelPayload" }
+              {
+                "$ref": "#/$defs/scalarLabelPayload"
+              },
+              {
+                "$ref": "#/$defs/profileLabelPayload"
+              }
             ]
           },
           "description": "Required on train/val. Every model_config.predictor head must appear, and every labeled head must cover all S sources with parallel path lists."
         },
-        "shuffle": { "type": "boolean" },
-        "num_workers": { "$ref": "#/$defs/nonNegativeInteger" },
-        "pin_memory": { "type": "boolean" },
-        "source_fracs": { "$ref": "#/$defs/sourceFracs" },
+        "shuffle": {
+          "type": "boolean"
+        },
+        "num_workers": {
+          "$ref": "#/$defs/nonNegativeInteger"
+        },
+        "pin_memory": {
+          "type": "boolean"
+        },
+        "source_fracs": {
+          "$ref": "#/$defs/sourceFracs"
+        },
         "persistent_workers": {
-          "type": ["boolean", "null"]
+          "type": [
+            "boolean",
+            "null"
+          ]
         },
         "prefetch_factor": {
           "oneOf": [
-            { "$ref": "#/$defs/positiveInteger" },
-            { "type": "null" }
+            {
+              "$ref": "#/$defs/positiveInteger"
+            },
+            {
+              "type": "null"
+            }
           ]
         }
       },
       "description": "Train/val split data block supporting single-source or multi-source nesting. batch_size lives in hparams, not here. Heads share one index stream. Runtime also enforces S alignment and array geometry."
+    },
+    "profileTrackName": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+      "description": "Filename-safe profile track name. Must not contain ':' or ','."
+    },
+    "profileCrossEntropyLoss": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "type",
+        "params"
+      ],
+      "properties": {
+        "type": {
+          "const": "profile_cross_entropy"
+        },
+        "params": {
+          "$ref": "#/$defs/emptyParams"
+        }
+      },
+      "description": "Mandatory profile-distribution loss object for ProfilePredictor."
+    },
+    "log1pMseLoss": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "type",
+        "params"
+      ],
+      "properties": {
+        "type": {
+          "const": "log1p_mse"
+        },
+        "params": {
+          "$ref": "#/$defs/emptyParams"
+        }
+      },
+      "description": "Mandatory profile-count loss object for ProfilePredictor."
     }
   }
 }

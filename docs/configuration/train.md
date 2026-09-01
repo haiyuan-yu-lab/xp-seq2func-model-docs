@@ -83,6 +83,21 @@ Loader keys live on the split (`shuffle`, `num_workers`, `pin_memory`,
 `source_fracs`, optional `persistent_workers` / `prefetch_factor`).
 `batch_size` is **not** a data-block field; it belongs in hparams.
 
+### Profile-specific validation
+
+When `model_config.predictor` includes a `ProfilePredictor`:
+
+| Check | Behavior |
+| --- | --- |
+| Labels | Train/val require `profile_npy` and `count_npy` for every profile head |
+| Optional mask | `mask_npy` may appear on train and/or val; boolean `(N, L_embed)` |
+| Geometry | `P = L_embed / bin_size` must be exact; profile labels rank-3 `(N, T, P)` |
+| Wrapper | Hparams use `profile_alpha` / `count_alpha` / `profile_loss` / `count_loss` |
+| Losses | `profile_loss.type` must be `profile_cross_entropy`; `count_loss.type` must be `log1p_mse` |
+
+See [Profiles](../profiles.md), [Labels](../data/labels.md), and
+[Masks](../data/masks.md).
+
 ## Complete example
 
 Placeholder paths only.
@@ -221,6 +236,7 @@ Forbidden W&B run name override:
 - [`train_model` CLI](../cli/train_model.md)
 - [Config overview](../config.md)
 - [Hyperparameters](hyperparameters.md)
+- [Profiles](../profiles.md)
 - [Multi-source](../data/multi-source.md)
 - [Multi-source data workflow](../workflows/multi-source-data.md)
 - [Schemas](../reference/schemas.md)

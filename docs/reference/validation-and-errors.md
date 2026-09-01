@@ -20,7 +20,8 @@ diagnosis.
 | CLI flags | Missing required flags, invalid combinations, bad verbosity |
 | Config JSON | Unknown keys, forbidden keys, type or range violations |
 | Data arrays | Shape, dtype, alignment, or value-domain failures |
-| Checkpoints | Missing modules, incompatible state keys or shapes |
+| Profile payloads | Missing profile/count pair, `mask_npy` on test, non-boolean masks, `L_embed` not divisible by `bin_size` |
+| Checkpoints | Missing modules, incompatible state keys or shapes, profile `contracts` mismatch |
 | Attribution | Invalid target syntax, profile models without an explicit target |
 
 ## Exit outcomes
@@ -33,6 +34,8 @@ expected artifacts under `--opath`.
 - [FAQ](../faq.md)
 - [Compatibility](compatibility.md)
 - [Schemas](schemas.md)
+- [Profiles](../profiles.md)
+- [Masks](../data/masks.md)
 
 !!! note "Later slices"
     Per-contract rejection tables expand in later documentation slices.

@@ -36,9 +36,9 @@ Each `.pth` is a dict payload with:
 | `contracts` | optional | Present when the saved subtree includes a `ProfilePredictor`; omitted otherwise |
 
 Private tensor layouts inside `states` are not stabilized in this
-documentation. Profile `contracts` entries, when present, identify profile
-heads for consumers; exact profile contract fields are documented with
-[Profiles](../profiles.md).
+documentation. Profile `contracts` entries, when present, record each profile
+head's ordered `track_names` and `bin_size` so same-shaped but semantically
+reordered heads fail to load. See [Profiles](../profiles.md).
 
 ## Selection rules
 

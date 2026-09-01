@@ -30,9 +30,20 @@ Logged metric namespaces for **v0.1.0a8** training.
 | Split-qualified diagnostics | console + W&B | Profile heads may emit additional `train|val:<head>:…` diagnostics |
 
 Scalar classification and regression heads contribute to the combined losses;
-they do not require separate public metric filenames. Profile diagnostic names
-are documented with [Profiles](../profiles.md). Exact console formatting is not
-stabilized.
+they do not require separate public metric filenames. Profile heads additionally
+emit unweighted component losses and masked Pearson diagnostics:
+
+```text
+train|val:<head>:profile_loss
+train|val:<head>:count_loss
+train|val:<head>:profile_pearson
+train|val:<head>:profile_pearson:<track>
+```
+
+Pearson keys are diagnostics only (not early-stopping or tune objectives).
+Positional validity masks affect profile loss and Pearson, not counts. See
+[Profiles](../profiles.md) and [Profile masks](../workflows/profile-masks.md).
+Exact console formatting is not stabilized.
 
 ## W&B mode
 

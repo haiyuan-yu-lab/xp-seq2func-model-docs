@@ -44,16 +44,42 @@ Typical targets are one-hot (or soft) class indicators with width `n_class`.
 | Alignment | Same `S` and per-source `N_s` as `encoder.ohe_npy` |
 | Cross-source | Trailing shape `(1,)` must match across sources |
 
-## Profile labels (summary)
+## Profile labels (`ProfilePredictor`)
 
-| Field | Train/val | Shape |
-| --- | --- | --- |
-| `profile_npy` | required | `(N, T, P)` |
-| `count_npy` | required | `(N, T)` |
-| `mask_npy` | optional | boolean `(N, L_embed)` |
+| Field | Train/val | Test | Shape | dtype / values |
+| --- | --- | --- | --- | --- |
+| `profile_npy` | required | optional with `count_npy` | `(N, T, P)` | Real integer or floating; finite nonnegative |
+| `count_npy` | required | optional with `profile_npy` | `(N, T)` | Real integer or floating; finite nonnegative |
+| `mask_npy` | optional | forbidden | `(N, L_embed)` | NumPy boolean only |
 
-Full profile geometry and mask rules: [Profiles](../profiles.md) and
-[Masks](masks.md). Do not put `label_npy` on a profile payload.
+| Invariant | Rule |
+| --- | --- |
+| Pairing | `profile_npy` and `count_npy` are always required together when a profile payload is present |
+| Rank | Profile arrays must be rank-3 even when `T = 1` (rank-2 shortcuts fail) |
+| Geometry | `T = len(track_names)`; `P = L_embed / bin_size` with exact divisibility |
+| Alignment | Same `S` and per-source `N_s` as `encoder.ohe_npy` |
+| Cross-source | Trailing shapes `(T, P)` / `(T,)` and `L_embed` must match across sources |
+| Count pairing | Count labels are authoritative; equality to profile-bin sums is not required |
+| Forbidden keys | Do not put `label_npy` on a profile payload |
+
+Full mask tables: [Masks](masks.md). Reconstruction overview: [Profiles](../profiles.md).
+
+<!-- schema: schemas/v0.1.0a8/profile-label-payload.schema.json -->
+```json
+{
+  "profile_npy": "/path/to/train_profile.npy",
+  "count_npy": "/path/to/train_count.npy",
+  "mask_npy": "/path/to/train_mask.npy"
+}
+```
+
+<!-- schema: schemas/v0.1.0a8/profile-test-label-payload.schema.json -->
+```json
+{
+  "profile_npy": "/path/to/test_profile.npy",
+  "count_npy": "/path/to/test_count.npy"
+}
+```
 
 ## Cross-field invariants
 
@@ -101,3 +127,5 @@ Multi-source classification:
 - [ClassPredictor](../models/class-predictor.md)
 - [RegressPredictor](../models/regress-predictor.md)
 - [Profiles](../profiles.md)
+- [Masks](masks.md)
+- [ProfilePredictor](../models/profile-predictor.md)

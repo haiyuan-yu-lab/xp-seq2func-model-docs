@@ -49,18 +49,39 @@ test rows after deterministic multi-source ordering.
 | Producer | `pred_model` |
 | Consumers | Downstream regression analysis |
 
-## Profile (`ProfilePredictor`) — summary
+## Profile (`ProfilePredictor`)
 
-Profile heads write a paired pair of arrays. Deep profile geometry belongs to
-a later documentation slice; the public filenames and shapes are:
+Each profile prediction head writes **both** a profile-distribution array and a
+profile-count array. Masks used during training do not change these artifacts.
 
-| Artifact | Filename | Shape | dtype |
-| --- | --- | --- | --- |
-| Profile | `{job}.{ep}.{head}.profile.npy` | `(N, T, P)` | float32 |
-| Count | `{job}.{ep}.{head}.count.npy` | `(N, T)` | float32 |
+### Profile distribution
 
-`T` is `len(track_names)`; `P` is the bin count for the retained window. See
-[Profiles](../profiles.md).
+| Property | Contract |
+| --- | --- |
+| Filename | `{job}.{ep}.{head}.profile.npy` |
+| Shape | `(N, T, P)` |
+| dtype | float32 |
+| Values | Profile-distribution probabilities; each row/track sums to 1 over `P` within numerical tolerance |
+| Channel order | `track_names` order (`T = len(track_names)`) |
+| Bin geometry | `P = L_embed / bin_size` with exact divisibility; bin `j` covers retained positions `[j * bin_size, (j + 1) * bin_size)` |
+| Producer | `pred_model` |
+| Consumers | Downstream profile-shape analysis |
+
+### Profile count
+
+| Property | Contract |
+| --- | --- |
+| Filename | `{job}.{ep}.{head}.count.npy` |
+| Shape | `(N, T)` |
+| dtype | float32 |
+| Values | Nonnegative reconstructed profile counts (paired one-to-one with tracks) |
+| Channel order | Same `track_names` order as the distribution array |
+| Producer | `pred_model` |
+| Consumers | Downstream magnitude analysis |
+
+`N` is the number of test rows after deterministic multi-source ordering.
+Deep geometry and count pairing: [Profiles](../profiles.md) and
+[ProfilePredictor](../models/profile-predictor.md).
 
 ## Always written
 
@@ -75,4 +96,6 @@ labels.
 - [Formats overview](../formats.md)
 - [ClassPredictor](../models/class-predictor.md)
 - [RegressPredictor](../models/regress-predictor.md)
+- [ProfilePredictor](../models/profile-predictor.md)
+- [Profiles](../profiles.md)
 - [Train to predict](../workflows/train-to-predict.md)

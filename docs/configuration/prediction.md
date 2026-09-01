@@ -67,9 +67,14 @@ hparams file passed to `--hparams`.
 | Profile head payload | Both `profile_npy` and `count_npy` required together when present |
 | Profile `mask_npy` | Invalid on test; rejected |
 
-Train/val require labels for every declared head. Prediction does not. Exact
-exception strings for invalid label combinations are not stabilized here; see
+Train/val require labels for every declared head. Prediction does not. Profile
+geometry (`T`, `P`, `L_embed` divisibility) still validates when profile labels
+are supplied. Exact exception strings for invalid label combinations are not
+stabilized here; see
 [Validation and errors](../reference/validation-and-errors.md).
+
+Profile contracts: [Profiles](../profiles.md), [Labels](../data/labels.md),
+[Masks](../data/masks.md).
 
 ### Encoder payload
 
@@ -223,6 +228,17 @@ Labeled multi-source fragment (illustrative; omit unused heads as needed):
 }
 ```
 
+
+Validated profile test payload (no mask):
+
+<!-- schema: schemas/v0.1.0a8/profile-test-label-payload.schema.json -->
+```json
+{
+  "profile_npy": "/path/to/test_profile.npy",
+  "count_npy": "/path/to/test_count.npy"
+}
+```
+
 ## Invalid fragments (illustrative)
 
 Forbidden training key on a prediction config:
@@ -267,6 +283,7 @@ pred_model \
 - [`pred_model` CLI](../cli/pred_model.md)
 - [Config overview](../config.md)
 - [Predictions](../artifacts/predictions.md)
+- [Profiles](../profiles.md)
 - [Multi-source](../data/multi-source.md)
 - [Multi-source data workflow](../workflows/multi-source-data.md)
 - [Train to predict](../workflows/train-to-predict.md)
