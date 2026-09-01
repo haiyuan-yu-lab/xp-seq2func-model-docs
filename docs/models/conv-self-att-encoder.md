@@ -79,6 +79,8 @@ Under each data block's `encoder` key:
 ## Related pages
 
 - [ConvEncoder](conv-encoder.md)
+- [RCConvEncoder](rc-conv-encoder.md)
+- [RCConvSelfAttEncoder](rc-conv-self-att-encoder.md)
 - [Model composition](composition.md)
 - [Hyperparameters](../configuration/hyperparameters.md)
 - [Arrays](../data/arrays.md)

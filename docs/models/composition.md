@@ -11,7 +11,7 @@ prediction heads nest under that tree; they are never valid top-level CLI
 | Role | Allowed `model_type` | Where it appears |
 | --- | --- | --- |
 | Top-level model | `EncoderPredictor` | CLI `model_type` / `model_config` |
-| Encoder (nestable) | `ConvEncoder`, `RCConvEncoder`, `ConvSelfAttEncoder` | `model_config.encoder` only |
+| Encoder (nestable) | `ConvEncoder`, `RCConvEncoder`, `ConvSelfAttEncoder`, `RCConvSelfAttEncoder` | `model_config.encoder` only |
 | Prediction head (nestable) | `ClassPredictor`, `RegressPredictor`, `ProfilePredictor` | `model_config.predictor` map only |
 
 Nested components always use the exact reference shape
@@ -22,7 +22,7 @@ Nested components always use the exact reference shape
 | Key | Type | Notes |
 | --- | --- | --- |
 | `model_name` | non-empty string | Unique across the whole composition tree |
-| `encoder` | nested ref | One encoder (`ConvEncoder`, `RCConvEncoder`, or `ConvSelfAttEncoder`) |
+| `encoder` | nested ref | One encoder (`ConvEncoder`, `RCConvEncoder`, `ConvSelfAttEncoder`, or `RCConvSelfAttEncoder`) |
 | `predictor` | object map | One or more prediction heads |
 | `embedding_trimming` | integer ≥ 0 | Required; bases trimmed from each end of the encoder embedding |
 
@@ -116,6 +116,7 @@ Predictor map keys must not contain `:`:
 - [ConvEncoder](conv-encoder.md)
 - [RCConvEncoder](rc-conv-encoder.md)
 - [ConvSelfAttEncoder](conv-self-att-encoder.md)
+- [RCConvSelfAttEncoder](rc-conv-self-att-encoder.md)
 - [ClassPredictor](class-predictor.md)
 - [RegressPredictor](regress-predictor.md)
 - [ProfilePredictor](profile-predictor.md) / [Profile reconstruction](../profiles.md)
