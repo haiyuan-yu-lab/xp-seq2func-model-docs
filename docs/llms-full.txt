@@ -1871,7 +1871,7 @@ distinct and both in `[0, n_class)`.
 | `<head>:profile-probability:<track>,<bin>` | Profile-bin probability | Row-independent | `profile-probability_{track}_{bin}` |
 | `<head>:profile-logit:<track>,<bin>` | Profile-bin logit | Row-independent | `profile-logit_{track}_{bin}` |
 | `<head>:count:<track>` | Reconstructed profile count | Row-independent | `count_{track}` |
-| `<head>:log1p-count:<track>` | `log1p` of the profile count | Row-independent | `log1p-count_{track}` |
+| `<head>:log1p-count:<track>` | Internal unrestricted log-count `z` for that track (not `log1p` of the reconstructed count) | Row-independent | `log1p-count_{track}` |
 
 `<track>` must match a configured `track_names` entry for that head.
 `<bin>` is a nonnegative decimal integer without leading zeros and must lie in
@@ -2880,6 +2880,10 @@ Supported profile forms:
 <head>:log1p-count:<track>
 ```
 
+`count` uses the reconstructed nonnegative profile count; `log1p-count` uses
+the unrestricted internal log-count `z` for that track (not `log1p` of the
+reconstructed count).
+
 Each invocation writes one target-qualified `(N, 4, L_input)` float32 array
 while still writing ordinary predictions for every head. Profile and count
 attributions need separate invocations. Masks do not change attribution
@@ -2942,6 +2946,7 @@ only.
 | Requiredness | Required on every split (`train_data` / `val_data` / `test_data`) |
 | Shape | `(N, 4, L)` per source file |
 | Channel order | Axis 1 is bases **A, C, G, T** (indices `0..3`) |
+| dtype / values | Numeric one-hot (or soft) encodings over the four channels; rank must be 3 with channel axis length 4 |
 | Alignment | Row `i` pairs with row `i` of every label array for the same source |
 | Cross-source | All sources share one sequence length `L`; row counts `N_s` may differ |
 
@@ -3103,6 +3108,17 @@ invariants: [Multi-source](multi-source.md).
   "prefetch_factor": 2
 }
 ```
+
+## Representative invalid cases
+
+| Case | Why it fails |
+| --- | --- |
+| Missing `source_fracs` | Required on every EncoderPredictor split |
+| `source_fracs: [1]` with two OHE paths | Length must equal `S` |
+| `source_fracs: [1, 0]` | Every entry must be `> 0` |
+| `encoder.label` set to a path | Must be JSON `null` |
+| Predictor map missing a declared head on train/val | Every head needs a payload |
+| `batch_size` inside the split object | Lives in hparams only |
 
 ## Related pages
 
@@ -3426,11 +3442,9 @@ on a predictor payload (`encoder.label` is a separate field that must be
 | Requiredness | Required on train/val for every classification head |
 | Shape | `(N, n_class)` per source |
 | Trailing width | Must equal that head's `model_config.n_class` (`≥ 2`) |
-| Values | Real integer or floating dtype; nonnegative; floating values must be finite |
+| Values | Real integer or floating dtype; floating values must be finite. Typical targets are one-hot or soft class indicators |
 | Alignment | Same `S` and per-source `N_s` as `encoder.ohe_npy` |
 | Cross-source | Trailing shape `(n_class,)` must match across sources |
-
-Typical targets are one-hot (or soft) class indicators with width `n_class`.
 
 ## Regression labels (`RegressPredictor`)
 
@@ -3440,7 +3454,7 @@ Typical targets are one-hot (or soft) class indicators with width `n_class`.
 | Requiredness | Required on train/val for every regression head |
 | Shape | `(N, 1)` per source |
 | Rank | Must be rank-2; rank-1 `(N,)` arrays fail |
-| Values | Real integer or floating dtype; nonnegative; floating values must be finite |
+| Values | Continuous real targets; real integer or floating dtype; floating values must be finite. Negatives are allowed (nonnegativity is a profile/count rule, not a regression rule) |
 | Alignment | Same `S` and per-source `N_s` as `encoder.ohe_npy` |
 | Cross-source | Trailing shape `(1,)` must match across sources |
 
@@ -3519,6 +3533,19 @@ Multi-source classification:
   ]
 }
 ```
+
+## Representative invalid cases
+
+Describe conditions only; exact exception strings are not stabilized.
+
+| Case | Why it fails |
+| --- | --- |
+| Scalar payload uses `"label"` instead of `"label_npy"` | Released field name is `label_npy` |
+| Regression array shaped `(N,)` | Trailing width `1` is required |
+| Classification width ≠ `n_class` | Trailing shape must match the head config |
+| Profile payload with only `profile_npy` | `count_npy` must be paired |
+| Profile `mask_npy` under `test_data` | Masks are train/val only |
+| Empty `label_npy` path array | Empty path lists fail closed |
 
 ## Related pages
 

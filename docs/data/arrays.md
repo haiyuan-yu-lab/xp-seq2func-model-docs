@@ -15,6 +15,7 @@ only.
 | Requiredness | Required on every split (`train_data` / `val_data` / `test_data`) |
 | Shape | `(N, 4, L)` per source file |
 | Channel order | Axis 1 is bases **A, C, G, T** (indices `0..3`) |
+| dtype / values | Numeric one-hot (or soft) encodings over the four channels; rank must be 3 with channel axis length 4 |
 | Alignment | Row `i` pairs with row `i` of every label array for the same source |
 | Cross-source | All sources share one sequence length `L`; row counts `N_s` may differ |
 

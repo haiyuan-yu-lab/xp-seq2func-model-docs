@@ -171,6 +171,10 @@ Supported profile forms:
 <head>:log1p-count:<track>
 ```
 
+`count` uses the reconstructed nonnegative profile count; `log1p-count` uses
+the unrestricted internal log-count `z` for that track (not `log1p` of the
+reconstructed count).
+
 Each invocation writes one target-qualified `(N, 4, L_input)` float32 array
 while still writing ordinary predictions for every head. Profile and count
 attributions need separate invocations. Masks do not change attribution

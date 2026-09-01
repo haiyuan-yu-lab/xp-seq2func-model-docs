@@ -119,6 +119,17 @@ invariants: [Multi-source](multi-source.md).
 }
 ```
 
+## Representative invalid cases
+
+| Case | Why it fails |
+| --- | --- |
+| Missing `source_fracs` | Required on every EncoderPredictor split |
+| `source_fracs: [1]` with two OHE paths | Length must equal `S` |
+| `source_fracs: [1, 0]` | Every entry must be `> 0` |
+| `encoder.label` set to a path | Must be JSON `null` |
+| Predictor map missing a declared head on train/val | Every head needs a payload |
+| `batch_size` inside the split object | Lives in hparams only |
+
 ## Related pages
 
 - [Train configuration](../configuration/train.md)

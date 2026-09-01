@@ -74,7 +74,7 @@ distinct and both in `[0, n_class)`.
 | `<head>:profile-probability:<track>,<bin>` | Profile-bin probability | Row-independent | `profile-probability_{track}_{bin}` |
 | `<head>:profile-logit:<track>,<bin>` | Profile-bin logit | Row-independent | `profile-logit_{track}_{bin}` |
 | `<head>:count:<track>` | Reconstructed profile count | Row-independent | `count_{track}` |
-| `<head>:log1p-count:<track>` | `log1p` of the profile count | Row-independent | `log1p-count_{track}` |
+| `<head>:log1p-count:<track>` | Internal unrestricted log-count `z` for that track (not `log1p` of the reconstructed count) | Row-independent | `log1p-count_{track}` |
 
 `<track>` must match a configured `track_names` entry for that head.
 `<bin>` is a nonnegative decimal integer without leading zeros and must lie in

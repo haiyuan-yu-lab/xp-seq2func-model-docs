@@ -26,11 +26,9 @@ on a predictor payload (`encoder.label` is a separate field that must be
 | Requiredness | Required on train/val for every classification head |
 | Shape | `(N, n_class)` per source |
 | Trailing width | Must equal that head's `model_config.n_class` (`≥ 2`) |
-| Values | Real integer or floating dtype; nonnegative; floating values must be finite |
+| Values | Real integer or floating dtype; floating values must be finite. Typical targets are one-hot or soft class indicators |
 | Alignment | Same `S` and per-source `N_s` as `encoder.ohe_npy` |
 | Cross-source | Trailing shape `(n_class,)` must match across sources |
-
-Typical targets are one-hot (or soft) class indicators with width `n_class`.
 
 ## Regression labels (`RegressPredictor`)
 
@@ -40,7 +38,7 @@ Typical targets are one-hot (or soft) class indicators with width `n_class`.
 | Requiredness | Required on train/val for every regression head |
 | Shape | `(N, 1)` per source |
 | Rank | Must be rank-2; rank-1 `(N,)` arrays fail |
-| Values | Real integer or floating dtype; nonnegative; floating values must be finite |
+| Values | Continuous real targets; real integer or floating dtype; floating values must be finite. Negatives are allowed (nonnegativity is a profile/count rule, not a regression rule) |
 | Alignment | Same `S` and per-source `N_s` as `encoder.ohe_npy` |
 | Cross-source | Trailing shape `(1,)` must match across sources |
 
@@ -119,6 +117,19 @@ Multi-source classification:
   ]
 }
 ```
+
+## Representative invalid cases
+
+Describe conditions only; exact exception strings are not stabilized.
+
+| Case | Why it fails |
+| --- | --- |
+| Scalar payload uses `"label"` instead of `"label_npy"` | Released field name is `label_npy` |
+| Regression array shaped `(N,)` | Trailing width `1` is required |
+| Classification width ≠ `n_class` | Trailing shape must match the head config |
+| Profile payload with only `profile_npy` | `count_npy` must be paired |
+| Profile `mask_npy` under `test_data` | Masks are train/val only |
+| Empty `label_npy` path array | Empty path lists fail closed |
 
 ## Related pages
 
