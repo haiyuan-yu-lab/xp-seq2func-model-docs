@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://haiyuan-yu-lab.github.io/xp-seq2func-model-docs/schemas/v0.1.0a8/attribution-target-string.schema.json",
+  "title": "Attribution target string (v0.1.0a8 documentation snapshot)",
+  "description": "Documentation-owned structural snapshot for pred_model --attribution-target strings in exact release v0.1.0a8. Matches the three-part grammar <head>:<domain>:<selector>. Not a canonical runtime definition: the installed package remains authoritative for head existence and type, class-index ranges, track membership, bin counts, leading-zero rejection, and other semantic checks that JSON Schema cannot express.",
+  "type": "string",
+  "oneOf": [
+    {
+      "title": "Class probability",
+      "pattern": "^[^:]+:probability:(0|[1-9][0-9]*)$"
+    },
+    {
+      "title": "Fixed class logit",
+      "pattern": "^[^:]+:logit:(0|[1-9][0-9]*)$"
+    },
+    {
+      "title": "Predicted-class logit",
+      "pattern": "^[^:]+:logit:predicted$"
+    },
+    {
+      "title": "Class logit difference",
+      "pattern": "^[^:]+:logit-difference:(0|[1-9][0-9]*),(0|[1-9][0-9]*)$"
+    },
+    {
+      "title": "Profile-bin probability",
+      "pattern": "^[^:]+:profile-probability:[^,]+,(0|[1-9][0-9]*)$"
+    },
+    {
+      "title": "Profile-bin logit",
+      "pattern": "^[^:]+:profile-logit:[^,]+,(0|[1-9][0-9]*)$"
+    },
+    {
+      "title": "Profile count",
+      "pattern": "^[^:]+:count:[^,]+$"
+    },
+    {
+      "title": "Profile log1p count",
+      "pattern": "^[^:]+:log1p-count:[^,]+$"
+    }
+  ]
+}

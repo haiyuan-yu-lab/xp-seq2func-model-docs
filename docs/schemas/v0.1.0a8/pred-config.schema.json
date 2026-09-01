@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://haiyuan-yu-lab.github.io/xp-seq2func-model-docs/schemas/v0.1.0a8/pred-config.schema.json",
+  "title": "pred_model config JSON (v0.1.0a8 documentation snapshot)",
+  "description": "Documentation-owned schema snapshot for the pred_model --config JSON in exact release v0.1.0a8. test_data reuses the nested test-data contract (single-source or multi-source). Not a canonical runtime definition. Forbidden top-level keys include wandb, loss, optimizer, max_epochs, early_stopping, init_checkpoint, and attribution*. Runtime also validates CUDA, array contents, and composition uniqueness.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "model_type",
+    "model_config",
+    "test_data",
+    "job_name",
+    "random_seed"
+  ],
+  "properties": {
+    "model_type": {
+      "const": "EncoderPredictor"
+    },
+    "model_config": {
+      "$ref": "encoder-predictor-model-config.schema.json"
+    },
+    "test_data": {
+      "$ref": "test-data.schema.json"
+    },
+    "job_name": {
+      "$ref": "defs.schema.json#/$defs/nonEmptyString",
+      "description": "Non-empty stem for prediction artifact filenames."
+    },
+    "random_seed": {
+      "type": "integer"
+    }
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://haiyuan-yu-lab.github.io/xp-seq2func-model-docs/schemas/v0.1.0a8/profile-head-hparams-wrapper.schema.json",
+  "title": "Profile prediction-head hparams wrapper (v0.1.0a8 documentation snapshot)",
+  "description": "Documentation-owned schema snapshot for ProfilePredictor entries under hparams.predictor in exact release v0.1.0a8. Not a canonical runtime definition. Runtime also requires profile_loss.type == profile_cross_entropy and count_loss.type == log1p_mse, and at least one positive head weight across the model.",
+  "$ref": "defs.schema.json#/$defs/profileHeadHparamsWrapper"
+}

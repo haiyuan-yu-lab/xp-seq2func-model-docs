@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://haiyuan-yu-lab.github.io/xp-seq2func-model-docs/schemas/v0.1.0a8/init-checkpoint.schema.json",
+  "title": "init_checkpoint object (v0.1.0a8 documentation snapshot)",
+  "description": "Documentation-owned schema snapshot for the optional train/tune init_checkpoint object in exact release v0.1.0a8. Not a canonical runtime definition.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["path", "modules"],
+  "properties": {
+    "path": {
+      "$ref": "defs.schema.json#/$defs/pathString"
+    },
+    "modules": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "defs.schema.json#/$defs/nonEmptyString"
+      }
+    }
+  }
+}
