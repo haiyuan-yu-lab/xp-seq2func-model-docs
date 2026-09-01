@@ -78,5 +78,7 @@ Tune optimizes on validation loss. Epoch metrics expose `val_loss` with a W&B
 ## Related pages
 
 - [Model composition](models/composition.md)
+- [Hyperparameters](configuration/hyperparameters.md)
+- [Losses](configuration/losses.md)
 - [Workflows](workflows/train-to-predict.md)
 - [Compatibility](reference/compatibility.md)

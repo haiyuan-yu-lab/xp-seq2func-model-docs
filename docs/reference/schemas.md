@@ -18,11 +18,12 @@ behavior JSON Schema cannot express.
 
 | Schema | Purpose |
 | --- | --- |
-| [`defs.schema.json`](../schemas/v0.1.0a8/defs.schema.json) | Reusable `$defs` for paths, numbers, and strings |
+| [`defs.schema.json`](../schemas/v0.1.0a8/defs.schema.json) | Reusable `$defs` for paths, numbers, strings, losses, and nested fragments |
 | [`init-checkpoint.schema.json`](../schemas/v0.1.0a8/init-checkpoint.schema.json) | Optional train/tune `init_checkpoint` object |
-
-Additional public JSON surfaces will receive snapshots in later documentation
-slices.
+| [`encoder-predictor-model-config.schema.json`](../schemas/v0.1.0a8/encoder-predictor-model-config.schema.json) | Top-level `EncoderPredictor` `model_config` tree |
+| [`encoder-predictor-hparams.schema.json`](../schemas/v0.1.0a8/encoder-predictor-hparams.schema.json) | Top-level pre-inheritance fixed hyperparameters |
+| [`scalar-head-hparams-wrapper.schema.json`](../schemas/v0.1.0a8/scalar-head-hparams-wrapper.schema.json) | `ClassPredictor` / `RegressPredictor` hparams wrapper |
+| [`loss.schema.json`](../schemas/v0.1.0a8/loss.schema.json) | Loss object `{ type, params }` |
 
 ## Example association convention
 
@@ -46,3 +47,26 @@ fragments omit the comment and are skipped.
 ```
 
 See also [Config: init_checkpoint](../config.md#init_checkpoint-train--tune).
+
+## Example: model composition
+
+<!-- schema: schemas/v0.1.0a8/encoder-predictor-model-config.schema.json -->
+```json
+{
+  "model_name": "ep_main",
+  "embedding_trimming": 0,
+  "encoder": {
+    "model_type": "ConvEncoder",
+    "model_config": { "model_name": "enc" }
+  },
+  "predictor": {
+    "cls": {
+      "model_type": "ClassPredictor",
+      "model_config": { "model_name": "cls_head", "n_class": 2 }
+    }
+  }
+}
+```
+
+See [Model composition](../models/composition.md) and
+[Hyperparameters](../configuration/hyperparameters.md).

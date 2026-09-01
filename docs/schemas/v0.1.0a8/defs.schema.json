@@ -38,6 +38,212 @@
     "nonNegativeInteger": {
       "type": "integer",
       "minimum": 0
+    },
+    "oddPositiveInteger": {
+      "type": "integer",
+      "minimum": 1,
+      "not": { "multipleOf": 2 },
+      "description": "Odd integer ≥ 1 (for example kernel_size)."
+    },
+    "unitIntervalHalfOpen": {
+      "type": "number",
+      "minimum": 0,
+      "exclusiveMaximum": 1,
+      "description": "Closed-open unit interval [0, 1)."
+    },
+    "activation": {
+      "type": "string",
+      "enum": ["relu", "gelu", "silu"]
+    },
+    "poolingMethods": {
+      "type": "string",
+      "enum": ["GAP", "GMP"]
+    },
+    "predictorMapKey": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^[^:]+$",
+      "description": "Caller-defined prediction-head map key: non-empty and must not contain ':'."
+    },
+    "modelName": {
+      "$ref": "#/$defs/nonEmptyString",
+      "description": "Unique non-empty model_name within the composition tree."
+    },
+    "nestedModelRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["model_type", "model_config"],
+      "properties": {
+        "model_type": { "$ref": "#/$defs/nonEmptyString" },
+        "model_config": { "type": "object" }
+      },
+      "description": "Nestable component reference: exactly model_type and model_config."
+    },
+    "lossType": {
+      "type": "string",
+      "enum": [
+        "categorical_cross_entropy",
+        "mse",
+        "profile_cross_entropy",
+        "log1p_mse"
+      ]
+    },
+    "emptyParams": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {}
+    },
+    "lossObject": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "params"],
+      "properties": {
+        "type": { "$ref": "#/$defs/lossType" },
+        "params": { "$ref": "#/$defs/emptyParams" }
+      },
+      "description": "Loss object shape { type, params }. Unknown keys fail closed at runtime."
+    },
+    "identityModelConfig": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["model_name"],
+      "properties": {
+        "model_name": { "$ref": "#/$defs/modelName" }
+      },
+      "description": "Identity-only nested model_config (encoder or RegressPredictor)."
+    },
+    "classPredictorModelConfig": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["model_name", "n_class"],
+      "properties": {
+        "model_name": { "$ref": "#/$defs/modelName" },
+        "n_class": {
+          "type": "integer",
+          "minimum": 2
+        }
+      }
+    },
+    "profilePredictorModelConfig": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["model_name", "track_names", "bin_size"],
+      "properties": {
+        "model_name": { "$ref": "#/$defs/modelName" },
+        "track_names": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/nonEmptyString" }
+        },
+        "bin_size": { "$ref": "#/$defs/positiveInteger" }
+      },
+      "description": "Composition hook for ProfilePredictor. Full profile contracts are documented separately."
+    },
+    "convEncoderHparams": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["n_layers", "kernel_size", "dilation"],
+      "properties": {
+        "n_layers": { "$ref": "#/$defs/positiveInteger" },
+        "kernel_size": { "$ref": "#/$defs/oddPositiveInteger" },
+        "dilation": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/positiveInteger" }
+        },
+        "batch_size": { "$ref": "#/$defs/positiveInteger" },
+        "learning_rate": { "$ref": "#/$defs/nonNegativeNumber" },
+        "n_channels": { "$ref": "#/$defs/positiveInteger" }
+      },
+      "description": "Pre-inheritance ConvEncoder hparams. dilation length must be ≥ n_layers (prefix used). Inheritable keys may be omitted."
+    },
+    "convSelfAttEncoderHparams": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "n_layers",
+        "kernel_size",
+        "dilation",
+        "n_attn_layers",
+        "n_heads",
+        "dropout",
+        "ffn_mult",
+        "activation"
+      ],
+      "properties": {
+        "n_layers": { "$ref": "#/$defs/positiveInteger" },
+        "kernel_size": { "$ref": "#/$defs/oddPositiveInteger" },
+        "dilation": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/positiveInteger" }
+        },
+        "n_attn_layers": { "$ref": "#/$defs/nonNegativeInteger" },
+        "n_heads": { "$ref": "#/$defs/positiveInteger" },
+        "dropout": { "$ref": "#/$defs/unitIntervalHalfOpen" },
+        "ffn_mult": { "$ref": "#/$defs/positiveInteger" },
+        "activation": { "$ref": "#/$defs/activation" },
+        "batch_size": { "$ref": "#/$defs/positiveInteger" },
+        "learning_rate": { "$ref": "#/$defs/nonNegativeNumber" },
+        "n_channels": { "$ref": "#/$defs/positiveInteger" }
+      },
+      "description": "Pre-inheritance ConvSelfAttEncoder hparams. Runtime also requires n_channels % n_heads == 0 after inheritance."
+    },
+    "scalarPredictorConfig": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "n_fc_layers",
+        "fc_hidden_dims",
+        "dropout",
+        "activation",
+        "pooling_methods"
+      ],
+      "properties": {
+        "n_fc_layers": { "$ref": "#/$defs/positiveInteger" },
+        "fc_hidden_dims": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/positiveInteger" }
+        },
+        "dropout": { "$ref": "#/$defs/unitIntervalHalfOpen" },
+        "activation": { "$ref": "#/$defs/activation" },
+        "pooling_methods": { "$ref": "#/$defs/poolingMethods" },
+        "batch_size": { "$ref": "#/$defs/positiveInteger" },
+        "learning_rate": { "$ref": "#/$defs/nonNegativeNumber" },
+        "n_channels": { "$ref": "#/$defs/positiveInteger" }
+      },
+      "description": "FC stack settings for ClassPredictor / RegressPredictor. fc_hidden_dims length must be ≥ n_fc_layers - 1 (prefix used)."
+    },
+    "scalarHeadHparamsWrapper": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["alpha", "loss", "predictor_config"],
+      "properties": {
+        "alpha": { "$ref": "#/$defs/nonNegativeInteger" },
+        "loss": { "$ref": "#/$defs/lossObject" },
+        "predictor_config": { "$ref": "#/$defs/scalarPredictorConfig" }
+      },
+      "description": "Exact keys for ClassPredictor / RegressPredictor entries under hparams.predictor."
+    },
+    "profileHeadHparamsWrapper": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "profile_alpha",
+        "count_alpha",
+        "profile_loss",
+        "count_loss",
+        "predictor_config"
+      ],
+      "properties": {
+        "profile_alpha": { "$ref": "#/$defs/nonNegativeNumber" },
+        "count_alpha": { "$ref": "#/$defs/nonNegativeNumber" },
+        "profile_loss": { "$ref": "#/$defs/lossObject" },
+        "count_loss": { "$ref": "#/$defs/lossObject" },
+        "predictor_config": { "$ref": "#/$defs/scalarPredictorConfig" }
+      },
+      "description": "Composition hook for ProfilePredictor hparams wrappers. Full profile contracts are documented separately."
     }
   }
 }

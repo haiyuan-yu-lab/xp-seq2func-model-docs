@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://haiyuan-yu-lab.github.io/xp-seq2func-model-docs/schemas/v0.1.0a8/encoder-predictor-hparams.schema.json",
+  "title": "EncoderPredictor fixed hyperparameters (v0.1.0a8 documentation snapshot)",
+  "description": "Documentation-owned schema snapshot for top-level pre-inheritance EncoderPredictor hyperparameters in exact release v0.1.0a8. Not a canonical runtime definition. Runtime also enforces inheritance fill, dilation/fc_hidden_dims prefix rules, n_channels % n_heads == 0, at least one positive head weight, and not freezing every module.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["batch_size", "learning_rate", "n_channels", "encoder", "predictor"],
+  "properties": {
+    "batch_size": {
+      "$ref": "defs.schema.json#/$defs/positiveInteger"
+    },
+    "learning_rate": {
+      "$ref": "defs.schema.json#/$defs/positiveNumber",
+      "description": "Top-level learning rate must be > 0. Nested module rates may be 0 to freeze."
+    },
+    "n_channels": {
+      "$ref": "defs.schema.json#/$defs/positiveInteger"
+    },
+    "encoder": {
+      "oneOf": [
+        { "$ref": "defs.schema.json#/$defs/convEncoderHparams" },
+        { "$ref": "defs.schema.json#/$defs/convSelfAttEncoderHparams" }
+      ]
+    },
+    "predictor": {
+      "type": "object",
+      "minProperties": 1,
+      "propertyNames": {
+        "$ref": "defs.schema.json#/$defs/predictorMapKey"
+      },
+      "additionalProperties": {
+        "oneOf": [
+          { "$ref": "defs.schema.json#/$defs/scalarHeadHparamsWrapper" },
+          { "$ref": "defs.schema.json#/$defs/profileHeadHparamsWrapper" }
+        ]
+      }
+    }
+  }
+}

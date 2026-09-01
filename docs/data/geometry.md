@@ -3,10 +3,11 @@
 Shared geometry rules for sequence length, embedding trimming, and profile bins
 in **v0.1.0a8**.
 
-- Embedding trimming shortens the retained encoder embedding by an integer ≥ 0
-- Profile **bin_size** must divide the retained embedding length exactly
+- Embedding trimming `T` shortens each end of the encoder embedding; retained
+  length is `L_embed = L - 2T` and must be `> 0`
+- All prediction heads share that trimmed embedding
+- Profile **bin_size** must divide `L_embed` exactly
 - Profile outputs use track count `T` and bin count `P`
 
-See [Profiles](../profiles.md) and [Model composition](../models/composition.md).
-
-Coming in a later documentation slice: complete geometry equations and examples.
+See [Model composition](../models/composition.md) and
+[Profiles](../profiles.md).

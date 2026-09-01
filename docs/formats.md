@@ -45,6 +45,7 @@ into prediction.
 
 Nested encoder/head `learning_rate` values may be `0` to freeze that module;
 the top-level `learning_rate` must stay strictly positive. See
+[Hyperparameters](configuration/hyperparameters.md) and
 [Concepts](concepts.md#learning-rates-and-freezing).
 
 ## Tune-space JSON

@@ -24,16 +24,11 @@ Required keys:
 
 All `model_name` values in the tree must be unique. `ProfilePredictor`
 `model_config` also requires ordered `track_names` and `bin_size` (≥ 1). See
-[Profiles](profiles.md).
+[Profiles](profiles.md). Full nesting tables and validated examples:
+[Model composition](models/composition.md).
 
-Head loss objects live in hparams (not the CLI config). Supported loss types:
-
-| `type` | Typical head | `params` |
-| --- | --- | --- |
-| `categorical_cross_entropy` | `ClassPredictor` | must be `{}` |
-| `mse` | `RegressPredictor` | must be `{}` |
-| `profile_cross_entropy` | `ProfilePredictor` profile component | must be `{}` |
-| `log1p_mse` | `ProfilePredictor` count component | must be `{}` |
+Head loss objects live in hparams (not the CLI config). Canonical loss
+contract: [Losses](configuration/losses.md).
 
 ## Train config (`train_model --config`)
 
@@ -108,11 +103,18 @@ Common required keys: `encoder`, `shuffle`, `num_workers`, `pin_memory`,
 | --- | --- |
 | `encoder.ohe_npy` | Path string or non-empty path array |
 | `encoder.label` | Must be `null` |
-| `predictor` | Map of head → `{ "label": <path or path array> }` (required for train/val; omitted for unlabeled pred) |
+| `predictor` | Map of head → typed label payload (required for train/val; omitted for unlabeled pred) |
 | `source_fracs` | Positive weights; length equals number of OHE sources; single-source must be `[1]` |
 | `persistent_workers` | Optional bool or null |
 | `prefetch_factor` | Optional int ≥ 1 or null |
 
+Predictor payload fields by head type:
+
+| Head type | Train/val payload |
+| --- | --- |
+| `ClassPredictor` / `RegressPredictor` | `{ "label_npy": <path or path array> }` |
+| `ProfilePredictor` | `{ "profile_npy": ..., "count_npy": ..., "mask_npy"?: ... }` |
+
 Train/val require labels for every head declared in `model_config.predictor`.
 `RegressPredictor` labels must have trailing width 1 (shape `(N, 1)` per
-source array).
+source array). Profile payload details: [Profiles](profiles.md).
