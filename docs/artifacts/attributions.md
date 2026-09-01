@@ -1,6 +1,6 @@
 # Attributions
 
-Attribution array artifacts from `pred_model` in exact release **v0.1.0a8**.
+Attribution array artifacts from `pred_model` in exact release **v0.1.0a9**.
 
 Target grammar, modes, and method notes:
 [Attribution workflow](../workflows/attribution.md). Flag summary:
@@ -96,7 +96,7 @@ demo_pred.ep_profile.atac_head.attr_ig.log1p-count_atac_a.npy
 ```
 
 Structural target-string examples validate against
-[attribution-target-string.schema.json](../schemas/v0.1.0a8/attribution-target-string.schema.json)
+[attribution-target-string.schema.json](../schemas/v0.1.0a9/attribution-target-string.schema.json)
 on the [Attribution workflow](../workflows/attribution.md#examples) page.
 
 ## Methods (artifact context)

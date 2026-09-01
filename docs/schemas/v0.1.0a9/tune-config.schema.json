@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://haiyuan-yu-lab.github.io/xp-seq2func-model-docs/schemas/v0.1.0a8/train-config.schema.json",
-  "title": "train_model config JSON (v0.1.0a8 documentation snapshot)",
-  "description": "Documentation-owned schema snapshot for the train_model --config JSON in exact release v0.1.0a8. train_data and val_data reuse the nested data-source contract (single-source or multi-source). Not a canonical runtime definition. Forbidden top-level keys include optimizer and loss. Runtime also validates CUDA, array contents, init_checkpoint module names, and composition uniqueness.",
+  "$id": "https://haiyuan-yu-lab.github.io/xp-seq2func-model-docs/schemas/v0.1.0a9/tune-config.schema.json",
+  "title": "tune_model config JSON (v0.1.0a9 documentation snapshot)",
+  "description": "Documentation-owned schema snapshot for the tune_model --config JSON in exact release v0.1.0a9. train_data and val_data reuse the nested data-source contract (single-source or multi-source). Not a canonical runtime definition. Forbidden top-level keys include optimizer, loss, job_name, num_agents, and max_trials. Runtime also validates CUDA_VISIBLE_DEVICES, array contents, init_checkpoint module names, and composition uniqueness.",
   "type": "object",
   "additionalProperties": false,
   "required": [
@@ -10,7 +10,6 @@
     "model_config",
     "train_data",
     "val_data",
-    "job_name",
     "random_seed",
     "max_epochs",
     "early_stopping",
@@ -29,10 +28,6 @@
     "val_data": {
       "$ref": "data-source.schema.json"
     },
-    "job_name": {
-      "$ref": "defs.schema.json#/$defs/nonEmptyString",
-      "description": "Non-empty stem for artifacts and the Weights & Biases run name."
-    },
     "random_seed": {
       "type": "integer"
     },
@@ -43,7 +38,7 @@
       "$ref": "early-stopping.schema.json"
     },
     "wandb": {
-      "$ref": "wandb-train.schema.json"
+      "$ref": "wandb-tune.schema.json"
     },
     "init_checkpoint": {
       "$ref": "init-checkpoint.schema.json"

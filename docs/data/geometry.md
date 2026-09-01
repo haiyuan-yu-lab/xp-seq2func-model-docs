@@ -1,7 +1,7 @@
 # Geometry
 
 Shared geometry rules for sequence length, embedding trimming, and profile bins
-in **v0.1.0a8**.
+in **v0.1.0a9**.
 
 ## Embedding trimming
 

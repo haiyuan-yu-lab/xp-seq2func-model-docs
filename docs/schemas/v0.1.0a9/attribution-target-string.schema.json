@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://haiyuan-yu-lab.github.io/xp-seq2func-model-docs/schemas/v0.1.0a8/attribution-target-string.schema.json",
-  "title": "Attribution target string (v0.1.0a8 documentation snapshot)",
-  "description": "Documentation-owned structural snapshot for pred_model --attribution-target strings in exact release v0.1.0a8. Matches the three-part grammar <head>:<domain>:<selector>. Not a canonical runtime definition: the installed package remains authoritative for head existence and type, class-index ranges, track membership, bin counts, leading-zero rejection, and other semantic checks that JSON Schema cannot express.",
+  "$id": "https://haiyuan-yu-lab.github.io/xp-seq2func-model-docs/schemas/v0.1.0a9/attribution-target-string.schema.json",
+  "title": "Attribution target string (v0.1.0a9 documentation snapshot)",
+  "description": "Documentation-owned structural snapshot for pred_model --attribution-target strings in exact release v0.1.0a9. Matches the three-part grammar <head>:<domain>:<selector>. Not a canonical runtime definition: the installed package remains authoritative for head existence and type, class-index ranges, track membership, bin counts, leading-zero rejection, and other semantic checks that JSON Schema cannot express.",
   "type": "string",
   "oneOf": [
     {

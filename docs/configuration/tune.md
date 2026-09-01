@@ -1,10 +1,10 @@
 # Tune configuration
 
-Tune-config JSON for `tune_model --config` in exact release **v0.1.0a8**.
+Tune-config JSON for `tune_model --config` in exact release **v0.1.0a9**.
 
 This page is the canonical human-readable contract. The documentation schema
 snapshot is
-[tune-config.schema.json](../schemas/v0.1.0a8/tune-config.schema.json).
+[tune-config.schema.json](../schemas/v0.1.0a9/tune-config.schema.json).
 
 Shared model, data, early-stopping, checkpoint, and metric contracts are
 documented once elsewhere — link to those pages rather than duplicating their
@@ -47,7 +47,7 @@ Do not put `init_checkpoint` in the tune-space file.
 ## `early_stopping`
 
 Same contract as training. Schema snapshot:
-[early-stopping.schema.json](../schemas/v0.1.0a8/early-stopping.schema.json).
+[early-stopping.schema.json](../schemas/v0.1.0a9/early-stopping.schema.json).
 
 | Key | Type | Notes |
 | --- | --- | --- |
@@ -55,7 +55,7 @@ Same contract as training. Schema snapshot:
 
 No other keys are allowed.
 
-<!-- schema: schemas/v0.1.0a8/early-stopping.schema.json -->
+<!-- schema: schemas/v0.1.0a9/early-stopping.schema.json -->
 ```json
 {
   "grace_epochs": 5
@@ -77,7 +77,7 @@ No other keys are allowed.
 Forbidden on tune configs: `name`, `num_agents`, `max_trials`. Trial run names
 come from W&B; agent and trial caps are CLI flags.
 
-<!-- schema: schemas/v0.1.0a8/wandb-tune.schema.json -->
+<!-- schema: schemas/v0.1.0a9/wandb-tune.schema.json -->
 ```json
 {
   "project": "seq2func-tune",
@@ -92,7 +92,7 @@ come from W&B; agent and trial caps are CLI flags.
 
 `train_data` and `val_data` share the split contract documented in
 [Splits](../data/splits.md). Schema snapshot:
-[data-source.schema.json](../schemas/v0.1.0a8/data-source.schema.json).
+[data-source.schema.json](../schemas/v0.1.0a9/data-source.schema.json).
 
 `batch_size` is **not** a data-block field; it belongs in the tune-space
 `parameters` tree (see [Tuning spaces](tuning-spaces.md) and
@@ -111,7 +111,7 @@ See [Profiles](../profiles.md) and [Tuning spaces](tuning-spaces.md).
 Placeholder paths only. Pair with a tune-space document from
 [Tuning spaces](tuning-spaces.md).
 
-<!-- schema: schemas/v0.1.0a8/tune-config.schema.json -->
+<!-- schema: schemas/v0.1.0a9/tune-config.schema.json -->
 ```json
 {
   "model_type": "EncoderPredictor",
@@ -189,7 +189,7 @@ Additive multi-source `train_data` nesting for tune configs. Complete
 multi-source tune example:
 [Multi-source data workflow](../workflows/multi-source-data.md).
 
-<!-- schema: schemas/v0.1.0a8/data-source.schema.json -->
+<!-- schema: schemas/v0.1.0a9/data-source.schema.json -->
 ```json
 {
   "encoder": {

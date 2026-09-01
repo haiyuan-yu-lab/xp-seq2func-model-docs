@@ -1,7 +1,7 @@
 # Multi-source data workflow
 
 Combine multiple one-hot sequence sources across training, tuning, and
-prediction in **v0.1.0a8**.
+prediction in **v0.1.0a9**.
 
 This workflow page shows command shapes and complete text-only JSON examples.
 Canonical nesting, source identity, sampler behavior, and cross-source
@@ -27,7 +27,7 @@ contracts: [`train_model`](../cli/train_model.md),
 Placeholder paths only. Pair with a complete hparams document from
 [Hyperparameters](../configuration/hyperparameters.md).
 
-<!-- schema: schemas/v0.1.0a8/train-config.schema.json -->
+<!-- schema: schemas/v0.1.0a9/train-config.schema.json -->
 ```json
 {
   "model_type": "EncoderPredictor",
@@ -160,7 +160,7 @@ Tune configs reuse the train/val split contract. Pair with a tune-space from
 [Tuning spaces](../configuration/tuning-spaces.md). Do not put data paths in
 the tune-space file.
 
-<!-- schema: schemas/v0.1.0a8/tune-config.schema.json -->
+<!-- schema: schemas/v0.1.0a9/tune-config.schema.json -->
 ```json
 {
   "model_type": "EncoderPredictor",
@@ -262,7 +262,7 @@ Unlabeled multi-source prediction. Output rows follow source list order when
 `shuffle` is `false`. Artifact filenames:
 [Predictions](../artifacts/predictions.md).
 
-<!-- schema: schemas/v0.1.0a8/pred-config.schema.json -->
+<!-- schema: schemas/v0.1.0a9/pred-config.schema.json -->
 ```json
 {
   "model_type": "EncoderPredictor",

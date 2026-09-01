@@ -1,10 +1,10 @@
 # Prediction configuration
 
-Prediction-config JSON for `pred_model --config` in exact release **v0.1.0a8**.
+Prediction-config JSON for `pred_model --config` in exact release **v0.1.0a9**.
 
 This page is the canonical human-readable contract. The documentation schema
 snapshot is
-[pred-config.schema.json](../schemas/v0.1.0a8/pred-config.schema.json).
+[pred-config.schema.json](../schemas/v0.1.0a9/pred-config.schema.json).
 
 ## Required top-level keys
 
@@ -34,7 +34,7 @@ Unknown top-level keys fail closed.
 
 `test_data` reuses the loader keys of train/val splits, but labels are optional
 and profile masks are forbidden. Schema snapshot:
-[test-data.schema.json](../schemas/v0.1.0a8/test-data.schema.json).
+[test-data.schema.json](../schemas/v0.1.0a9/test-data.schema.json).
 
 ### Required keys
 
@@ -90,7 +90,7 @@ See [Arrays](../data/arrays.md) and [Splits](../data/splits.md) for geometry and
 
 Placeholder paths only.
 
-<!-- schema: schemas/v0.1.0a8/pred-config.schema.json -->
+<!-- schema: schemas/v0.1.0a9/pred-config.schema.json -->
 ```json
 {
   "model_type": "EncoderPredictor",
@@ -149,7 +149,7 @@ Placeholder paths only.
 Standalone `test_data` documents may also validate against the test-data
 schema:
 
-<!-- schema: schemas/v0.1.0a8/test-data.schema.json -->
+<!-- schema: schemas/v0.1.0a9/test-data.schema.json -->
 ```json
 {
   "encoder": {
@@ -169,7 +169,7 @@ Unlabeled multi-source inference. With `shuffle: false`, prediction rows follow
 sources concatenated in list order. Full command example:
 [Multi-source data workflow](../workflows/multi-source-data.md).
 
-<!-- schema: schemas/v0.1.0a8/test-data.schema.json -->
+<!-- schema: schemas/v0.1.0a9/test-data.schema.json -->
 ```json
 {
   "encoder": {
@@ -231,7 +231,7 @@ Labeled multi-source fragment (illustrative; omit unused heads as needed):
 
 Validated profile test payload (no mask):
 
-<!-- schema: schemas/v0.1.0a8/profile-test-label-payload.schema.json -->
+<!-- schema: schemas/v0.1.0a9/profile-test-label-payload.schema.json -->
 ```json
 {
   "profile_npy": "/path/to/test_profile.npy",

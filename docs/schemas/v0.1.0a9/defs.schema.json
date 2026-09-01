@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://haiyuan-yu-lab.github.io/xp-seq2func-model-docs/schemas/v0.1.0a8/defs.schema.json",
-  "title": "Reusable definitions for xp-seq2func-model docs (v0.1.0a8)",
-  "description": "Documentation-owned reusable $defs for exact release v0.1.0a8. These schemas are documentation artifacts, not canonical runtime validators.",
+  "$id": "https://haiyuan-yu-lab.github.io/xp-seq2func-model-docs/schemas/v0.1.0a9/defs.schema.json",
+  "title": "Reusable definitions for xp-seq2func-model docs (v0.1.0a9)",
+  "description": "Documentation-owned reusable $defs for exact release v0.1.0a9. These schemas are documentation artifacts, not canonical runtime validators.",
   "$defs": {
     "nonEmptyString": {
       "type": "string",

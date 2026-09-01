@@ -1,6 +1,6 @@
 # xp-seq2func-model
 
-> Exact-release **v0.1.0a8** documentation for the `train_model`, `tune_model`, and `pred_model` CLIs and their configuration, data, and artifact contracts. Python imports are not a supported API.
+> Exact-release **v0.1.0a9** documentation for the `train_model`, `tune_model`, and `pred_model` CLIs and their configuration, data, and artifact contracts. Python imports are not a supported API.
 
 Site: https://haiyuan-yu-lab.github.io/xp-seq2func-model-docs/
 

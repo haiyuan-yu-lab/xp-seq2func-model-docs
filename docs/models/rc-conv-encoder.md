@@ -1,6 +1,6 @@
 # RCConvEncoder
 
-Reverse-complement-equivariant convolutional encoder component for **v0.1.0a8**.
+Reverse-complement-equivariant convolutional encoder component for **v0.1.0a9**.
 
 Nestable only under `EncoderPredictor.encoder`. Cannot be used as top-level
 CLI `model_type`. See [Model composition](composition.md).

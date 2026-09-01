@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://haiyuan-yu-lab.github.io/xp-seq2func-model-docs/schemas/v0.1.0a8/encoder-predictor-hparams.schema.json",
-  "title": "EncoderPredictor fixed hyperparameters (v0.1.0a8 documentation snapshot)",
-  "description": "Documentation-owned schema snapshot for top-level pre-inheritance EncoderPredictor hyperparameters in exact release v0.1.0a8. Not a canonical runtime definition. Runtime also enforces inheritance fill, dilation/fc_hidden_dims prefix rules, n_channels % n_heads == 0, at least one positive head weight, and not freezing every module.",
+  "$id": "https://haiyuan-yu-lab.github.io/xp-seq2func-model-docs/schemas/v0.1.0a9/encoder-predictor-hparams.schema.json",
+  "title": "EncoderPredictor fixed hyperparameters (v0.1.0a9 documentation snapshot)",
+  "description": "Documentation-owned schema snapshot for top-level pre-inheritance EncoderPredictor hyperparameters in exact release v0.1.0a9. Not a canonical runtime definition. Runtime also enforces inheritance fill, dilation/fc_hidden_dims prefix rules, n_channels % n_heads == 0, at least one positive head weight, and not freezing every module.",
   "type": "object",
   "additionalProperties": false,
   "required": ["batch_size", "learning_rate", "n_channels", "encoder", "predictor"],

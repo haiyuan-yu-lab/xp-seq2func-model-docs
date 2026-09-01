@@ -1,6 +1,6 @@
 # Model composition
 
-Top-level composition rules for **v0.1.0a8**.
+Top-level composition rules for **v0.1.0a9**.
 
 Only `EncoderPredictor` may appear as the CLI `model_type`. Encoders and
 prediction heads nest under that tree; they are never valid top-level CLI
@@ -63,7 +63,7 @@ keeps its own embedding-level contract on the shared trimmed embedding.
 
 ## Mixed-head example
 
-<!-- schema: schemas/v0.1.0a8/encoder-predictor-model-config.schema.json -->
+<!-- schema: schemas/v0.1.0a9/encoder-predictor-model-config.schema.json -->
 ```json
 {
   "model_name": "ep_main",
@@ -96,7 +96,7 @@ keeps its own embedding-level contract on the shared trimmed embedding.
 
 ## Valid example (scalar heads)
 
-<!-- schema: schemas/v0.1.0a8/encoder-predictor-model-config.schema.json -->
+<!-- schema: schemas/v0.1.0a9/encoder-predictor-model-config.schema.json -->
 ```json
 {
   "model_name": "ep_main",

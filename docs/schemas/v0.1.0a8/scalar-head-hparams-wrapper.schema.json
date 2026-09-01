@@ -1,7 +1,0 @@
-{
-  "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://haiyuan-yu-lab.github.io/xp-seq2func-model-docs/schemas/v0.1.0a8/scalar-head-hparams-wrapper.schema.json",
-  "title": "Scalar prediction-head hparams wrapper (v0.1.0a8 documentation snapshot)",
-  "description": "Documentation-owned schema snapshot for ClassPredictor / RegressPredictor entries under hparams.predictor in exact release v0.1.0a8. Not a canonical runtime definition.",
-  "$ref": "defs.schema.json#/$defs/scalarHeadHparamsWrapper"
-}

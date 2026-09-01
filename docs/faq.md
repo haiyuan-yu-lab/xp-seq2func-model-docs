@@ -13,7 +13,7 @@ pass `--num-agents`, it must equal the token count.
 
 ## Can I use ConvEncoder, ConvSelfAttEncoder, ClassPredictor, RegressPredictor, ProfilePredictor, or their RC-aware counterparts as the top-level model_type?
 
-No. In **v0.1.0a8** only `EncoderPredictor` is a top-level CLI model type.
+No. In **v0.1.0a9** only `EncoderPredictor` is a top-level CLI model type.
 Encoders (`ConvEncoder`, `RCConvEncoder`, `ConvSelfAttEncoder`,
 `RCConvSelfAttEncoder`) and prediction heads (`ClassPredictor`,
 `RCClassPredictor`, `RegressPredictor`, `RCRegressPredictor`,
@@ -69,12 +69,12 @@ freeze the loaded modules. This is selective weight init, not
 
 ## Is there a PyPI package?
 
-No. **v0.1.0a8** is not published to PyPI and is not anonymously installable.
+No. **v0.1.0a9** is not published to PyPI and is not anonymously installable.
 Source installation requires repository access and authentication. See
 [Install](install.md) and [Compatibility](reference/compatibility.md).
 
 ## Are Python imports a supported API?
 
-No. For **v0.1.0a8**, the supported public interface is the three CLIs and their
+No. For **v0.1.0a9**, the supported public interface is the three CLIs and their
 configuration, data, and artifact contracts. See the [Home](index.md) page and
 [Compatibility](reference/compatibility.md).

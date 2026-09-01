@@ -1,6 +1,6 @@
 # Metrics
 
-Logged metric namespaces for **v0.1.0a8** training.
+Logged metric namespaces for **v0.1.0a9** training.
 
 ## Producers and consumers
 

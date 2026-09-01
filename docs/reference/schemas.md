@@ -1,8 +1,8 @@
 # Schemas
 
-Documentation-owned JSON Schema snapshots for exact release **v0.1.0a8**.
+Documentation-owned JSON Schema snapshots for exact release **v0.1.0a9**.
 
-These files live under `schemas/v0.1.0a8/` on this site. They are **not**
+These files live under `schemas/v0.1.0a9/` on this site. They are **not**
 canonical runtime definitions. Runtime validators in the installed package
 remain authoritative for filesystem properties, array contents, and other
 behavior JSON Schema cannot express.
@@ -11,34 +11,34 @@ behavior JSON Schema cannot express.
 
 - JSON Schema Draft **2020-12**
 - Stable `$id` values under
-  `https://haiyuan-yu-lab.github.io/xp-seq2func-model-docs/schemas/v0.1.0a8/`
+  `https://haiyuan-yu-lab.github.io/xp-seq2func-model-docs/schemas/v0.1.0a9/`
 - Reusable shared definitions in `defs.schema.json`
 
 ## Available snapshots
 
 | Schema | Purpose |
 | --- | --- |
-| [`defs.schema.json`](../schemas/v0.1.0a8/defs.schema.json) | Reusable `$defs` for paths, numbers, strings, losses, data blocks, and nested fragments |
-| [`init-checkpoint.schema.json`](../schemas/v0.1.0a8/init-checkpoint.schema.json) | Optional train/tune `init_checkpoint` object |
-| [`early-stopping.schema.json`](../schemas/v0.1.0a8/early-stopping.schema.json) | Train/tune `early_stopping` object |
-| [`wandb-train.schema.json`](../schemas/v0.1.0a8/wandb-train.schema.json) | Train-config `wandb` block |
-| [`wandb-tune.schema.json`](../schemas/v0.1.0a8/wandb-tune.schema.json) | Tune-config `wandb` block |
-| [`data-source.schema.json`](../schemas/v0.1.0a8/data-source.schema.json) | Train/val split data block (`train_data` / `val_data`) |
-| [`test-data.schema.json`](../schemas/v0.1.0a8/test-data.schema.json) | Prediction `test_data` block (labels optional; no `mask_npy`) |
-| [`train-config.schema.json`](../schemas/v0.1.0a8/train-config.schema.json) | Complete `train_model --config` JSON |
-| [`tune-config.schema.json`](../schemas/v0.1.0a8/tune-config.schema.json) | Complete `tune_model --config` JSON |
-| [`tune-space.schema.json`](../schemas/v0.1.0a8/tune-space.schema.json) | Complete `tune_model --tune-space` JSON |
-| [`pred-config.schema.json`](../schemas/v0.1.0a8/pred-config.schema.json) | Complete `pred_model --config` JSON |
-| [`attribution-target-string.schema.json`](../schemas/v0.1.0a8/attribution-target-string.schema.json) | Structural patterns for `pred_model --attribution-target` strings |
-| [`encoder-predictor-model-config.schema.json`](../schemas/v0.1.0a8/encoder-predictor-model-config.schema.json) | Top-level `EncoderPredictor` `model_config` tree |
-| [`encoder-predictor-hparams.schema.json`](../schemas/v0.1.0a8/encoder-predictor-hparams.schema.json) | Top-level pre-inheritance fixed hyperparameters |
-| [`scalar-head-hparams-wrapper.schema.json`](../schemas/v0.1.0a8/scalar-head-hparams-wrapper.schema.json) | `ClassPredictor` / `RCClassPredictor` / `RegressPredictor` / `RCRegressPredictor` hparams wrapper |
-| [`profile-predictor-model-config.schema.json`](../schemas/v0.1.0a8/profile-predictor-model-config.schema.json) | Nestable `ProfilePredictor` `model_config` |
-| [`rc-profile-predictor-model-config.schema.json`](../schemas/v0.1.0a8/rc-profile-predictor-model-config.schema.json) | Nestable `RCProfilePredictor` `model_config` |
-| [`profile-head-hparams-wrapper.schema.json`](../schemas/v0.1.0a8/profile-head-hparams-wrapper.schema.json) | `ProfilePredictor` / `RCProfilePredictor` hparams wrapper |
-| [`profile-label-payload.schema.json`](../schemas/v0.1.0a8/profile-label-payload.schema.json) | Train/val profile payload (`profile_npy` / `count_npy` / optional `mask_npy`) |
-| [`profile-test-label-payload.schema.json`](../schemas/v0.1.0a8/profile-test-label-payload.schema.json) | Test profile payload (no `mask_npy`) |
-| [`loss.schema.json`](../schemas/v0.1.0a8/loss.schema.json) | Loss object `{ type, params }` |
+| [`defs.schema.json`](../schemas/v0.1.0a9/defs.schema.json) | Reusable `$defs` for paths, numbers, strings, losses, data blocks, and nested fragments |
+| [`init-checkpoint.schema.json`](../schemas/v0.1.0a9/init-checkpoint.schema.json) | Optional train/tune `init_checkpoint` object |
+| [`early-stopping.schema.json`](../schemas/v0.1.0a9/early-stopping.schema.json) | Train/tune `early_stopping` object |
+| [`wandb-train.schema.json`](../schemas/v0.1.0a9/wandb-train.schema.json) | Train-config `wandb` block |
+| [`wandb-tune.schema.json`](../schemas/v0.1.0a9/wandb-tune.schema.json) | Tune-config `wandb` block |
+| [`data-source.schema.json`](../schemas/v0.1.0a9/data-source.schema.json) | Train/val split data block (`train_data` / `val_data`) |
+| [`test-data.schema.json`](../schemas/v0.1.0a9/test-data.schema.json) | Prediction `test_data` block (labels optional; no `mask_npy`) |
+| [`train-config.schema.json`](../schemas/v0.1.0a9/train-config.schema.json) | Complete `train_model --config` JSON |
+| [`tune-config.schema.json`](../schemas/v0.1.0a9/tune-config.schema.json) | Complete `tune_model --config` JSON |
+| [`tune-space.schema.json`](../schemas/v0.1.0a9/tune-space.schema.json) | Complete `tune_model --tune-space` JSON |
+| [`pred-config.schema.json`](../schemas/v0.1.0a9/pred-config.schema.json) | Complete `pred_model --config` JSON |
+| [`attribution-target-string.schema.json`](../schemas/v0.1.0a9/attribution-target-string.schema.json) | Structural patterns for `pred_model --attribution-target` strings |
+| [`encoder-predictor-model-config.schema.json`](../schemas/v0.1.0a9/encoder-predictor-model-config.schema.json) | Top-level `EncoderPredictor` `model_config` tree |
+| [`encoder-predictor-hparams.schema.json`](../schemas/v0.1.0a9/encoder-predictor-hparams.schema.json) | Top-level pre-inheritance fixed hyperparameters |
+| [`scalar-head-hparams-wrapper.schema.json`](../schemas/v0.1.0a9/scalar-head-hparams-wrapper.schema.json) | `ClassPredictor` / `RCClassPredictor` / `RegressPredictor` / `RCRegressPredictor` hparams wrapper |
+| [`profile-predictor-model-config.schema.json`](../schemas/v0.1.0a9/profile-predictor-model-config.schema.json) | Nestable `ProfilePredictor` `model_config` |
+| [`rc-profile-predictor-model-config.schema.json`](../schemas/v0.1.0a9/rc-profile-predictor-model-config.schema.json) | Nestable `RCProfilePredictor` `model_config` |
+| [`profile-head-hparams-wrapper.schema.json`](../schemas/v0.1.0a9/profile-head-hparams-wrapper.schema.json) | `ProfilePredictor` / `RCProfilePredictor` hparams wrapper |
+| [`profile-label-payload.schema.json`](../schemas/v0.1.0a9/profile-label-payload.schema.json) | Train/val profile payload (`profile_npy` / `count_npy` / optional `mask_npy`) |
+| [`profile-test-label-payload.schema.json`](../schemas/v0.1.0a9/profile-test-label-payload.schema.json) | Test profile payload (no `mask_npy`) |
+| [`loss.schema.json`](../schemas/v0.1.0a9/loss.schema.json) | Loss object `{ type, params }` |
 
 ## Example association convention
 
@@ -46,7 +46,7 @@ Complete inline JSON examples in Markdown may declare their schema with an HTML
 comment immediately before a fenced `json` block. The comment path is relative
 to the MkDocs `docs/` directory, for example:
 
-`<!-- schema: schemas/v0.1.0a8/init-checkpoint.schema.json -->`
+`<!-- schema: schemas/v0.1.0a9/init-checkpoint.schema.json -->`
 
 Docs-only checks validate those complete examples structurally. Illustrative
 fragments omit the comment and are skipped.
@@ -54,7 +54,7 @@ fragments omit the comment and are skipped.
 
 ## Example: profile configuration fragments
 
-<!-- schema: schemas/v0.1.0a8/profile-predictor-model-config.schema.json -->
+<!-- schema: schemas/v0.1.0a9/profile-predictor-model-config.schema.json -->
 ```json
 {
   "model_name": "atac_profile",
@@ -63,7 +63,7 @@ fragments omit the comment and are skipped.
 }
 ```
 
-<!-- schema: schemas/v0.1.0a8/profile-head-hparams-wrapper.schema.json -->
+<!-- schema: schemas/v0.1.0a9/profile-head-hparams-wrapper.schema.json -->
 ```json
 {
   "profile_alpha": 1.0,
@@ -80,7 +80,7 @@ fragments omit the comment and are skipped.
 }
 ```
 
-<!-- schema: schemas/v0.1.0a8/profile-label-payload.schema.json -->
+<!-- schema: schemas/v0.1.0a9/profile-label-payload.schema.json -->
 ```json
 {
   "profile_npy": "/path/to/train_profile.npy",
@@ -94,7 +94,7 @@ See [ProfilePredictor](../models/profile-predictor.md),
 
 ## Example: init_checkpoint
 
-<!-- schema: schemas/v0.1.0a8/init-checkpoint.schema.json -->
+<!-- schema: schemas/v0.1.0a9/init-checkpoint.schema.json -->
 ```json
 {
   "path": "/path/to/checkpoint.pth",
@@ -106,7 +106,7 @@ See also [Config: init_checkpoint](../config.md#init_checkpoint-train--tune).
 
 ## Example: model composition
 
-<!-- schema: schemas/v0.1.0a8/encoder-predictor-model-config.schema.json -->
+<!-- schema: schemas/v0.1.0a9/encoder-predictor-model-config.schema.json -->
 ```json
 {
   "model_name": "ep_main",
@@ -131,9 +131,9 @@ See [Model composition](../models/composition.md) and
 
 Complete train-config examples live on
 [Train configuration](../configuration/train.md) and validate against
-[train-config.schema.json](../schemas/v0.1.0a8/train-config.schema.json).
+[train-config.schema.json](../schemas/v0.1.0a9/train-config.schema.json).
 Split-only examples validate against
-[data-source.schema.json](../schemas/v0.1.0a8/data-source.schema.json).
+[data-source.schema.json](../schemas/v0.1.0a9/data-source.schema.json).
 
 ## Example: multi-source data nesting
 
@@ -148,31 +148,31 @@ examples validate against `data-source.schema.json`, `test-data.schema.json`,
 Reusable nested definitions (`pathOrPathArray`, `sourceFracs`,
 `encoderDataBlock`, `splitDataBlock`, `testDataBlock`, scalar and profile label
 payloads) live in
-[defs.schema.json](../schemas/v0.1.0a8/defs.schema.json).
+[defs.schema.json](../schemas/v0.1.0a9/defs.schema.json).
 
 ## Example: prediction config (excerpt association)
 
 Complete prediction-config examples live on
 [Prediction configuration](../configuration/prediction.md) and validate against
-[pred-config.schema.json](../schemas/v0.1.0a8/pred-config.schema.json).
+[pred-config.schema.json](../schemas/v0.1.0a9/pred-config.schema.json).
 Test-data-only examples validate against
-[test-data.schema.json](../schemas/v0.1.0a8/test-data.schema.json).
+[test-data.schema.json](../schemas/v0.1.0a9/test-data.schema.json).
 
 ## Example: attribution-target strings
 
 Structural string examples live on
 [Attribution workflow](../workflows/attribution.md) and validate against
-[attribution-target-string.schema.json](../schemas/v0.1.0a8/attribution-target-string.schema.json).
+[attribution-target-string.schema.json](../schemas/v0.1.0a9/attribution-target-string.schema.json).
 Artifact filename contracts:
 [Attributions](../artifacts/attributions.md). Runtime remains authoritative for
 class ranges, track membership, bin counts, and head-type checks.
 
-<!-- schema: schemas/v0.1.0a8/attribution-target-string.schema.json -->
+<!-- schema: schemas/v0.1.0a9/attribution-target-string.schema.json -->
 ```json
 "cls:probability:1"
 ```
 
-<!-- schema: schemas/v0.1.0a8/attribution-target-string.schema.json -->
+<!-- schema: schemas/v0.1.0a9/attribution-target-string.schema.json -->
 ```json
 "prof:profile-logit:short,0"
 ```
@@ -182,7 +182,7 @@ class ranges, track membership, bin counts, and head-type checks.
 Complete tune-config and tune-space examples live on
 [Tune configuration](../configuration/tune.md) and
 [Tuning spaces](../configuration/tuning-spaces.md). They validate against
-[tune-config.schema.json](../schemas/v0.1.0a8/tune-config.schema.json) and
-[tune-space.schema.json](../schemas/v0.1.0a8/tune-space.schema.json).
+[tune-config.schema.json](../schemas/v0.1.0a9/tune-config.schema.json) and
+[tune-space.schema.json](../schemas/v0.1.0a9/tune-space.schema.json).
 Tune `wandb` fragments use
-[wandb-tune.schema.json](../schemas/v0.1.0a8/wandb-tune.schema.json).
+[wandb-tune.schema.json](../schemas/v0.1.0a9/wandb-tune.schema.json).

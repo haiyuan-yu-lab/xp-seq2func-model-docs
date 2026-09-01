@@ -1,6 +1,6 @@
 # Profile reconstruction
 
-End-to-end contracts for **profile prediction heads** in **v0.1.0a8**.
+End-to-end contracts for **profile prediction heads** in **v0.1.0a9**.
 
 `ProfilePredictor` is a nestable head that reconstructs one or more named
 **profile tracks** over a retained sequence window and a paired nonnegative
@@ -48,7 +48,7 @@ Do not put `label_npy` on a profile payload.
 
 Validated payload fragments:
 
-<!-- schema: schemas/v0.1.0a8/profile-label-payload.schema.json -->
+<!-- schema: schemas/v0.1.0a9/profile-label-payload.schema.json -->
 ```json
 {
   "profile_npy": "/path/to/train_profile.npy",
@@ -57,7 +57,7 @@ Validated payload fragments:
 }
 ```
 
-<!-- schema: schemas/v0.1.0a8/profile-test-label-payload.schema.json -->
+<!-- schema: schemas/v0.1.0a9/profile-test-label-payload.schema.json -->
 ```json
 {
   "profile_npy": "/path/to/test_profile.npy",
@@ -79,7 +79,7 @@ attribution. Full tables: [Masks](data/masks.md) and
 Profile heads use component weights and losses instead of scalar `alpha` /
 `loss`:
 
-<!-- schema: schemas/v0.1.0a8/profile-head-hparams-wrapper.schema.json -->
+<!-- schema: schemas/v0.1.0a9/profile-head-hparams-wrapper.schema.json -->
 ```json
 {
   "profile_alpha": 1.0,
@@ -108,7 +108,7 @@ above. Do not put `track_names` or `bin_size` in the tune space.
 One single-track head (`bin_size: 1`) and one three-track head (`bin_size: 5`)
 over a trimmed window:
 
-<!-- schema: schemas/v0.1.0a8/encoder-predictor-model-config.schema.json -->
+<!-- schema: schemas/v0.1.0a9/encoder-predictor-model-config.schema.json -->
 ```json
 {
   "model_name": "ep_profile",

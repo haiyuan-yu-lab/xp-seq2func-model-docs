@@ -1,10 +1,10 @@
 # Tuning spaces
 
-Tune-space JSON for `tune_model --tune-space` in exact release **v0.1.0a8**.
+Tune-space JSON for `tune_model --tune-space` in exact release **v0.1.0a9**.
 
 This page is the canonical human-readable contract for the search-space
 envelope and leaf descriptors. The documentation schema snapshot is
-[tune-space.schema.json](../schemas/v0.1.0a8/tune-space.schema.json).
+[tune-space.schema.json](../schemas/v0.1.0a9/tune-space.schema.json).
 
 Drawn hyperparameter **values** follow the same field meanings as fixed
 hparams: reuse [Hyperparameters](hyperparameters.md) for key tables, inheritance,
@@ -69,7 +69,7 @@ Placeholder paths are not used inside the tune-space file itself; values are
 numeric / structural. This example matches the composition used on
 [Tune configuration](tune.md).
 
-<!-- schema: schemas/v0.1.0a8/tune-space.schema.json -->
+<!-- schema: schemas/v0.1.0a9/tune-space.schema.json -->
 ```json
 {
   "method": "random",

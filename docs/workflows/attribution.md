@@ -2,7 +2,7 @@
 
 Choose an **attribution target** and **output domain**, run Captum attribution
 through `pred_model`, and interpret the resulting arrays for exact release
-**v0.1.0a8**.
+**v0.1.0a9**.
 
 Attribution is CLI-only. Prediction JSON must not contain keys matching
 `attribution*`; see [Prediction configuration](../configuration/prediction.md).
@@ -50,7 +50,7 @@ Filenames use each head's `model_name`, not the map key. The map key appears
 only in the target string.
 
 Structural snapshot (patterns only):
-[attribution-target-string.schema.json](../schemas/v0.1.0a8/attribution-target-string.schema.json).
+[attribution-target-string.schema.json](../schemas/v0.1.0a9/attribution-target-string.schema.json).
 Runtime validation remains authoritative for class ranges, track membership,
 bin counts, leading zeros, and head-type compatibility.
 
@@ -126,7 +126,7 @@ checkpoints. Structural target-string checks use the schema snapshot.
 
 ### Explicit class probability
 
-<!-- schema: schemas/v0.1.0a8/attribution-target-string.schema.json -->
+<!-- schema: schemas/v0.1.0a9/attribution-target-string.schema.json -->
 ```json
 "cls:probability:1"
 ```
@@ -150,7 +150,7 @@ Writes (among prediction arrays):
 
 ### Logit difference
 
-<!-- schema: schemas/v0.1.0a8/attribution-target-string.schema.json -->
+<!-- schema: schemas/v0.1.0a9/attribution-target-string.schema.json -->
 ```json
 "cls:logit-difference:1,0"
 ```
@@ -167,19 +167,19 @@ pred_model \
 
 ### Predicted-class logit (row-dependent)
 
-<!-- schema: schemas/v0.1.0a8/attribution-target-string.schema.json -->
+<!-- schema: schemas/v0.1.0a9/attribution-target-string.schema.json -->
 ```json
 "cls:logit:predicted"
 ```
 
 ### Profile bin and count (separate runs)
 
-<!-- schema: schemas/v0.1.0a8/attribution-target-string.schema.json -->
+<!-- schema: schemas/v0.1.0a9/attribution-target-string.schema.json -->
 ```json
 "prof:profile-probability:atac_a,12"
 ```
 
-<!-- schema: schemas/v0.1.0a8/attribution-target-string.schema.json -->
+<!-- schema: schemas/v0.1.0a9/attribution-target-string.schema.json -->
 ```json
 "prof:log1p-count:atac_a"
 ```

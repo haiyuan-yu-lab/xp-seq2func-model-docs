@@ -1,6 +1,6 @@
 # RCRegressPredictor
 
-Reverse-complement-aware scalar regression head for **v0.1.0a8**.
+Reverse-complement-aware scalar regression head for **v0.1.0a9**.
 
 Nestable only under `EncoderPredictor.predictor`. It preserves the same
 external role as `RegressPredictor` — continuous labels, `*.pred.npy`
@@ -52,7 +52,7 @@ Canonical wrapper, inheritance, and freeze rules:
 [Hyperparameters](../configuration/hyperparameters.md). Loss object contract:
 [Losses](../configuration/losses.md).
 
-<!-- schema: schemas/v0.1.0a8/scalar-head-hparams-wrapper.schema.json -->
+<!-- schema: schemas/v0.1.0a9/scalar-head-hparams-wrapper.schema.json -->
 ```json
 {
   "alpha": 1,

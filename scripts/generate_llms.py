@@ -30,7 +30,7 @@ from typing import Any
 import yaml
 
 SITE_ORIGIN = "https://haiyuan-yu-lab.github.io/xp-seq2func-model-docs"
-VERSION = "v0.1.0a8"
+VERSION = "v0.1.0a9"
 
 # Curated map entries: (section, title, docs-relative path, one-line description).
 # Keep this list intentional and short; do not auto-dump the full nav.

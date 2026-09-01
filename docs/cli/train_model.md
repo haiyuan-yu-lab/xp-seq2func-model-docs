@@ -1,7 +1,7 @@
 # train_model
 
 Train an `EncoderPredictor` with fixed hyperparameters for exact release
-**v0.1.0a8**.
+**v0.1.0a9**.
 
 ## Command snapshot
 
@@ -20,7 +20,7 @@ options:
   --hparams HPARAMS     Path to top-level pre-inheritance hparams JSON
 ```
 
-CLI help snapshot for **v0.1.0a8** (committed Markdown; documentation build does
+CLI help snapshot for **v0.1.0a9** (committed Markdown; documentation build does
 not import the package or regenerate this text).
 
 ## Flags

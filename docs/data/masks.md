@@ -1,6 +1,6 @@
 # Masks
 
-**Positional validity mask** contracts for **v0.1.0a8**.
+**Positional validity mask** contracts for **v0.1.0a9**.
 
 Optional boolean `mask_npy` on train/val **profile prediction head** payloads
 marks retained positions eligible for position-wise profile losses and Pearson
@@ -21,7 +21,7 @@ Workflow effects (what masks change vs leave alone):
 | Coverage | When present for a head, must cover every source for that head |
 | Independence | Train and val choose independently; multiple profile heads may share files |
 
-<!-- schema: schemas/v0.1.0a8/profile-label-payload.schema.json -->
+<!-- schema: schemas/v0.1.0a9/profile-label-payload.schema.json -->
 ```json
 {
   "profile_npy": "/path/to/train_profile.npy",

@@ -1,6 +1,6 @@
 # Checkpoints
 
-Checkpoint artifacts written and consumed in **v0.1.0a8**.
+Checkpoint artifacts written and consumed in **v0.1.0a9**.
 
 ## Producers and consumers
 

@@ -3,7 +3,7 @@
 
 Convention: place an HTML comment immediately before a ```json fence:
 
-    <!-- schema: schemas/v0.1.0a8/example-name.schema.json -->
+    <!-- schema: schemas/v0.1.0a9/example-name.schema.json -->
     ```json
     { ... }
     ```

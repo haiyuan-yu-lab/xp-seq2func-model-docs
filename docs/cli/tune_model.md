@@ -1,7 +1,7 @@
 # tune_model
 
 Run a Weights & Biases hyperparameter sweep for an `EncoderPredictor` in exact
-release **v0.1.0a8**.
+release **v0.1.0a9**.
 
 ## Command snapshot
 
@@ -29,7 +29,7 @@ options:
                         Passed as count to each wandb.agent call.
 ```
 
-CLI help snapshot for **v0.1.0a8** (committed Markdown; documentation build does
+CLI help snapshot for **v0.1.0a9** (committed Markdown; documentation build does
 not import the package or regenerate this text).
 
 ## Flags
