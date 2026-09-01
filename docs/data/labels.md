@@ -1,6 +1,6 @@
 # Labels
 
-Label array contracts for prediction heads in **v0.1.0a8**.
+Label array contracts for prediction heads in **v0.1.0a9**.
 
 Train and validation require a label payload for **every** head declared in
 `model_config.predictor`, including zero-weight heads. Prediction may omit
@@ -65,7 +65,7 @@ on a predictor payload (`encoder.label` is a separate field that must be
 
 Full mask tables: [Masks](masks.md). Reconstruction overview: [Profiles](../profiles.md).
 
-<!-- schema: schemas/v0.1.0a8/profile-label-payload.schema.json -->
+<!-- schema: schemas/v0.1.0a9/profile-label-payload.schema.json -->
 ```json
 {
   "profile_npy": "/path/to/train_profile.npy",
@@ -74,7 +74,7 @@ Full mask tables: [Masks](masks.md). Reconstruction overview: [Profiles](../prof
 }
 ```
 
-<!-- schema: schemas/v0.1.0a8/profile-test-label-payload.schema.json -->
+<!-- schema: schemas/v0.1.0a9/profile-test-label-payload.schema.json -->
 ```json
 {
   "profile_npy": "/path/to/test_profile.npy",

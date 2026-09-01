@@ -1,6 +1,6 @@
 # Arrays
 
-NumPy array contracts used by the **v0.1.0a8** CLIs. This page covers sequence
+NumPy array contracts used by the **v0.1.0a9** CLIs. This page covers sequence
 (one-hot) arrays referenced as `encoder.ohe_npy`. Label arrays are documented
 on [Labels](labels.md).
 

@@ -1,6 +1,6 @@
 # ProfilePredictor
 
-Profile prediction head for **v0.1.0a8**.
+Profile prediction head for **v0.1.0a9**.
 
 Nestable only under `EncoderPredictor.predictor`. Consumes the shared trimmed
 encoder embedding and emits a **profile distribution** over **profile bins**
@@ -20,7 +20,7 @@ attribution targets are expanded on [Profile reconstruction](../profiles.md).
 must be positive and exactly divisible by `bin_size`; then
 `P = L_embed / bin_size`.
 
-<!-- schema: schemas/v0.1.0a8/profile-predictor-model-config.schema.json -->
+<!-- schema: schemas/v0.1.0a9/profile-predictor-model-config.schema.json -->
 ```json
 {
   "model_name": "atac_profile",
@@ -76,7 +76,7 @@ Canonical wrapper, inheritance, and freeze rules:
 [Hyperparameters](../configuration/hyperparameters.md). Loss object contract:
 [Losses](../configuration/losses.md).
 
-<!-- schema: schemas/v0.1.0a8/profile-head-hparams-wrapper.schema.json -->
+<!-- schema: schemas/v0.1.0a9/profile-head-hparams-wrapper.schema.json -->
 ```json
 {
   "profile_alpha": 1.0,

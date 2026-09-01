@@ -1,10 +1,10 @@
 # Train configuration
 
-Train-config JSON for `train_model --config` in exact release **v0.1.0a8**.
+Train-config JSON for `train_model --config` in exact release **v0.1.0a9**.
 
 This page is the canonical human-readable contract. The documentation schema
 snapshot is
-[train-config.schema.json](../schemas/v0.1.0a8/train-config.schema.json).
+[train-config.schema.json](../schemas/v0.1.0a9/train-config.schema.json).
 
 ## Required top-level keys
 
@@ -43,7 +43,7 @@ Unknown top-level keys fail closed.
 
 No other keys are allowed.
 
-<!-- schema: schemas/v0.1.0a8/early-stopping.schema.json -->
+<!-- schema: schemas/v0.1.0a9/early-stopping.schema.json -->
 ```json
 {
   "grace_epochs": 5
@@ -63,7 +63,7 @@ No other keys are allowed.
 Forbidden on train configs: `name`, `sweep_id`, `sweep_name`. The run name is
 always taken from `job_name`. When `mode` is `disabled`, no W&B run is created.
 
-<!-- schema: schemas/v0.1.0a8/wandb-train.schema.json -->
+<!-- schema: schemas/v0.1.0a9/wandb-train.schema.json -->
 ```json
 {
   "project": "seq2func-train",
@@ -77,7 +77,7 @@ always taken from `job_name`. When `mode` is `disabled`, no W&B run is created.
 
 `train_data` and `val_data` share the split contract documented in
 [Splits](../data/splits.md). Schema snapshot:
-[data-source.schema.json](../schemas/v0.1.0a8/data-source.schema.json).
+[data-source.schema.json](../schemas/v0.1.0a9/data-source.schema.json).
 
 Loader keys live on the split (`shuffle`, `num_workers`, `pin_memory`,
 `source_fracs`, optional `persistent_workers` / `prefetch_factor`).
@@ -103,7 +103,7 @@ See [Profiles](../profiles.md), [Labels](../data/labels.md), and
 
 Placeholder paths only.
 
-<!-- schema: schemas/v0.1.0a8/train-config.schema.json -->
+<!-- schema: schemas/v0.1.0a9/train-config.schema.json -->
 ```json
 {
   "model_type": "EncoderPredictor",
@@ -181,7 +181,7 @@ Additive multi-source `train_data` / `val_data` nesting. Full train/tune/pred
 command examples: [Multi-source data workflow](../workflows/multi-source-data.md).
 Invariants: [Multi-source](../data/multi-source.md).
 
-<!-- schema: schemas/v0.1.0a8/data-source.schema.json -->
+<!-- schema: schemas/v0.1.0a9/data-source.schema.json -->
 ```json
 {
   "encoder": {

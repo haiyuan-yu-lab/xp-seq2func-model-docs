@@ -1,12 +1,12 @@
 # Train to predict
 
-End-to-end path from training artifacts to prediction outputs for **v0.1.0a8**.
+End-to-end path from training artifacts to prediction outputs for **v0.1.0a9**.
 Placeholder paths only; this documentation does not ship datasets or
 checkpoints.
 
 ## 1. Install and prepare CUDA
 
-1. Install from tag `v0.1.0a8` ([Install](../install.md)).
+1. Install from tag `v0.1.0a9` ([Install](../install.md)).
 2. Confirm a CUDA device is visible to the process (`CUDA_VISIBLE_DEVICES` is
    optional environment, not a CLI flag).
 

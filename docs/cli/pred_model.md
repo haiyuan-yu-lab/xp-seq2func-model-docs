@@ -1,7 +1,7 @@
 # pred_model
 
 Run inference with a trained `EncoderPredictor` and write per-head prediction
-arrays for exact release **v0.1.0a8**. Optionally compute Captum input
+arrays for exact release **v0.1.0a9**. Optionally compute Captum input
 attributions.
 
 ## Command snapshot
@@ -38,7 +38,7 @@ options:
                         <head>:log1p-count:<track>.
 ```
 
-CLI help snapshot for **v0.1.0a8** (committed Markdown; documentation build does
+CLI help snapshot for **v0.1.0a9** (committed Markdown; documentation build does
 not import the package or regenerate this text).
 
 ## Flags
@@ -149,7 +149,7 @@ and methods: [Attribution](../workflows/attribution.md). Filenames and shapes:
 
 Predictor map keys must not contain `:`. Ordinary prediction arrays for all
 heads are unchanged when attribution is enabled. Structural string snapshot:
-[attribution-target-string.schema.json](../schemas/v0.1.0a8/attribution-target-string.schema.json).
+[attribution-target-string.schema.json](../schemas/v0.1.0a9/attribution-target-string.schema.json).
 
 ## Minimal example
 

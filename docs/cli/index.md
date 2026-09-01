@@ -1,6 +1,6 @@
 # CLI overview
 
-Three console scripts ship with **v0.1.0a8**. Together with their configuration,
+Three console scripts ship with **v0.1.0a9**. Together with their configuration,
 data, and artifact contracts, they are the supported public interface for this
 release (Python imports are not).
 

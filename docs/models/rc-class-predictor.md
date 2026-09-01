@@ -1,6 +1,6 @@
 # RCClassPredictor
 
-Reverse-complement-aware classification head for **v0.1.0a8**.
+Reverse-complement-aware classification head for **v0.1.0a9**.
 
 Nestable only under `EncoderPredictor.predictor`. It preserves the same
 external role as `ClassPredictor` — class probabilities, one-hot labels,
@@ -53,7 +53,7 @@ Canonical wrapper, inheritance, and freeze rules:
 [Hyperparameters](../configuration/hyperparameters.md). Loss object contract:
 [Losses](../configuration/losses.md).
 
-<!-- schema: schemas/v0.1.0a8/scalar-head-hparams-wrapper.schema.json -->
+<!-- schema: schemas/v0.1.0a9/scalar-head-hparams-wrapper.schema.json -->
 ```json
 {
   "alpha": 1,

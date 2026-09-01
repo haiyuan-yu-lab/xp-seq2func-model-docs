@@ -1,6 +1,6 @@
 # Hyperparameter sidecars
 
-Hyperparameter sidecar JSON written alongside checkpoints in **v0.1.0a8**.
+Hyperparameter sidecar JSON written alongside checkpoints in **v0.1.0a9**.
 
 ## Producers and consumers
 

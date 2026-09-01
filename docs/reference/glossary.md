@@ -1,6 +1,6 @@
 # Glossary
 
-Canonical sequence-to-function terms for exact release **v0.1.0a8**. Prefer
+Canonical sequence-to-function terms for exact release **v0.1.0a9**. Prefer
 these names in configuration discussion and documentation.
 
 ## Prediction head

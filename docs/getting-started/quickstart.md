@@ -1,6 +1,6 @@
 # Quickstart
 
-Text-only orientation for **v0.1.0a8**. This page uses placeholder paths only;
+Text-only orientation for **v0.1.0a9**. This page uses placeholder paths only;
 the documentation does not ship datasets or checkpoints.
 
 ## Prerequisites

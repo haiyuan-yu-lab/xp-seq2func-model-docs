@@ -1,6 +1,6 @@
 # Tuning workflow
 
-End-to-end hyperparameter search with `tune_model` for **v0.1.0a8**.
+End-to-end hyperparameter search with `tune_model` for **v0.1.0a9**.
 
 This page explains GPU assignment, W&B requirements, sweep creation, agent
 behavior, and the per-agent meaning of trial limits. Field tables live on the
@@ -8,7 +8,7 @@ canonical configuration pages — link there instead of duplicating them.
 
 ## Prerequisites
 
-1. Install from tag `v0.1.0a8` ([Install](../install.md)).
+1. Install from tag `v0.1.0a9` ([Install](../install.md)).
 2. Set `CUDA_VISIBLE_DEVICES` to the device tokens you want agents to use
    (required for tune).
 3. Author a [tune config](../configuration/tune.md) and

@@ -1,7 +1,7 @@
 # Initialization and freezing
 
 Warm-start selected modules from a checkpoint and freeze or fine-tune them
-during `train_model` or `tune_model` in **v0.1.0a8**.
+during `train_model` or `tune_model` in **v0.1.0a9**.
 
 Placeholder paths only. This documentation does not ship checkpoints and does
 not open `.pth` files during docs checks.
@@ -20,7 +20,7 @@ CLI flag, not allowed on prediction configs, and not allowed under
 
 Object shape and schema snapshot:
 [Config: init_checkpoint](../config.md#init_checkpoint-train--tune),
-[init-checkpoint.schema.json](../schemas/v0.1.0a8/init-checkpoint.schema.json).
+[init-checkpoint.schema.json](../schemas/v0.1.0a9/init-checkpoint.schema.json).
 
 ## Selectable modules
 
@@ -116,7 +116,7 @@ train_model \
 
 Train-config fragment:
 
-<!-- schema: schemas/v0.1.0a8/init-checkpoint.schema.json -->
+<!-- schema: schemas/v0.1.0a9/init-checkpoint.schema.json -->
 ```json
 {
   "path": "/path/to/prior.ep_main.pth",
@@ -132,7 +132,7 @@ continues training.
 
 Load only the encoder; heads stay randomly initialized:
 
-<!-- schema: schemas/v0.1.0a8/init-checkpoint.schema.json -->
+<!-- schema: schemas/v0.1.0a9/init-checkpoint.schema.json -->
 ```json
 {
   "path": "/path/to/prior.enc.pth",
@@ -147,7 +147,7 @@ Load only the encoder; heads stay randomly initialized:
 
 Same selective `init_checkpoint` as above, plus nested freeze in hparams:
 
-<!-- schema: schemas/v0.1.0a8/encoder-predictor-hparams.schema.json -->
+<!-- schema: schemas/v0.1.0a9/encoder-predictor-hparams.schema.json -->
 ```json
 {
   "batch_size": 32,
@@ -197,7 +197,7 @@ the top-level rate:
 
 Train-config `init_checkpoint`:
 
-<!-- schema: schemas/v0.1.0a8/init-checkpoint.schema.json -->
+<!-- schema: schemas/v0.1.0a9/init-checkpoint.schema.json -->
 ```json
 {
   "path": "/path/to/prior.ep_main.pth",
@@ -238,7 +238,7 @@ tune_model \
 
 Tune-config fragment (same schema as train):
 
-<!-- schema: schemas/v0.1.0a8/init-checkpoint.schema.json -->
+<!-- schema: schemas/v0.1.0a9/init-checkpoint.schema.json -->
 ```json
 {
   "path": "/path/to/prior.ep_main.pth",

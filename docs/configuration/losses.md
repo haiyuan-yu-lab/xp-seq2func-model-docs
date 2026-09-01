@@ -1,6 +1,6 @@
 # Losses
 
-Loss objects paired with prediction heads in **v0.1.0a8**. This page is the
+Loss objects paired with prediction heads in **v0.1.0a9**. This page is the
 canonical reference for the `{ "type", "params" }` contract.
 
 Head wrappers that embed these objects are documented on
@@ -16,7 +16,7 @@ Head wrappers that embed these objects are documented on
 Unknown keys on the loss object fail closed. Omitting `params` or supplying
 non-empty `params` is rejected.
 
-<!-- schema: schemas/v0.1.0a8/loss.schema.json -->
+<!-- schema: schemas/v0.1.0a9/loss.schema.json -->
 ```json
 {
   "type": "categorical_cross_entropy",
@@ -68,7 +68,7 @@ respective branches: `profile_cross_entropy` for the profile distribution and
 
 ## Schema snapshot
 
-[`loss.schema.json`](../schemas/v0.1.0a8/loss.schema.json).
+[`loss.schema.json`](../schemas/v0.1.0a9/loss.schema.json).
 
 ## Related pages
 

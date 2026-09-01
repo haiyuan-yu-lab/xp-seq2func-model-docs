@@ -1,17 +1,17 @@
 # Concepts
 
-Core ideas for release **v0.1.0a8**. Terminology follows the
+Core ideas for release **v0.1.0a9**. Terminology follows the
 [Glossary](reference/glossary.md).
 
 ## Public interface
 
-Callers interact with **v0.1.0a8** through the `train_model`, `tune_model`, and
+Callers interact with **v0.1.0a9** through the `train_model`, `tune_model`, and
 `pred_model` CLIs and the configuration, data, and artifact contracts those
 commands define. Python imports are not a supported public API.
 
 ## EncoderPredictor
 
-The only top-level model type in **v0.1.0a8** is `EncoderPredictor`.
+The only top-level model type in **v0.1.0a9** is `EncoderPredictor`.
 
 It composes:
 

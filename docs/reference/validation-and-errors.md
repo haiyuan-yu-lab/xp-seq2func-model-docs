@@ -1,6 +1,6 @@
 # Validation and errors
 
-How **v0.1.0a8** commands respond to invalid inputs.
+How **v0.1.0a9** commands respond to invalid inputs.
 
 ## Fail-closed behavior
 

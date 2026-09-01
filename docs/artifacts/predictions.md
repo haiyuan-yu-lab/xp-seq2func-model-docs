@@ -1,6 +1,6 @@
 # Predictions
 
-Prediction array artifacts written by `pred_model` in **v0.1.0a8**.
+Prediction array artifacts written by `pred_model` in **v0.1.0a9**.
 
 ## Producers and consumers
 

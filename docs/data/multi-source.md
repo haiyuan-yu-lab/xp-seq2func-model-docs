@@ -1,7 +1,7 @@
 # Multi-source loading
 
 Multi-source path, weight, nesting, and cross-source alignment contracts for
-**v0.1.0a8**.
+**v0.1.0a9**.
 
 Documentation does not publish `.npy` binaries; examples use placeholder paths
 only. Array geometry belongs on [Arrays](arrays.md) and [Labels](labels.md).
@@ -55,10 +55,10 @@ sources (no partial path lists). Prediction may omit `predictor` or individual
 heads for unlabeled inference.
 
 Schema snapshots:
-[data-source.schema.json](../schemas/v0.1.0a8/data-source.schema.json) (train/val)
-and [test-data.schema.json](../schemas/v0.1.0a8/test-data.schema.json)
+[data-source.schema.json](../schemas/v0.1.0a9/data-source.schema.json) (train/val)
+and [test-data.schema.json](../schemas/v0.1.0a9/test-data.schema.json)
 (prediction). Shared `$defs` live in
-[defs.schema.json](../schemas/v0.1.0a8/defs.schema.json).
+[defs.schema.json](../schemas/v0.1.0a9/defs.schema.json).
 
 ## Split usage
 
@@ -149,7 +149,7 @@ Profile geometry details: [Profiles](../profiles.md). Mask semantics:
 
 ### Single-source train/val block
 
-<!-- schema: schemas/v0.1.0a8/data-source.schema.json -->
+<!-- schema: schemas/v0.1.0a9/data-source.schema.json -->
 ```json
 {
   "encoder": {
@@ -169,7 +169,7 @@ Profile geometry details: [Profiles](../profiles.md). Mask semantics:
 
 ### Multi-source train/val block (class + regress + profile/mask)
 
-<!-- schema: schemas/v0.1.0a8/data-source.schema.json -->
+<!-- schema: schemas/v0.1.0a9/data-source.schema.json -->
 ```json
 {
   "encoder": {
@@ -218,7 +218,7 @@ Profile geometry details: [Profiles](../profiles.md). Mask semantics:
 
 ### Multi-source unlabeled `test_data`
 
-<!-- schema: schemas/v0.1.0a8/test-data.schema.json -->
+<!-- schema: schemas/v0.1.0a9/test-data.schema.json -->
 ```json
 {
   "encoder": {

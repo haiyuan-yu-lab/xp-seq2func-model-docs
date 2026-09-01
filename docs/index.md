@@ -2,11 +2,11 @@
 
 Train, tune, and run predictions for sequence-to-function models.
 
-This site documents exact release **v0.1.0a8**.
+This site documents exact release **v0.1.0a9**.
 
 ## Supported public interface
 
-For **v0.1.0a8**, the supported public interface is:
+For **v0.1.0a9**, the supported public interface is:
 
 - the three console commands `train_model`, `tune_model`, and `pred_model`
 - the JSON configuration contracts those commands accept
@@ -15,7 +15,7 @@ For **v0.1.0a8**, the supported public interface is:
 Python imports from the installed package are **not** a supported API in this
 release. Prefer the CLIs and file contracts documented on this site.
 
-## What ships in v0.1.0a8
+## What ships in v0.1.0a9
 
 | Component | Kind | Role |
 | --- | --- | --- |
@@ -36,13 +36,13 @@ release. Prefer the CLIs and file contracts documented on this site.
     [Profile reconstruction](profiles.md).
 
 !!! warning "Alpha release"
-    **v0.1.0a8** is a pre-release. Config schemas and CLI flags may change.
+    **v0.1.0a9** is a pre-release. Config schemas and CLI flags may change.
     Documentation accuracy is promised for this exact tag only. See
     [Compatibility](reference/compatibility.md).
 
 ## Where to start
 
-1. [Install](install.md) from the `v0.1.0a8` code tag (requires repository access)
+1. [Install](install.md) from the `v0.1.0a9` code tag (requires repository access)
 2. Skim [Core concepts](concepts.md) and the [Quickstart](getting-started/quickstart.md)
 3. Review [CLI Reference](cli/index.md) and [Configuration](config.md)
 4. Browse [Data Contracts](data/arrays.md) and [Artifacts](artifacts/checkpoints.md) as needed
@@ -54,4 +54,4 @@ release. Prefer the CLIs and file contracts documented on this site.
   canonical Markdown sources
 
 Code repository: [haiyuan-yu-lab/xp-seq2func-model](https://github.com/haiyuan-yu-lab/xp-seq2func-model)
-(tag `v0.1.0a8`).
+(tag `v0.1.0a9`).

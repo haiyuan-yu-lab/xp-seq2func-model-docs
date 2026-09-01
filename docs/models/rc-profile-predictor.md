@@ -1,6 +1,6 @@
 # RCProfilePredictor
 
-Reverse-complement-aware profile head for **v0.1.0a8** (`preserve` and `swap_pair`
+Reverse-complement-aware profile head for **v0.1.0a9** (`preserve` and `swap_pair`
 modes).
 
 Nestable only under `EncoderPredictor.predictor`. It preserves the same
@@ -67,7 +67,7 @@ Nested reference under `predictor`:
 }
 ```
 
-<!-- schema: schemas/v0.1.0a8/rc-profile-predictor-model-config.schema.json -->
+<!-- schema: schemas/v0.1.0a9/rc-profile-predictor-model-config.schema.json -->
 
 ## Hyperparameters
 

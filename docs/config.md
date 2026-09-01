@@ -73,7 +73,7 @@ Forbidden at top level: `optimizer`, `loss`, `job_name`, `num_agents`,
 Optional object on the train or tune config (not in hparams or tune-space).
 The object value matches the documentation schema snapshot below:
 
-<!-- schema: schemas/v0.1.0a8/init-checkpoint.schema.json -->
+<!-- schema: schemas/v0.1.0a9/init-checkpoint.schema.json -->
 ```json
 {
   "path": "/path/to/checkpoint.pth",
@@ -83,7 +83,7 @@ The object value matches the documentation schema snapshot below:
 
 Place that object under the `init_checkpoint` key of the train or tune config.
 Documentation schema:
-[init-checkpoint.schema.json](schemas/v0.1.0a8/init-checkpoint.schema.json).
+[init-checkpoint.schema.json](schemas/v0.1.0a9/init-checkpoint.schema.json).
 
 | Key | Type | Notes |
 | --- | --- | --- |

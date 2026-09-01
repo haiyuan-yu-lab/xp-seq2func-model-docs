@@ -1,4 +1,4 @@
-# xp-seq2func-model documentation corpus (v0.1.0a8)
+# xp-seq2func-model documentation corpus (v0.1.0a9)
 
 Concatenated canonical Markdown in MkDocs navigation order.
 Schema JSON snapshots and site HTML boilerplate are omitted; see
@@ -16,11 +16,11 @@ https://haiyuan-yu-lab.github.io/xp-seq2func-model-docs/reference/schemas/ for s
 
 Train, tune, and run predictions for sequence-to-function models.
 
-This site documents exact release **v0.1.0a8**.
+This site documents exact release **v0.1.0a9**.
 
 ## Supported public interface
 
-For **v0.1.0a8**, the supported public interface is:
+For **v0.1.0a9**, the supported public interface is:
 
 - the three console commands `train_model`, `tune_model`, and `pred_model`
 - the JSON configuration contracts those commands accept
@@ -29,7 +29,7 @@ For **v0.1.0a8**, the supported public interface is:
 Python imports from the installed package are **not** a supported API in this
 release. Prefer the CLIs and file contracts documented on this site.
 
-## What ships in v0.1.0a8
+## What ships in v0.1.0a9
 
 | Component | Kind | Role |
 | --- | --- | --- |
@@ -50,13 +50,13 @@ release. Prefer the CLIs and file contracts documented on this site.
     [Profile reconstruction](profiles.md).
 
 !!! warning "Alpha release"
-    **v0.1.0a8** is a pre-release. Config schemas and CLI flags may change.
+    **v0.1.0a9** is a pre-release. Config schemas and CLI flags may change.
     Documentation accuracy is promised for this exact tag only. See
     [Compatibility](reference/compatibility.md).
 
 ## Where to start
 
-1. [Install](install.md) from the `v0.1.0a8` code tag (requires repository access)
+1. [Install](install.md) from the `v0.1.0a9` code tag (requires repository access)
 2. Skim [Core concepts](concepts.md) and the [Quickstart](getting-started/quickstart.md)
 3. Review [CLI Reference](cli/index.md) and [Configuration](config.md)
 4. Browse [Data Contracts](data/arrays.md) and [Artifacts](artifacts/checkpoints.md) as needed
@@ -68,7 +68,7 @@ release. Prefer the CLIs and file contracts documented on this site.
   canonical Markdown sources
 
 Code repository: [haiyuan-yu-lab/xp-seq2func-model](https://github.com/haiyuan-yu-lab/xp-seq2func-model)
-(tag `v0.1.0a8`).
+(tag `v0.1.0a9`).
 
 
 
@@ -80,7 +80,7 @@ Code repository: [haiyuan-yu-lab/xp-seq2func-model](https://github.com/haiyuan-y
 
 # Install
 
-Install instructions for exact release **v0.1.0a8**.
+Install instructions for exact release **v0.1.0a9**.
 
 ## Requirements
 
@@ -93,7 +93,7 @@ Install instructions for exact release **v0.1.0a8**.
 
 ## Access prerequisite
 
-**v0.1.0a8** is not published to PyPI and is not available for anonymous
+**v0.1.0a9** is not published to PyPI and is not available for anonymous
 download. Source installation requires access to the
 [code repository](https://github.com/haiyuan-yu-lab/xp-seq2func-model) and a
 working GitHub authentication method (for example SSH keys or a personal access
@@ -102,7 +102,7 @@ token) that can read that repository.
 If you cannot clone or fetch the repository, request access from the
 maintainers before attempting installation.
 
-## Install from the v0.1.0a8 tag
+## Install from the v0.1.0a9 tag
 
 Clone the authenticated repository, check out the release tag, then install:
 
@@ -110,7 +110,7 @@ Clone the authenticated repository, check out the release tag, then install:
 # SSH (typical for accounts with repository access)
 git clone git@github.com:haiyuan-yu-lab/xp-seq2func-model.git
 cd xp-seq2func-model
-git checkout v0.1.0a8
+git checkout v0.1.0a9
 pip install -e .
 ```
 
@@ -120,7 +120,7 @@ GitHub authentication:
 ```bash
 git clone https://github.com/haiyuan-yu-lab/xp-seq2func-model.git
 cd xp-seq2func-model
-git checkout v0.1.0a8
+git checkout v0.1.0a9
 pip install -e .
 ```
 
@@ -157,7 +157,7 @@ to use (comma-separated, non-empty, no duplicates).
 
 # Quickstart
 
-Text-only orientation for **v0.1.0a8**. This page uses placeholder paths only;
+Text-only orientation for **v0.1.0a9**. This page uses placeholder paths only;
 the documentation does not ship datasets or checkpoints.
 
 ## Prerequisites
@@ -225,18 +225,18 @@ Exact flags and defaults for the installed build are authoritative via
 
 # Concepts
 
-Core ideas for release **v0.1.0a8**. Terminology follows the
+Core ideas for release **v0.1.0a9**. Terminology follows the
 [Glossary](reference/glossary.md).
 
 ## Public interface
 
-Callers interact with **v0.1.0a8** through the `train_model`, `tune_model`, and
+Callers interact with **v0.1.0a9** through the `train_model`, `tune_model`, and
 `pred_model` CLIs and the configuration, data, and artifact contracts those
 commands define. Python imports are not a supported public API.
 
 ## EncoderPredictor
 
-The only top-level model type in **v0.1.0a8** is `EncoderPredictor`.
+The only top-level model type in **v0.1.0a9** is `EncoderPredictor`.
 
 It composes:
 
@@ -328,7 +328,7 @@ Tune optimizes on validation loss. Epoch metrics expose `val_loss` with a W&B
 
 # CLI overview
 
-Three console scripts ship with **v0.1.0a8**. Together with their configuration,
+Three console scripts ship with **v0.1.0a9**. Together with their configuration,
 data, and artifact contracts, they are the supported public interface for this
 release (Python imports are not).
 
@@ -373,7 +373,7 @@ All three commands share:
 # train_model
 
 Train an `EncoderPredictor` with fixed hyperparameters for exact release
-**v0.1.0a8**.
+**v0.1.0a9**.
 
 ## Command snapshot
 
@@ -392,7 +392,7 @@ options:
   --hparams HPARAMS     Path to top-level pre-inheritance hparams JSON
 ```
 
-CLI help snapshot for **v0.1.0a8** (committed Markdown; documentation build does
+CLI help snapshot for **v0.1.0a9** (committed Markdown; documentation build does
 not import the package or regenerate this text).
 
 ## Flags
@@ -504,7 +504,7 @@ train_model \
 # tune_model
 
 Run a Weights & Biases hyperparameter sweep for an `EncoderPredictor` in exact
-release **v0.1.0a8**.
+release **v0.1.0a9**.
 
 ## Command snapshot
 
@@ -532,7 +532,7 @@ options:
                         Passed as count to each wandb.agent call.
 ```
 
-CLI help snapshot for **v0.1.0a8** (committed Markdown; documentation build does
+CLI help snapshot for **v0.1.0a9** (committed Markdown; documentation build does
 not import the package or regenerate this text).
 
 ## Flags
@@ -666,7 +666,7 @@ tune_model \
 # pred_model
 
 Run inference with a trained `EncoderPredictor` and write per-head prediction
-arrays for exact release **v0.1.0a8**. Optionally compute Captum input
+arrays for exact release **v0.1.0a9**. Optionally compute Captum input
 attributions.
 
 ## Command snapshot
@@ -703,7 +703,7 @@ options:
                         <head>:log1p-count:<track>.
 ```
 
-CLI help snapshot for **v0.1.0a8** (committed Markdown; documentation build does
+CLI help snapshot for **v0.1.0a9** (committed Markdown; documentation build does
 not import the package or regenerate this text).
 
 ## Flags
@@ -814,7 +814,7 @@ and methods: [Attribution](../workflows/attribution.md). Filenames and shapes:
 
 Predictor map keys must not contain `:`. Ordinary prediction arrays for all
 heads are unchanged when attribution is enabled. Structural string snapshot:
-[attribution-target-string.schema.json](../schemas/v0.1.0a8/attribution-target-string.schema.json).
+[attribution-target-string.schema.json](../schemas/v0.1.0a9/attribution-target-string.schema.json).
 
 ## Minimal example
 
@@ -860,13 +860,13 @@ pred_model \
 
 # Train to predict
 
-End-to-end path from training artifacts to prediction outputs for **v0.1.0a8**.
+End-to-end path from training artifacts to prediction outputs for **v0.1.0a9**.
 Placeholder paths only; this documentation does not ship datasets or
 checkpoints.
 
 ## 1. Install and prepare CUDA
 
-1. Install from tag `v0.1.0a8` ([Install](../install.md)).
+1. Install from tag `v0.1.0a9` ([Install](../install.md)).
 2. Confirm a CUDA device is visible to the process (`CUDA_VISIBLE_DEVICES` is
    optional environment, not a CLI flag).
 
@@ -983,7 +983,7 @@ non-zero on failure.
 
 # Tuning workflow
 
-End-to-end hyperparameter search with `tune_model` for **v0.1.0a8**.
+End-to-end hyperparameter search with `tune_model` for **v0.1.0a9**.
 
 This page explains GPU assignment, W&B requirements, sweep creation, agent
 behavior, and the per-agent meaning of trial limits. Field tables live on the
@@ -991,7 +991,7 @@ canonical configuration pages — link there instead of duplicating them.
 
 ## Prerequisites
 
-1. Install from tag `v0.1.0a8` ([Install](../install.md)).
+1. Install from tag `v0.1.0a9` ([Install](../install.md)).
 2. Set `CUDA_VISIBLE_DEVICES` to the device tokens you want agents to use
    (required for tune).
 3. Author a [tune config](../configuration/tune.md) and
@@ -1109,7 +1109,7 @@ Optional warm-start / freeze patterns:
 # Initialization and freezing
 
 Warm-start selected modules from a checkpoint and freeze or fine-tune them
-during `train_model` or `tune_model` in **v0.1.0a8**.
+during `train_model` or `tune_model` in **v0.1.0a9**.
 
 Placeholder paths only. This documentation does not ship checkpoints and does
 not open `.pth` files during docs checks.
@@ -1128,7 +1128,7 @@ CLI flag, not allowed on prediction configs, and not allowed under
 
 Object shape and schema snapshot:
 [Config: init_checkpoint](../config.md#init_checkpoint-train--tune),
-[init-checkpoint.schema.json](../schemas/v0.1.0a8/init-checkpoint.schema.json).
+[init-checkpoint.schema.json](../schemas/v0.1.0a9/init-checkpoint.schema.json).
 
 ## Selectable modules
 
@@ -1224,7 +1224,7 @@ train_model \
 
 Train-config fragment:
 
-<!-- schema: schemas/v0.1.0a8/init-checkpoint.schema.json -->
+<!-- schema: schemas/v0.1.0a9/init-checkpoint.schema.json -->
 ```json
 {
   "path": "/path/to/prior.ep_main.pth",
@@ -1240,7 +1240,7 @@ continues training.
 
 Load only the encoder; heads stay randomly initialized:
 
-<!-- schema: schemas/v0.1.0a8/init-checkpoint.schema.json -->
+<!-- schema: schemas/v0.1.0a9/init-checkpoint.schema.json -->
 ```json
 {
   "path": "/path/to/prior.enc.pth",
@@ -1255,7 +1255,7 @@ Load only the encoder; heads stay randomly initialized:
 
 Same selective `init_checkpoint` as above, plus nested freeze in hparams:
 
-<!-- schema: schemas/v0.1.0a8/encoder-predictor-hparams.schema.json -->
+<!-- schema: schemas/v0.1.0a9/encoder-predictor-hparams.schema.json -->
 ```json
 {
   "batch_size": 32,
@@ -1305,7 +1305,7 @@ the top-level rate:
 
 Train-config `init_checkpoint`:
 
-<!-- schema: schemas/v0.1.0a8/init-checkpoint.schema.json -->
+<!-- schema: schemas/v0.1.0a9/init-checkpoint.schema.json -->
 ```json
 {
   "path": "/path/to/prior.ep_main.pth",
@@ -1346,7 +1346,7 @@ tune_model \
 
 Tune-config fragment (same schema as train):
 
-<!-- schema: schemas/v0.1.0a8/init-checkpoint.schema.json -->
+<!-- schema: schemas/v0.1.0a9/init-checkpoint.schema.json -->
 ```json
 {
   "path": "/path/to/prior.ep_main.pth",
@@ -1400,7 +1400,7 @@ Illustrative encoder freeze leaf:
 # Multi-source data workflow
 
 Combine multiple one-hot sequence sources across training, tuning, and
-prediction in **v0.1.0a8**.
+prediction in **v0.1.0a9**.
 
 This workflow page shows command shapes and complete text-only JSON examples.
 Canonical nesting, source identity, sampler behavior, and cross-source
@@ -1426,7 +1426,7 @@ contracts: [`train_model`](../cli/train_model.md),
 Placeholder paths only. Pair with a complete hparams document from
 [Hyperparameters](../configuration/hyperparameters.md).
 
-<!-- schema: schemas/v0.1.0a8/train-config.schema.json -->
+<!-- schema: schemas/v0.1.0a9/train-config.schema.json -->
 ```json
 {
   "model_type": "EncoderPredictor",
@@ -1559,7 +1559,7 @@ Tune configs reuse the train/val split contract. Pair with a tune-space from
 [Tuning spaces](../configuration/tuning-spaces.md). Do not put data paths in
 the tune-space file.
 
-<!-- schema: schemas/v0.1.0a8/tune-config.schema.json -->
+<!-- schema: schemas/v0.1.0a9/tune-config.schema.json -->
 ```json
 {
   "model_type": "EncoderPredictor",
@@ -1661,7 +1661,7 @@ Unlabeled multi-source prediction. Output rows follow source list order when
 `shuffle` is `false`. Artifact filenames:
 [Predictions](../artifacts/predictions.md).
 
-<!-- schema: schemas/v0.1.0a8/pred-config.schema.json -->
+<!-- schema: schemas/v0.1.0a9/pred-config.schema.json -->
 ```json
 {
   "model_type": "EncoderPredictor",
@@ -1739,7 +1739,7 @@ pred_model \
 # Profile masks workflow
 
 How **positional validity masks** interact with profile training and prediction
-in **v0.1.0a8**.
+in **v0.1.0a9**.
 
 A positional validity mask is a boolean annotation aligned to retained sequence
 positions. `true` marks positions eligible for position-wise profile losses and
@@ -1816,7 +1816,7 @@ when training used them.
 
 Choose an **attribution target** and **output domain**, run Captum attribution
 through `pred_model`, and interpret the resulting arrays for exact release
-**v0.1.0a8**.
+**v0.1.0a9**.
 
 Attribution is CLI-only. Prediction JSON must not contain keys matching
 `attribution*`; see [Prediction configuration](../configuration/prediction.md).
@@ -1864,7 +1864,7 @@ Filenames use each head's `model_name`, not the map key. The map key appears
 only in the target string.
 
 Structural snapshot (patterns only):
-[attribution-target-string.schema.json](../schemas/v0.1.0a8/attribution-target-string.schema.json).
+[attribution-target-string.schema.json](../schemas/v0.1.0a9/attribution-target-string.schema.json).
 Runtime validation remains authoritative for class ranges, track membership,
 bin counts, leading zeros, and head-type compatibility.
 
@@ -1940,7 +1940,7 @@ checkpoints. Structural target-string checks use the schema snapshot.
 
 ### Explicit class probability
 
-<!-- schema: schemas/v0.1.0a8/attribution-target-string.schema.json -->
+<!-- schema: schemas/v0.1.0a9/attribution-target-string.schema.json -->
 ```json
 "cls:probability:1"
 ```
@@ -1964,7 +1964,7 @@ Writes (among prediction arrays):
 
 ### Logit difference
 
-<!-- schema: schemas/v0.1.0a8/attribution-target-string.schema.json -->
+<!-- schema: schemas/v0.1.0a9/attribution-target-string.schema.json -->
 ```json
 "cls:logit-difference:1,0"
 ```
@@ -1981,19 +1981,19 @@ pred_model \
 
 ### Predicted-class logit (row-dependent)
 
-<!-- schema: schemas/v0.1.0a8/attribution-target-string.schema.json -->
+<!-- schema: schemas/v0.1.0a9/attribution-target-string.schema.json -->
 ```json
 "cls:logit:predicted"
 ```
 
 ### Profile bin and count (separate runs)
 
-<!-- schema: schemas/v0.1.0a8/attribution-target-string.schema.json -->
+<!-- schema: schemas/v0.1.0a9/attribution-target-string.schema.json -->
 ```json
 "prof:profile-probability:atac_a,12"
 ```
 
-<!-- schema: schemas/v0.1.0a8/attribution-target-string.schema.json -->
+<!-- schema: schemas/v0.1.0a9/attribution-target-string.schema.json -->
 ```json
 "prof:log1p-count:atac_a"
 ```
@@ -2062,7 +2062,7 @@ prof:probability:0       # class domain on a profile head
 
 # Model composition
 
-Top-level composition rules for **v0.1.0a8**.
+Top-level composition rules for **v0.1.0a9**.
 
 Only `EncoderPredictor` may appear as the CLI `model_type`. Encoders and
 prediction heads nest under that tree; they are never valid top-level CLI
@@ -2125,7 +2125,7 @@ keeps its own embedding-level contract on the shared trimmed embedding.
 
 ## Mixed-head example
 
-<!-- schema: schemas/v0.1.0a8/encoder-predictor-model-config.schema.json -->
+<!-- schema: schemas/v0.1.0a9/encoder-predictor-model-config.schema.json -->
 ```json
 {
   "model_name": "ep_main",
@@ -2158,7 +2158,7 @@ keeps its own embedding-level contract on the shared trimmed embedding.
 
 ## Valid example (scalar heads)
 
-<!-- schema: schemas/v0.1.0a8/encoder-predictor-model-config.schema.json -->
+<!-- schema: schemas/v0.1.0a9/encoder-predictor-model-config.schema.json -->
 ```json
 {
   "model_name": "ep_main",
@@ -2237,7 +2237,7 @@ Predictor map keys must not contain `:`:
 
 # ConvEncoder
 
-Convolutional encoder component for **v0.1.0a8**.
+Convolutional encoder component for **v0.1.0a9**.
 
 Nestable only under `EncoderPredictor.encoder`. Cannot be used as top-level
 CLI `model_type`. See [Model composition](composition.md).
@@ -2320,7 +2320,7 @@ Under each data block's `encoder` key:
 
 # RCConvEncoder
 
-Reverse-complement-equivariant convolutional encoder component for **v0.1.0a8**.
+Reverse-complement-equivariant convolutional encoder component for **v0.1.0a9**.
 
 Nestable only under `EncoderPredictor.encoder`. Cannot be used as top-level
 CLI `model_type`. See [Model composition](composition.md).
@@ -2429,7 +2429,7 @@ Under each data block's `encoder` key:
 
 # ConvSelfAttEncoder
 
-Convolutional self-attention encoder component for **v0.1.0a8**.
+Convolutional self-attention encoder component for **v0.1.0a9**.
 
 Nestable only under `EncoderPredictor.encoder`. Cannot be used as top-level
 CLI `model_type`. See [Model composition](composition.md).
@@ -2525,7 +2525,7 @@ Under each data block's `encoder` key:
 # RCConvSelfAttEncoder
 
 Reverse-complement-equivariant convolutional self-attention encoder component for
-**v0.1.0a8**.
+**v0.1.0a9**.
 
 Nestable only under `EncoderPredictor.encoder`. Cannot be used as top-level
 CLI `model_type`. See [Model composition](composition.md).
@@ -2652,7 +2652,7 @@ Under each data block's `encoder` key:
 
 # ClassPredictor
 
-Classification prediction head for **v0.1.0a8**.
+Classification prediction head for **v0.1.0a9**.
 
 Nestable only under `EncoderPredictor.predictor`. Consumes the shared trimmed
 encoder embedding and emits class probabilities. See
@@ -2700,7 +2700,7 @@ Canonical wrapper, inheritance, and freeze rules:
 [Hyperparameters](../configuration/hyperparameters.md). Loss object contract:
 [Losses](../configuration/losses.md).
 
-<!-- schema: schemas/v0.1.0a8/scalar-head-hparams-wrapper.schema.json -->
+<!-- schema: schemas/v0.1.0a9/scalar-head-hparams-wrapper.schema.json -->
 ```json
 {
   "alpha": 1,
@@ -2750,7 +2750,7 @@ Prediction may omit labels.
 
 # RCClassPredictor
 
-Reverse-complement-aware classification head for **v0.1.0a8**.
+Reverse-complement-aware classification head for **v0.1.0a9**.
 
 Nestable only under `EncoderPredictor.predictor`. It preserves the same
 external role as `ClassPredictor` — class probabilities, one-hot labels,
@@ -2803,7 +2803,7 @@ Canonical wrapper, inheritance, and freeze rules:
 [Hyperparameters](../configuration/hyperparameters.md). Loss object contract:
 [Losses](../configuration/losses.md).
 
-<!-- schema: schemas/v0.1.0a8/scalar-head-hparams-wrapper.schema.json -->
+<!-- schema: schemas/v0.1.0a9/scalar-head-hparams-wrapper.schema.json -->
 ```json
 {
   "alpha": 1,
@@ -2875,7 +2875,7 @@ checkpoints cannot load into a composition tree that contains this head type.
 
 # RegressPredictor
 
-Scalar regression prediction head for **v0.1.0a8**.
+Scalar regression prediction head for **v0.1.0a9**.
 
 Nestable only under `EncoderPredictor.predictor`. Consumes the shared trimmed
 encoder embedding and emits a single scalar per row. See
@@ -2924,7 +2924,7 @@ Canonical wrapper, inheritance, and freeze rules:
 [Hyperparameters](../configuration/hyperparameters.md). Loss object contract:
 [Losses](../configuration/losses.md).
 
-<!-- schema: schemas/v0.1.0a8/scalar-head-hparams-wrapper.schema.json -->
+<!-- schema: schemas/v0.1.0a9/scalar-head-hparams-wrapper.schema.json -->
 ```json
 {
   "alpha": 1,
@@ -2975,7 +2975,7 @@ may omit labels.
 
 # RCRegressPredictor
 
-Reverse-complement-aware scalar regression head for **v0.1.0a8**.
+Reverse-complement-aware scalar regression head for **v0.1.0a9**.
 
 Nestable only under `EncoderPredictor.predictor`. It preserves the same
 external role as `RegressPredictor` — continuous labels, `*.pred.npy`
@@ -3027,7 +3027,7 @@ Canonical wrapper, inheritance, and freeze rules:
 [Hyperparameters](../configuration/hyperparameters.md). Loss object contract:
 [Losses](../configuration/losses.md).
 
-<!-- schema: schemas/v0.1.0a8/scalar-head-hparams-wrapper.schema.json -->
+<!-- schema: schemas/v0.1.0a9/scalar-head-hparams-wrapper.schema.json -->
 ```json
 {
   "alpha": 1,
@@ -3100,7 +3100,7 @@ checkpoints cannot load into a composition tree that contains this head type.
 
 # ProfilePredictor
 
-Profile prediction head for **v0.1.0a8**.
+Profile prediction head for **v0.1.0a9**.
 
 Nestable only under `EncoderPredictor.predictor`. Consumes the shared trimmed
 encoder embedding and emits a **profile distribution** over **profile bins**
@@ -3120,7 +3120,7 @@ attribution targets are expanded on [Profile reconstruction](../profiles.md).
 must be positive and exactly divisible by `bin_size`; then
 `P = L_embed / bin_size`.
 
-<!-- schema: schemas/v0.1.0a8/profile-predictor-model-config.schema.json -->
+<!-- schema: schemas/v0.1.0a9/profile-predictor-model-config.schema.json -->
 ```json
 {
   "model_name": "atac_profile",
@@ -3176,7 +3176,7 @@ Canonical wrapper, inheritance, and freeze rules:
 [Hyperparameters](../configuration/hyperparameters.md). Loss object contract:
 [Losses](../configuration/losses.md).
 
-<!-- schema: schemas/v0.1.0a8/profile-head-hparams-wrapper.schema.json -->
+<!-- schema: schemas/v0.1.0a9/profile-head-hparams-wrapper.schema.json -->
 ```json
 {
   "profile_alpha": 1.0,
@@ -3259,7 +3259,7 @@ together; `mask_npy` is rejected on test. Full shape/dtype tables:
 
 # RCProfilePredictor
 
-Reverse-complement-aware profile head for **v0.1.0a8** (`preserve` and `swap_pair`
+Reverse-complement-aware profile head for **v0.1.0a9** (`preserve` and `swap_pair`
 modes).
 
 Nestable only under `EncoderPredictor.predictor`. It preserves the same
@@ -3326,7 +3326,7 @@ Nested reference under `predictor`:
 }
 ```
 
-<!-- schema: schemas/v0.1.0a8/rc-profile-predictor-model-config.schema.json -->
+<!-- schema: schemas/v0.1.0a9/rc-profile-predictor-model-config.schema.json -->
 
 ## Hyperparameters
 
@@ -3441,7 +3441,7 @@ into a composition tree that contains this head type.
 
 # Profile reconstruction
 
-End-to-end contracts for **profile prediction heads** in **v0.1.0a8**.
+End-to-end contracts for **profile prediction heads** in **v0.1.0a9**.
 
 `ProfilePredictor` is a nestable head that reconstructs one or more named
 **profile tracks** over a retained sequence window and a paired nonnegative
@@ -3489,7 +3489,7 @@ Do not put `label_npy` on a profile payload.
 
 Validated payload fragments:
 
-<!-- schema: schemas/v0.1.0a8/profile-label-payload.schema.json -->
+<!-- schema: schemas/v0.1.0a9/profile-label-payload.schema.json -->
 ```json
 {
   "profile_npy": "/path/to/train_profile.npy",
@@ -3498,7 +3498,7 @@ Validated payload fragments:
 }
 ```
 
-<!-- schema: schemas/v0.1.0a8/profile-test-label-payload.schema.json -->
+<!-- schema: schemas/v0.1.0a9/profile-test-label-payload.schema.json -->
 ```json
 {
   "profile_npy": "/path/to/test_profile.npy",
@@ -3520,7 +3520,7 @@ attribution. Full tables: [Masks](data/masks.md) and
 Profile heads use component weights and losses instead of scalar `alpha` /
 `loss`:
 
-<!-- schema: schemas/v0.1.0a8/profile-head-hparams-wrapper.schema.json -->
+<!-- schema: schemas/v0.1.0a9/profile-head-hparams-wrapper.schema.json -->
 ```json
 {
   "profile_alpha": 1.0,
@@ -3549,7 +3549,7 @@ above. Do not put `track_names` or `bin_size` in the tune space.
 One single-track head (`bin_size: 1`) and one three-track head (`bin_size: 5`)
 over a trimmed window:
 
-<!-- schema: schemas/v0.1.0a8/encoder-predictor-model-config.schema.json -->
+<!-- schema: schemas/v0.1.0a9/encoder-predictor-model-config.schema.json -->
 ```json
 {
   "model_name": "ep_profile",
@@ -3663,7 +3663,7 @@ Pearson keys are diagnostics only. See [Metrics](artifacts/metrics.md).
 
 # Arrays
 
-NumPy array contracts used by the **v0.1.0a8** CLIs. This page covers sequence
+NumPy array contracts used by the **v0.1.0a9** CLIs. This page covers sequence
 (one-hot) arrays referenced as `encoder.ohe_npy`. Label arrays are documented
 on [Labels](labels.md).
 
@@ -3722,7 +3722,7 @@ Exact exception strings are not stabilized here.
 
 # Splits
 
-Train, validation, and test split contracts for **v0.1.0a8**.
+Train, validation, and test split contracts for **v0.1.0a9**.
 
 | Split key | Used by | Labels |
 | --- | --- | --- |
@@ -3731,10 +3731,10 @@ Train, validation, and test split contracts for **v0.1.0a8**.
 | `test_data` | `pred_model` | Optional (label-free prediction allowed) |
 
 This page focuses on the train/val block used by training. Schema snapshot:
-[data-source.schema.json](../schemas/v0.1.0a8/data-source.schema.json).
+[data-source.schema.json](../schemas/v0.1.0a9/data-source.schema.json).
 Prediction `test_data` (label-optional, no `mask_npy`):
 [Prediction configuration](../configuration/prediction.md) and
-[test-data.schema.json](../schemas/v0.1.0a8/test-data.schema.json).
+[test-data.schema.json](../schemas/v0.1.0a9/test-data.schema.json).
 
 ## Required keys
 
@@ -3794,7 +3794,7 @@ Path arrays for labels must use the same `S` and the same source order as
 
 ## Complete single-source example
 
-<!-- schema: schemas/v0.1.0a8/data-source.schema.json -->
+<!-- schema: schemas/v0.1.0a9/data-source.schema.json -->
 ```json
 {
   "encoder": {
@@ -3817,7 +3817,7 @@ Path arrays for labels must use the same `S` and the same source order as
 Complete multi-source train/val block (schema-validated). Cross-source
 invariants: [Multi-source](multi-source.md).
 
-<!-- schema: schemas/v0.1.0a8/data-source.schema.json -->
+<!-- schema: schemas/v0.1.0a9/data-source.schema.json -->
 ```json
 {
   "encoder": {
@@ -3871,7 +3871,7 @@ invariants: [Multi-source](multi-source.md).
 # Multi-source loading
 
 Multi-source path, weight, nesting, and cross-source alignment contracts for
-**v0.1.0a8**.
+**v0.1.0a9**.
 
 Documentation does not publish `.npy` binaries; examples use placeholder paths
 only. Array geometry belongs on [Arrays](arrays.md) and [Labels](labels.md).
@@ -3925,10 +3925,10 @@ sources (no partial path lists). Prediction may omit `predictor` or individual
 heads for unlabeled inference.
 
 Schema snapshots:
-[data-source.schema.json](../schemas/v0.1.0a8/data-source.schema.json) (train/val)
-and [test-data.schema.json](../schemas/v0.1.0a8/test-data.schema.json)
+[data-source.schema.json](../schemas/v0.1.0a9/data-source.schema.json) (train/val)
+and [test-data.schema.json](../schemas/v0.1.0a9/test-data.schema.json)
 (prediction). Shared `$defs` live in
-[defs.schema.json](../schemas/v0.1.0a8/defs.schema.json).
+[defs.schema.json](../schemas/v0.1.0a9/defs.schema.json).
 
 ## Split usage
 
@@ -4019,7 +4019,7 @@ Profile geometry details: [Profiles](../profiles.md). Mask semantics:
 
 ### Single-source train/val block
 
-<!-- schema: schemas/v0.1.0a8/data-source.schema.json -->
+<!-- schema: schemas/v0.1.0a9/data-source.schema.json -->
 ```json
 {
   "encoder": {
@@ -4039,7 +4039,7 @@ Profile geometry details: [Profiles](../profiles.md). Mask semantics:
 
 ### Multi-source train/val block (class + regress + profile/mask)
 
-<!-- schema: schemas/v0.1.0a8/data-source.schema.json -->
+<!-- schema: schemas/v0.1.0a9/data-source.schema.json -->
 ```json
 {
   "encoder": {
@@ -4088,7 +4088,7 @@ Profile geometry details: [Profiles](../profiles.md). Mask semantics:
 
 ### Multi-source unlabeled `test_data`
 
-<!-- schema: schemas/v0.1.0a8/test-data.schema.json -->
+<!-- schema: schemas/v0.1.0a9/test-data.schema.json -->
 ```json
 {
   "encoder": {
@@ -4148,7 +4148,7 @@ conditions below (exact exception strings are not stabilized here).
 
 # Labels
 
-Label array contracts for prediction heads in **v0.1.0a8**.
+Label array contracts for prediction heads in **v0.1.0a9**.
 
 Train and validation require a label payload for **every** head declared in
 `model_config.predictor`, including zero-weight heads. Prediction may omit
@@ -4213,7 +4213,7 @@ on a predictor payload (`encoder.label` is a separate field that must be
 
 Full mask tables: [Masks](masks.md). Reconstruction overview: [Profiles](../profiles.md).
 
-<!-- schema: schemas/v0.1.0a8/profile-label-payload.schema.json -->
+<!-- schema: schemas/v0.1.0a9/profile-label-payload.schema.json -->
 ```json
 {
   "profile_npy": "/path/to/train_profile.npy",
@@ -4222,7 +4222,7 @@ Full mask tables: [Masks](masks.md). Reconstruction overview: [Profiles](../prof
 }
 ```
 
-<!-- schema: schemas/v0.1.0a8/profile-test-label-payload.schema.json -->
+<!-- schema: schemas/v0.1.0a9/profile-test-label-payload.schema.json -->
 ```json
 {
   "profile_npy": "/path/to/test_profile.npy",
@@ -4304,7 +4304,7 @@ Describe conditions only; exact exception strings are not stabilized.
 
 # Masks
 
-**Positional validity mask** contracts for **v0.1.0a8**.
+**Positional validity mask** contracts for **v0.1.0a9**.
 
 Optional boolean `mask_npy` on train/val **profile prediction head** payloads
 marks retained positions eligible for position-wise profile losses and Pearson
@@ -4325,7 +4325,7 @@ Workflow effects (what masks change vs leave alone):
 | Coverage | When present for a head, must cover every source for that head |
 | Independence | Train and val choose independently; multiple profile heads may share files |
 
-<!-- schema: schemas/v0.1.0a8/profile-label-payload.schema.json -->
+<!-- schema: schemas/v0.1.0a9/profile-label-payload.schema.json -->
 ```json
 {
   "profile_npy": "/path/to/train_profile.npy",
@@ -4407,7 +4407,7 @@ M[i,p] = AND over r in [p*K, (p+1)*K) of m[i,r]
 # Geometry
 
 Shared geometry rules for sequence length, embedding trimming, and profile bins
-in **v0.1.0a8**.
+in **v0.1.0a9**.
 
 ## Embedding trimming
 
@@ -4653,7 +4653,7 @@ Forbidden at top level: `optimizer`, `loss`, `job_name`, `num_agents`,
 Optional object on the train or tune config (not in hparams or tune-space).
 The object value matches the documentation schema snapshot below:
 
-<!-- schema: schemas/v0.1.0a8/init-checkpoint.schema.json -->
+<!-- schema: schemas/v0.1.0a9/init-checkpoint.schema.json -->
 ```json
 {
   "path": "/path/to/checkpoint.pth",
@@ -4663,7 +4663,7 @@ The object value matches the documentation schema snapshot below:
 
 Place that object under the `init_checkpoint` key of the train or tune config.
 Documentation schema:
-[init-checkpoint.schema.json](schemas/v0.1.0a8/init-checkpoint.schema.json).
+[init-checkpoint.schema.json](schemas/v0.1.0a9/init-checkpoint.schema.json).
 
 | Key | Type | Notes |
 | --- | --- | --- |
@@ -4732,11 +4732,11 @@ regression labels are `(N, 1)` (rank-1 fails). Profile payload details:
 
 # Train configuration
 
-Train-config JSON for `train_model --config` in exact release **v0.1.0a8**.
+Train-config JSON for `train_model --config` in exact release **v0.1.0a9**.
 
 This page is the canonical human-readable contract. The documentation schema
 snapshot is
-[train-config.schema.json](../schemas/v0.1.0a8/train-config.schema.json).
+[train-config.schema.json](../schemas/v0.1.0a9/train-config.schema.json).
 
 ## Required top-level keys
 
@@ -4775,7 +4775,7 @@ Unknown top-level keys fail closed.
 
 No other keys are allowed.
 
-<!-- schema: schemas/v0.1.0a8/early-stopping.schema.json -->
+<!-- schema: schemas/v0.1.0a9/early-stopping.schema.json -->
 ```json
 {
   "grace_epochs": 5
@@ -4795,7 +4795,7 @@ No other keys are allowed.
 Forbidden on train configs: `name`, `sweep_id`, `sweep_name`. The run name is
 always taken from `job_name`. When `mode` is `disabled`, no W&B run is created.
 
-<!-- schema: schemas/v0.1.0a8/wandb-train.schema.json -->
+<!-- schema: schemas/v0.1.0a9/wandb-train.schema.json -->
 ```json
 {
   "project": "seq2func-train",
@@ -4809,7 +4809,7 @@ always taken from `job_name`. When `mode` is `disabled`, no W&B run is created.
 
 `train_data` and `val_data` share the split contract documented in
 [Splits](../data/splits.md). Schema snapshot:
-[data-source.schema.json](../schemas/v0.1.0a8/data-source.schema.json).
+[data-source.schema.json](../schemas/v0.1.0a9/data-source.schema.json).
 
 Loader keys live on the split (`shuffle`, `num_workers`, `pin_memory`,
 `source_fracs`, optional `persistent_workers` / `prefetch_factor`).
@@ -4835,7 +4835,7 @@ See [Profiles](../profiles.md), [Labels](../data/labels.md), and
 
 Placeholder paths only.
 
-<!-- schema: schemas/v0.1.0a8/train-config.schema.json -->
+<!-- schema: schemas/v0.1.0a9/train-config.schema.json -->
 ```json
 {
   "model_type": "EncoderPredictor",
@@ -4913,7 +4913,7 @@ Additive multi-source `train_data` / `val_data` nesting. Full train/tune/pred
 command examples: [Multi-source data workflow](../workflows/multi-source-data.md).
 Invariants: [Multi-source](../data/multi-source.md).
 
-<!-- schema: schemas/v0.1.0a8/data-source.schema.json -->
+<!-- schema: schemas/v0.1.0a9/data-source.schema.json -->
 ```json
 {
   "encoder": {
@@ -4984,11 +4984,11 @@ Forbidden W&B run name override:
 
 # Tune configuration
 
-Tune-config JSON for `tune_model --config` in exact release **v0.1.0a8**.
+Tune-config JSON for `tune_model --config` in exact release **v0.1.0a9**.
 
 This page is the canonical human-readable contract. The documentation schema
 snapshot is
-[tune-config.schema.json](../schemas/v0.1.0a8/tune-config.schema.json).
+[tune-config.schema.json](../schemas/v0.1.0a9/tune-config.schema.json).
 
 Shared model, data, early-stopping, checkpoint, and metric contracts are
 documented once elsewhere — link to those pages rather than duplicating their
@@ -5031,7 +5031,7 @@ Do not put `init_checkpoint` in the tune-space file.
 ## `early_stopping`
 
 Same contract as training. Schema snapshot:
-[early-stopping.schema.json](../schemas/v0.1.0a8/early-stopping.schema.json).
+[early-stopping.schema.json](../schemas/v0.1.0a9/early-stopping.schema.json).
 
 | Key | Type | Notes |
 | --- | --- | --- |
@@ -5039,7 +5039,7 @@ Same contract as training. Schema snapshot:
 
 No other keys are allowed.
 
-<!-- schema: schemas/v0.1.0a8/early-stopping.schema.json -->
+<!-- schema: schemas/v0.1.0a9/early-stopping.schema.json -->
 ```json
 {
   "grace_epochs": 5
@@ -5061,7 +5061,7 @@ No other keys are allowed.
 Forbidden on tune configs: `name`, `num_agents`, `max_trials`. Trial run names
 come from W&B; agent and trial caps are CLI flags.
 
-<!-- schema: schemas/v0.1.0a8/wandb-tune.schema.json -->
+<!-- schema: schemas/v0.1.0a9/wandb-tune.schema.json -->
 ```json
 {
   "project": "seq2func-tune",
@@ -5076,7 +5076,7 @@ come from W&B; agent and trial caps are CLI flags.
 
 `train_data` and `val_data` share the split contract documented in
 [Splits](../data/splits.md). Schema snapshot:
-[data-source.schema.json](../schemas/v0.1.0a8/data-source.schema.json).
+[data-source.schema.json](../schemas/v0.1.0a9/data-source.schema.json).
 
 `batch_size` is **not** a data-block field; it belongs in the tune-space
 `parameters` tree (see [Tuning spaces](tuning-spaces.md) and
@@ -5095,7 +5095,7 @@ See [Profiles](../profiles.md) and [Tuning spaces](tuning-spaces.md).
 Placeholder paths only. Pair with a tune-space document from
 [Tuning spaces](tuning-spaces.md).
 
-<!-- schema: schemas/v0.1.0a8/tune-config.schema.json -->
+<!-- schema: schemas/v0.1.0a9/tune-config.schema.json -->
 ```json
 {
   "model_type": "EncoderPredictor",
@@ -5173,7 +5173,7 @@ Additive multi-source `train_data` nesting for tune configs. Complete
 multi-source tune example:
 [Multi-source data workflow](../workflows/multi-source-data.md).
 
-<!-- schema: schemas/v0.1.0a8/data-source.schema.json -->
+<!-- schema: schemas/v0.1.0a9/data-source.schema.json -->
 ```json
 {
   "encoder": {
@@ -5258,11 +5258,11 @@ Missing `sweep_name` when `sweep_id` is empty:
 
 # Prediction configuration
 
-Prediction-config JSON for `pred_model --config` in exact release **v0.1.0a8**.
+Prediction-config JSON for `pred_model --config` in exact release **v0.1.0a9**.
 
 This page is the canonical human-readable contract. The documentation schema
 snapshot is
-[pred-config.schema.json](../schemas/v0.1.0a8/pred-config.schema.json).
+[pred-config.schema.json](../schemas/v0.1.0a9/pred-config.schema.json).
 
 ## Required top-level keys
 
@@ -5292,7 +5292,7 @@ Unknown top-level keys fail closed.
 
 `test_data` reuses the loader keys of train/val splits, but labels are optional
 and profile masks are forbidden. Schema snapshot:
-[test-data.schema.json](../schemas/v0.1.0a8/test-data.schema.json).
+[test-data.schema.json](../schemas/v0.1.0a9/test-data.schema.json).
 
 ### Required keys
 
@@ -5348,7 +5348,7 @@ See [Arrays](../data/arrays.md) and [Splits](../data/splits.md) for geometry and
 
 Placeholder paths only.
 
-<!-- schema: schemas/v0.1.0a8/pred-config.schema.json -->
+<!-- schema: schemas/v0.1.0a9/pred-config.schema.json -->
 ```json
 {
   "model_type": "EncoderPredictor",
@@ -5407,7 +5407,7 @@ Placeholder paths only.
 Standalone `test_data` documents may also validate against the test-data
 schema:
 
-<!-- schema: schemas/v0.1.0a8/test-data.schema.json -->
+<!-- schema: schemas/v0.1.0a9/test-data.schema.json -->
 ```json
 {
   "encoder": {
@@ -5427,7 +5427,7 @@ Unlabeled multi-source inference. With `shuffle: false`, prediction rows follow
 sources concatenated in list order. Full command example:
 [Multi-source data workflow](../workflows/multi-source-data.md).
 
-<!-- schema: schemas/v0.1.0a8/test-data.schema.json -->
+<!-- schema: schemas/v0.1.0a9/test-data.schema.json -->
 ```json
 {
   "encoder": {
@@ -5489,7 +5489,7 @@ Labeled multi-source fragment (illustrative; omit unused heads as needed):
 
 Validated profile test payload (no mask):
 
-<!-- schema: schemas/v0.1.0a8/profile-test-label-payload.schema.json -->
+<!-- schema: schemas/v0.1.0a9/profile-test-label-payload.schema.json -->
 ```json
 {
   "profile_npy": "/path/to/test_profile.npy",
@@ -5557,7 +5557,7 @@ pred_model \
 
 # Model configuration
 
-Nested `model_config` trees for **v0.1.0a8**.
+Nested `model_config` trees for **v0.1.0a9**.
 
 The canonical composition contract — top-level vs nestable roles, nested ref
 shape, `model_name` uniqueness, predictor map keys, trimming geometry, and
@@ -5578,9 +5578,9 @@ validated examples — lives on
 ## Schema snapshot
 
 Documentation schema for the top-level tree:
-[`encoder-predictor-model-config.schema.json`](../schemas/v0.1.0a8/encoder-predictor-model-config.schema.json).
+[`encoder-predictor-model-config.schema.json`](../schemas/v0.1.0a9/encoder-predictor-model-config.schema.json).
 
-<!-- schema: schemas/v0.1.0a8/encoder-predictor-model-config.schema.json -->
+<!-- schema: schemas/v0.1.0a9/encoder-predictor-model-config.schema.json -->
 ```json
 {
   "model_name": "ep_main",
@@ -5614,7 +5614,7 @@ Documentation schema for the top-level tree:
 
 # Hyperparameters
 
-Fixed hyperparameter JSON for `train_model` and `pred_model` in **v0.1.0a8**.
+Fixed hyperparameter JSON for `train_model` and `pred_model` in **v0.1.0a9**.
 This page is the canonical reference for top-level required keys, scalar and
 profile head wrappers, inheritance, freezing, and the Adam optimizer contract.
 
@@ -5680,7 +5680,7 @@ count pairing: [ProfilePredictor](../models/profile-predictor.md),
 [RCProfilePredictor](../models/rc-profile-predictor.md), and
 [Profile reconstruction](../profiles.md).
 
-<!-- schema: schemas/v0.1.0a8/profile-head-hparams-wrapper.schema.json -->
+<!-- schema: schemas/v0.1.0a9/profile-head-hparams-wrapper.schema.json -->
 ```json
 {
   "profile_alpha": 1.0,
@@ -5737,7 +5737,7 @@ and [Config: init_checkpoint](../config.md#init_checkpoint-train--tune).
 
 ## Complete example
 
-<!-- schema: schemas/v0.1.0a8/encoder-predictor-hparams.schema.json -->
+<!-- schema: schemas/v0.1.0a9/encoder-predictor-hparams.schema.json -->
 ```json
 {
   "batch_size": 32,
@@ -5814,10 +5814,10 @@ Scalar wrappers reject unknown keys:
 
 ## Schema snapshot
 
-[`encoder-predictor-hparams.schema.json`](../schemas/v0.1.0a8/encoder-predictor-hparams.schema.json),
-[`scalar-head-hparams-wrapper.schema.json`](../schemas/v0.1.0a8/scalar-head-hparams-wrapper.schema.json),
+[`encoder-predictor-hparams.schema.json`](../schemas/v0.1.0a9/encoder-predictor-hparams.schema.json),
+[`scalar-head-hparams-wrapper.schema.json`](../schemas/v0.1.0a9/scalar-head-hparams-wrapper.schema.json),
 and
-[`profile-head-hparams-wrapper.schema.json`](../schemas/v0.1.0a8/profile-head-hparams-wrapper.schema.json).
+[`profile-head-hparams-wrapper.schema.json`](../schemas/v0.1.0a9/profile-head-hparams-wrapper.schema.json).
 
 ## Related pages
 
@@ -5838,11 +5838,11 @@ and
 
 # Tuning spaces
 
-Tune-space JSON for `tune_model --tune-space` in exact release **v0.1.0a8**.
+Tune-space JSON for `tune_model --tune-space` in exact release **v0.1.0a9**.
 
 This page is the canonical human-readable contract for the search-space
 envelope and leaf descriptors. The documentation schema snapshot is
-[tune-space.schema.json](../schemas/v0.1.0a8/tune-space.schema.json).
+[tune-space.schema.json](../schemas/v0.1.0a9/tune-space.schema.json).
 
 Drawn hyperparameter **values** follow the same field meanings as fixed
 hparams: reuse [Hyperparameters](hyperparameters.md) for key tables, inheritance,
@@ -5907,7 +5907,7 @@ Placeholder paths are not used inside the tune-space file itself; values are
 numeric / structural. This example matches the composition used on
 [Tune configuration](tune.md).
 
-<!-- schema: schemas/v0.1.0a8/tune-space.schema.json -->
+<!-- schema: schemas/v0.1.0a9/tune-space.schema.json -->
 ```json
 {
   "method": "random",
@@ -6015,7 +6015,7 @@ Top-level learning rate may not be zero:
 
 # Losses
 
-Loss objects paired with prediction heads in **v0.1.0a8**. This page is the
+Loss objects paired with prediction heads in **v0.1.0a9**. This page is the
 canonical reference for the `{ "type", "params" }` contract.
 
 Head wrappers that embed these objects are documented on
@@ -6031,7 +6031,7 @@ Head wrappers that embed these objects are documented on
 Unknown keys on the loss object fail closed. Omitting `params` or supplying
 non-empty `params` is rejected.
 
-<!-- schema: schemas/v0.1.0a8/loss.schema.json -->
+<!-- schema: schemas/v0.1.0a9/loss.schema.json -->
 ```json
 {
   "type": "categorical_cross_entropy",
@@ -6083,7 +6083,7 @@ respective branches: `profile_cross_entropy` for the profile distribution and
 
 ## Schema snapshot
 
-[`loss.schema.json`](../schemas/v0.1.0a8/loss.schema.json).
+[`loss.schema.json`](../schemas/v0.1.0a9/loss.schema.json).
 
 ## Related pages
 
@@ -6106,7 +6106,7 @@ respective branches: `profile_cross_entropy` for the profile distribution and
 
 # Checkpoints
 
-Checkpoint artifacts written and consumed in **v0.1.0a8**.
+Checkpoint artifacts written and consumed in **v0.1.0a9**.
 
 ## Producers and consumers
 
@@ -6231,7 +6231,7 @@ modules fail closed. Exact error text is not stabilized here.
 
 # Hyperparameter sidecars
 
-Hyperparameter sidecar JSON written alongside checkpoints in **v0.1.0a8**.
+Hyperparameter sidecar JSON written alongside checkpoints in **v0.1.0a9**.
 
 ## Producers and consumers
 
@@ -6287,7 +6287,7 @@ Canonical field tables: [Hyperparameters](../configuration/hyperparameters.md).
 
 # Predictions
 
-Prediction array artifacts written by `pred_model` in **v0.1.0a8**.
+Prediction array artifacts written by `pred_model` in **v0.1.0a9**.
 
 ## Producers and consumers
 
@@ -6400,7 +6400,7 @@ labels.
 
 # Attributions
 
-Attribution array artifacts from `pred_model` in exact release **v0.1.0a8**.
+Attribution array artifacts from `pred_model` in exact release **v0.1.0a9**.
 
 Target grammar, modes, and method notes:
 [Attribution workflow](../workflows/attribution.md). Flag summary:
@@ -6496,7 +6496,7 @@ demo_pred.ep_profile.atac_head.attr_ig.log1p-count_atac_a.npy
 ```
 
 Structural target-string examples validate against
-[attribution-target-string.schema.json](../schemas/v0.1.0a8/attribution-target-string.schema.json)
+[attribution-target-string.schema.json](../schemas/v0.1.0a9/attribution-target-string.schema.json)
 on the [Attribution workflow](../workflows/attribution.md#examples) page.
 
 ## Methods (artifact context)
@@ -6528,7 +6528,7 @@ The method token appears in the filename; it does not change shape or dtype.
 
 # Metrics
 
-Logged metric namespaces for **v0.1.0a8** training.
+Logged metric namespaces for **v0.1.0a9** training.
 
 ## Producers and consumers
 
@@ -6600,7 +6600,7 @@ Tune `wandb.mode` must be `online` or `offline` (sweeps only). See
 
 # Validation and errors
 
-How **v0.1.0a8** commands respond to invalid inputs.
+How **v0.1.0a9** commands respond to invalid inputs.
 
 ## Fail-closed behavior
 
@@ -6678,7 +6678,7 @@ expected artifacts under `--opath`.
 
 # Glossary
 
-Canonical sequence-to-function terms for exact release **v0.1.0a8**. Prefer
+Canonical sequence-to-function terms for exact release **v0.1.0a9**. Prefer
 these names in configuration discussion and documentation.
 
 ## Prediction head
@@ -6796,12 +6796,12 @@ Avoid: sequence RC (when referring to this channel-first embedding operation).
 
 # Compatibility
 
-Compatibility statement for exact release **v0.1.0a8**.
+Compatibility statement for exact release **v0.1.0a9**.
 
 ## Exact-release accuracy
 
 This documentation site describes the public CLI, configuration, data, and
-artifact contracts of tag **v0.1.0a8** only. Facts on this site are intended to
+artifact contracts of tag **v0.1.0a9** only. Facts on this site are intended to
 match that exact release.
 
 ## No cross-alpha promise
@@ -6809,17 +6809,17 @@ match that exact release.
 Alpha tags may change flags, configuration keys, array contracts, and artifact
 layouts without a migration guide. Do not assume that configs, checkpoints, or
 workflows written for an earlier or later alpha are compatible with
-**v0.1.0a8**, or the reverse.
+**v0.1.0a9**, or the reverse.
 
-Within **v0.1.0a8**, new training runs write typed `seq2func_ckpt_v2`
+Within **v0.1.0a9**, new training runs write typed `seq2func_ckpt_v2`
 checkpoints. Loaders accept those files and legacy `seq2func_ckpt_v1` checkpoints
 for ordinary-model target trees; see [Checkpoints](../artifacts/checkpoints.md).
 
-Pin the `v0.1.0a8` tag when you need a fixed cut.
+Pin the `v0.1.0a9` tag when you need a fixed cut.
 
 ## Supported interface boundary
 
-Supported for **v0.1.0a8**:
+Supported for **v0.1.0a9**:
 
 - `train_model`, `tune_model`, and `pred_model`
 - Their documented configuration JSON contracts
@@ -6835,13 +6835,13 @@ future release explicitly documents a Python API.
 
 ## Installation access
 
-Source installation requires repository access and authentication. **v0.1.0a8**
+Source installation requires repository access and authentication. **v0.1.0a9**
 is not published to PyPI and is not anonymously installable. See
 [Install](../install.md).
 
 ## Schema snapshots
 
-JSON Schema files under [`schemas/v0.1.0a8/`](schemas.md) are
+JSON Schema files under [`schemas/v0.1.0a9/`](schemas.md) are
 documentation-owned snapshots for this exact release. They assist structural
 checks and editor tooling; runtime validators in the installed package remain
 authoritative for filesystem and tensor semantics that JSON Schema cannot
@@ -6870,7 +6870,7 @@ pass `--num-agents`, it must equal the token count.
 
 ## Can I use ConvEncoder, ConvSelfAttEncoder, ClassPredictor, RegressPredictor, ProfilePredictor, or their RC-aware counterparts as the top-level model_type?
 
-No. In **v0.1.0a8** only `EncoderPredictor` is a top-level CLI model type.
+No. In **v0.1.0a9** only `EncoderPredictor` is a top-level CLI model type.
 Encoders (`ConvEncoder`, `RCConvEncoder`, `ConvSelfAttEncoder`,
 `RCConvSelfAttEncoder`) and prediction heads (`ClassPredictor`,
 `RCClassPredictor`, `RegressPredictor`, `RCRegressPredictor`,
@@ -6926,13 +6926,13 @@ freeze the loaded modules. This is selective weight init, not
 
 ## Is there a PyPI package?
 
-No. **v0.1.0a8** is not published to PyPI and is not anonymously installable.
+No. **v0.1.0a9** is not published to PyPI and is not anonymously installable.
 Source installation requires repository access and authentication. See
 [Install](install.md) and [Compatibility](reference/compatibility.md).
 
 ## Are Python imports a supported API?
 
-No. For **v0.1.0a8**, the supported public interface is the three CLIs and their
+No. For **v0.1.0a9**, the supported public interface is the three CLIs and their
 configuration, data, and artifact contracts. See the [Home](index.md) page and
 [Compatibility](reference/compatibility.md).
 
@@ -6946,9 +6946,9 @@ configuration, data, and artifact contracts. See the [Home](index.md) page and
 
 # Schemas
 
-Documentation-owned JSON Schema snapshots for exact release **v0.1.0a8**.
+Documentation-owned JSON Schema snapshots for exact release **v0.1.0a9**.
 
-These files live under `schemas/v0.1.0a8/` on this site. They are **not**
+These files live under `schemas/v0.1.0a9/` on this site. They are **not**
 canonical runtime definitions. Runtime validators in the installed package
 remain authoritative for filesystem properties, array contents, and other
 behavior JSON Schema cannot express.
@@ -6957,34 +6957,34 @@ behavior JSON Schema cannot express.
 
 - JSON Schema Draft **2020-12**
 - Stable `$id` values under
-  `https://haiyuan-yu-lab.github.io/xp-seq2func-model-docs/schemas/v0.1.0a8/`
+  `https://haiyuan-yu-lab.github.io/xp-seq2func-model-docs/schemas/v0.1.0a9/`
 - Reusable shared definitions in `defs.schema.json`
 
 ## Available snapshots
 
 | Schema | Purpose |
 | --- | --- |
-| [`defs.schema.json`](../schemas/v0.1.0a8/defs.schema.json) | Reusable `$defs` for paths, numbers, strings, losses, data blocks, and nested fragments |
-| [`init-checkpoint.schema.json`](../schemas/v0.1.0a8/init-checkpoint.schema.json) | Optional train/tune `init_checkpoint` object |
-| [`early-stopping.schema.json`](../schemas/v0.1.0a8/early-stopping.schema.json) | Train/tune `early_stopping` object |
-| [`wandb-train.schema.json`](../schemas/v0.1.0a8/wandb-train.schema.json) | Train-config `wandb` block |
-| [`wandb-tune.schema.json`](../schemas/v0.1.0a8/wandb-tune.schema.json) | Tune-config `wandb` block |
-| [`data-source.schema.json`](../schemas/v0.1.0a8/data-source.schema.json) | Train/val split data block (`train_data` / `val_data`) |
-| [`test-data.schema.json`](../schemas/v0.1.0a8/test-data.schema.json) | Prediction `test_data` block (labels optional; no `mask_npy`) |
-| [`train-config.schema.json`](../schemas/v0.1.0a8/train-config.schema.json) | Complete `train_model --config` JSON |
-| [`tune-config.schema.json`](../schemas/v0.1.0a8/tune-config.schema.json) | Complete `tune_model --config` JSON |
-| [`tune-space.schema.json`](../schemas/v0.1.0a8/tune-space.schema.json) | Complete `tune_model --tune-space` JSON |
-| [`pred-config.schema.json`](../schemas/v0.1.0a8/pred-config.schema.json) | Complete `pred_model --config` JSON |
-| [`attribution-target-string.schema.json`](../schemas/v0.1.0a8/attribution-target-string.schema.json) | Structural patterns for `pred_model --attribution-target` strings |
-| [`encoder-predictor-model-config.schema.json`](../schemas/v0.1.0a8/encoder-predictor-model-config.schema.json) | Top-level `EncoderPredictor` `model_config` tree |
-| [`encoder-predictor-hparams.schema.json`](../schemas/v0.1.0a8/encoder-predictor-hparams.schema.json) | Top-level pre-inheritance fixed hyperparameters |
-| [`scalar-head-hparams-wrapper.schema.json`](../schemas/v0.1.0a8/scalar-head-hparams-wrapper.schema.json) | `ClassPredictor` / `RCClassPredictor` / `RegressPredictor` / `RCRegressPredictor` hparams wrapper |
-| [`profile-predictor-model-config.schema.json`](../schemas/v0.1.0a8/profile-predictor-model-config.schema.json) | Nestable `ProfilePredictor` `model_config` |
-| [`rc-profile-predictor-model-config.schema.json`](../schemas/v0.1.0a8/rc-profile-predictor-model-config.schema.json) | Nestable `RCProfilePredictor` `model_config` |
-| [`profile-head-hparams-wrapper.schema.json`](../schemas/v0.1.0a8/profile-head-hparams-wrapper.schema.json) | `ProfilePredictor` / `RCProfilePredictor` hparams wrapper |
-| [`profile-label-payload.schema.json`](../schemas/v0.1.0a8/profile-label-payload.schema.json) | Train/val profile payload (`profile_npy` / `count_npy` / optional `mask_npy`) |
-| [`profile-test-label-payload.schema.json`](../schemas/v0.1.0a8/profile-test-label-payload.schema.json) | Test profile payload (no `mask_npy`) |
-| [`loss.schema.json`](../schemas/v0.1.0a8/loss.schema.json) | Loss object `{ type, params }` |
+| [`defs.schema.json`](../schemas/v0.1.0a9/defs.schema.json) | Reusable `$defs` for paths, numbers, strings, losses, data blocks, and nested fragments |
+| [`init-checkpoint.schema.json`](../schemas/v0.1.0a9/init-checkpoint.schema.json) | Optional train/tune `init_checkpoint` object |
+| [`early-stopping.schema.json`](../schemas/v0.1.0a9/early-stopping.schema.json) | Train/tune `early_stopping` object |
+| [`wandb-train.schema.json`](../schemas/v0.1.0a9/wandb-train.schema.json) | Train-config `wandb` block |
+| [`wandb-tune.schema.json`](../schemas/v0.1.0a9/wandb-tune.schema.json) | Tune-config `wandb` block |
+| [`data-source.schema.json`](../schemas/v0.1.0a9/data-source.schema.json) | Train/val split data block (`train_data` / `val_data`) |
+| [`test-data.schema.json`](../schemas/v0.1.0a9/test-data.schema.json) | Prediction `test_data` block (labels optional; no `mask_npy`) |
+| [`train-config.schema.json`](../schemas/v0.1.0a9/train-config.schema.json) | Complete `train_model --config` JSON |
+| [`tune-config.schema.json`](../schemas/v0.1.0a9/tune-config.schema.json) | Complete `tune_model --config` JSON |
+| [`tune-space.schema.json`](../schemas/v0.1.0a9/tune-space.schema.json) | Complete `tune_model --tune-space` JSON |
+| [`pred-config.schema.json`](../schemas/v0.1.0a9/pred-config.schema.json) | Complete `pred_model --config` JSON |
+| [`attribution-target-string.schema.json`](../schemas/v0.1.0a9/attribution-target-string.schema.json) | Structural patterns for `pred_model --attribution-target` strings |
+| [`encoder-predictor-model-config.schema.json`](../schemas/v0.1.0a9/encoder-predictor-model-config.schema.json) | Top-level `EncoderPredictor` `model_config` tree |
+| [`encoder-predictor-hparams.schema.json`](../schemas/v0.1.0a9/encoder-predictor-hparams.schema.json) | Top-level pre-inheritance fixed hyperparameters |
+| [`scalar-head-hparams-wrapper.schema.json`](../schemas/v0.1.0a9/scalar-head-hparams-wrapper.schema.json) | `ClassPredictor` / `RCClassPredictor` / `RegressPredictor` / `RCRegressPredictor` hparams wrapper |
+| [`profile-predictor-model-config.schema.json`](../schemas/v0.1.0a9/profile-predictor-model-config.schema.json) | Nestable `ProfilePredictor` `model_config` |
+| [`rc-profile-predictor-model-config.schema.json`](../schemas/v0.1.0a9/rc-profile-predictor-model-config.schema.json) | Nestable `RCProfilePredictor` `model_config` |
+| [`profile-head-hparams-wrapper.schema.json`](../schemas/v0.1.0a9/profile-head-hparams-wrapper.schema.json) | `ProfilePredictor` / `RCProfilePredictor` hparams wrapper |
+| [`profile-label-payload.schema.json`](../schemas/v0.1.0a9/profile-label-payload.schema.json) | Train/val profile payload (`profile_npy` / `count_npy` / optional `mask_npy`) |
+| [`profile-test-label-payload.schema.json`](../schemas/v0.1.0a9/profile-test-label-payload.schema.json) | Test profile payload (no `mask_npy`) |
+| [`loss.schema.json`](../schemas/v0.1.0a9/loss.schema.json) | Loss object `{ type, params }` |
 
 ## Example association convention
 
@@ -6992,7 +6992,7 @@ Complete inline JSON examples in Markdown may declare their schema with an HTML
 comment immediately before a fenced `json` block. The comment path is relative
 to the MkDocs `docs/` directory, for example:
 
-`<!-- schema: schemas/v0.1.0a8/init-checkpoint.schema.json -->`
+`<!-- schema: schemas/v0.1.0a9/init-checkpoint.schema.json -->`
 
 Docs-only checks validate those complete examples structurally. Illustrative
 fragments omit the comment and are skipped.
@@ -7000,7 +7000,7 @@ fragments omit the comment and are skipped.
 
 ## Example: profile configuration fragments
 
-<!-- schema: schemas/v0.1.0a8/profile-predictor-model-config.schema.json -->
+<!-- schema: schemas/v0.1.0a9/profile-predictor-model-config.schema.json -->
 ```json
 {
   "model_name": "atac_profile",
@@ -7009,7 +7009,7 @@ fragments omit the comment and are skipped.
 }
 ```
 
-<!-- schema: schemas/v0.1.0a8/profile-head-hparams-wrapper.schema.json -->
+<!-- schema: schemas/v0.1.0a9/profile-head-hparams-wrapper.schema.json -->
 ```json
 {
   "profile_alpha": 1.0,
@@ -7026,7 +7026,7 @@ fragments omit the comment and are skipped.
 }
 ```
 
-<!-- schema: schemas/v0.1.0a8/profile-label-payload.schema.json -->
+<!-- schema: schemas/v0.1.0a9/profile-label-payload.schema.json -->
 ```json
 {
   "profile_npy": "/path/to/train_profile.npy",
@@ -7040,7 +7040,7 @@ See [ProfilePredictor](../models/profile-predictor.md),
 
 ## Example: init_checkpoint
 
-<!-- schema: schemas/v0.1.0a8/init-checkpoint.schema.json -->
+<!-- schema: schemas/v0.1.0a9/init-checkpoint.schema.json -->
 ```json
 {
   "path": "/path/to/checkpoint.pth",
@@ -7052,7 +7052,7 @@ See also [Config: init_checkpoint](../config.md#init_checkpoint-train--tune).
 
 ## Example: model composition
 
-<!-- schema: schemas/v0.1.0a8/encoder-predictor-model-config.schema.json -->
+<!-- schema: schemas/v0.1.0a9/encoder-predictor-model-config.schema.json -->
 ```json
 {
   "model_name": "ep_main",
@@ -7077,9 +7077,9 @@ See [Model composition](../models/composition.md) and
 
 Complete train-config examples live on
 [Train configuration](../configuration/train.md) and validate against
-[train-config.schema.json](../schemas/v0.1.0a8/train-config.schema.json).
+[train-config.schema.json](../schemas/v0.1.0a9/train-config.schema.json).
 Split-only examples validate against
-[data-source.schema.json](../schemas/v0.1.0a8/data-source.schema.json).
+[data-source.schema.json](../schemas/v0.1.0a9/data-source.schema.json).
 
 ## Example: multi-source data nesting
 
@@ -7094,31 +7094,31 @@ examples validate against `data-source.schema.json`, `test-data.schema.json`,
 Reusable nested definitions (`pathOrPathArray`, `sourceFracs`,
 `encoderDataBlock`, `splitDataBlock`, `testDataBlock`, scalar and profile label
 payloads) live in
-[defs.schema.json](../schemas/v0.1.0a8/defs.schema.json).
+[defs.schema.json](../schemas/v0.1.0a9/defs.schema.json).
 
 ## Example: prediction config (excerpt association)
 
 Complete prediction-config examples live on
 [Prediction configuration](../configuration/prediction.md) and validate against
-[pred-config.schema.json](../schemas/v0.1.0a8/pred-config.schema.json).
+[pred-config.schema.json](../schemas/v0.1.0a9/pred-config.schema.json).
 Test-data-only examples validate against
-[test-data.schema.json](../schemas/v0.1.0a8/test-data.schema.json).
+[test-data.schema.json](../schemas/v0.1.0a9/test-data.schema.json).
 
 ## Example: attribution-target strings
 
 Structural string examples live on
 [Attribution workflow](../workflows/attribution.md) and validate against
-[attribution-target-string.schema.json](../schemas/v0.1.0a8/attribution-target-string.schema.json).
+[attribution-target-string.schema.json](../schemas/v0.1.0a9/attribution-target-string.schema.json).
 Artifact filename contracts:
 [Attributions](../artifacts/attributions.md). Runtime remains authoritative for
 class ranges, track membership, bin counts, and head-type checks.
 
-<!-- schema: schemas/v0.1.0a8/attribution-target-string.schema.json -->
+<!-- schema: schemas/v0.1.0a9/attribution-target-string.schema.json -->
 ```json
 "cls:probability:1"
 ```
 
-<!-- schema: schemas/v0.1.0a8/attribution-target-string.schema.json -->
+<!-- schema: schemas/v0.1.0a9/attribution-target-string.schema.json -->
 ```json
 "prof:profile-logit:short,0"
 ```
@@ -7128,8 +7128,8 @@ class ranges, track membership, bin counts, and head-type checks.
 Complete tune-config and tune-space examples live on
 [Tune configuration](../configuration/tune.md) and
 [Tuning spaces](../configuration/tuning-spaces.md). They validate against
-[tune-config.schema.json](../schemas/v0.1.0a8/tune-config.schema.json) and
-[tune-space.schema.json](../schemas/v0.1.0a8/tune-space.schema.json).
+[tune-config.schema.json](../schemas/v0.1.0a9/tune-config.schema.json) and
+[tune-space.schema.json](../schemas/v0.1.0a9/tune-space.schema.json).
 Tune `wandb` fragments use
-[wandb-tune.schema.json](../schemas/v0.1.0a8/wandb-tune.schema.json).
+[wandb-tune.schema.json](../schemas/v0.1.0a9/wandb-tune.schema.json).
 

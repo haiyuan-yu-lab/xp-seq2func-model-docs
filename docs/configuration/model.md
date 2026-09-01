@@ -1,6 +1,6 @@
 # Model configuration
 
-Nested `model_config` trees for **v0.1.0a8**.
+Nested `model_config` trees for **v0.1.0a9**.
 
 The canonical composition contract — top-level vs nestable roles, nested ref
 shape, `model_name` uniqueness, predictor map keys, trimming geometry, and
@@ -21,9 +21,9 @@ validated examples — lives on
 ## Schema snapshot
 
 Documentation schema for the top-level tree:
-[`encoder-predictor-model-config.schema.json`](../schemas/v0.1.0a8/encoder-predictor-model-config.schema.json).
+[`encoder-predictor-model-config.schema.json`](../schemas/v0.1.0a9/encoder-predictor-model-config.schema.json).
 
-<!-- schema: schemas/v0.1.0a8/encoder-predictor-model-config.schema.json -->
+<!-- schema: schemas/v0.1.0a9/encoder-predictor-model-config.schema.json -->
 ```json
 {
   "model_name": "ep_main",

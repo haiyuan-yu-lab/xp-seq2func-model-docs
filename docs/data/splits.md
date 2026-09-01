@@ -1,6 +1,6 @@
 # Splits
 
-Train, validation, and test split contracts for **v0.1.0a8**.
+Train, validation, and test split contracts for **v0.1.0a9**.
 
 | Split key | Used by | Labels |
 | --- | --- | --- |
@@ -9,10 +9,10 @@ Train, validation, and test split contracts for **v0.1.0a8**.
 | `test_data` | `pred_model` | Optional (label-free prediction allowed) |
 
 This page focuses on the train/val block used by training. Schema snapshot:
-[data-source.schema.json](../schemas/v0.1.0a8/data-source.schema.json).
+[data-source.schema.json](../schemas/v0.1.0a9/data-source.schema.json).
 Prediction `test_data` (label-optional, no `mask_npy`):
 [Prediction configuration](../configuration/prediction.md) and
-[test-data.schema.json](../schemas/v0.1.0a8/test-data.schema.json).
+[test-data.schema.json](../schemas/v0.1.0a9/test-data.schema.json).
 
 ## Required keys
 
@@ -72,7 +72,7 @@ Path arrays for labels must use the same `S` and the same source order as
 
 ## Complete single-source example
 
-<!-- schema: schemas/v0.1.0a8/data-source.schema.json -->
+<!-- schema: schemas/v0.1.0a9/data-source.schema.json -->
 ```json
 {
   "encoder": {
@@ -95,7 +95,7 @@ Path arrays for labels must use the same `S` and the same source order as
 Complete multi-source train/val block (schema-validated). Cross-source
 invariants: [Multi-source](multi-source.md).
 
-<!-- schema: schemas/v0.1.0a8/data-source.schema.json -->
+<!-- schema: schemas/v0.1.0a9/data-source.schema.json -->
 ```json
 {
   "encoder": {

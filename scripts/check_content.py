@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Content checks for the v0.1.0a8 documentation foundation."""
+"""Content checks for the v0.1.0a9 documentation foundation."""
 
 from __future__ import annotations
 
@@ -8,7 +8,7 @@ import re
 import sys
 from pathlib import Path
 
-VERSION = "v0.1.0a8"
+VERSION = "v0.1.0a9"
 BINARY_SUFFIXES = {
     ".npy",
     ".npz",

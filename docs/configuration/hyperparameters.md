@@ -1,6 +1,6 @@
 # Hyperparameters
 
-Fixed hyperparameter JSON for `train_model` and `pred_model` in **v0.1.0a8**.
+Fixed hyperparameter JSON for `train_model` and `pred_model` in **v0.1.0a9**.
 This page is the canonical reference for top-level required keys, scalar and
 profile head wrappers, inheritance, freezing, and the Adam optimizer contract.
 
@@ -66,7 +66,7 @@ count pairing: [ProfilePredictor](../models/profile-predictor.md),
 [RCProfilePredictor](../models/rc-profile-predictor.md), and
 [Profile reconstruction](../profiles.md).
 
-<!-- schema: schemas/v0.1.0a8/profile-head-hparams-wrapper.schema.json -->
+<!-- schema: schemas/v0.1.0a9/profile-head-hparams-wrapper.schema.json -->
 ```json
 {
   "profile_alpha": 1.0,
@@ -123,7 +123,7 @@ and [Config: init_checkpoint](../config.md#init_checkpoint-train--tune).
 
 ## Complete example
 
-<!-- schema: schemas/v0.1.0a8/encoder-predictor-hparams.schema.json -->
+<!-- schema: schemas/v0.1.0a9/encoder-predictor-hparams.schema.json -->
 ```json
 {
   "batch_size": 32,
@@ -200,10 +200,10 @@ Scalar wrappers reject unknown keys:
 
 ## Schema snapshot
 
-[`encoder-predictor-hparams.schema.json`](../schemas/v0.1.0a8/encoder-predictor-hparams.schema.json),
-[`scalar-head-hparams-wrapper.schema.json`](../schemas/v0.1.0a8/scalar-head-hparams-wrapper.schema.json),
+[`encoder-predictor-hparams.schema.json`](../schemas/v0.1.0a9/encoder-predictor-hparams.schema.json),
+[`scalar-head-hparams-wrapper.schema.json`](../schemas/v0.1.0a9/scalar-head-hparams-wrapper.schema.json),
 and
-[`profile-head-hparams-wrapper.schema.json`](../schemas/v0.1.0a8/profile-head-hparams-wrapper.schema.json).
+[`profile-head-hparams-wrapper.schema.json`](../schemas/v0.1.0a9/profile-head-hparams-wrapper.schema.json).
 
 ## Related pages
 

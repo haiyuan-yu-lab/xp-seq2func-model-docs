@@ -1,6 +1,6 @@
 # ClassPredictor
 
-Classification prediction head for **v0.1.0a8**.
+Classification prediction head for **v0.1.0a9**.
 
 Nestable only under `EncoderPredictor.predictor`. Consumes the shared trimmed
 encoder embedding and emits class probabilities. See
@@ -48,7 +48,7 @@ Canonical wrapper, inheritance, and freeze rules:
 [Hyperparameters](../configuration/hyperparameters.md). Loss object contract:
 [Losses](../configuration/losses.md).
 
-<!-- schema: schemas/v0.1.0a8/scalar-head-hparams-wrapper.schema.json -->
+<!-- schema: schemas/v0.1.0a9/scalar-head-hparams-wrapper.schema.json -->
 ```json
 {
   "alpha": 1,

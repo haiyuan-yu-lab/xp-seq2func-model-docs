@@ -1,7 +1,7 @@
 # Profile masks workflow
 
 How **positional validity masks** interact with profile training and prediction
-in **v0.1.0a8**.
+in **v0.1.0a9**.
 
 A positional validity mask is a boolean annotation aligned to retained sequence
 positions. `true` marks positions eligible for position-wise profile losses and

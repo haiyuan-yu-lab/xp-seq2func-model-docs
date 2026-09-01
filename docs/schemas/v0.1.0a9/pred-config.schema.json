@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://haiyuan-yu-lab.github.io/xp-seq2func-model-docs/schemas/v0.1.0a8/pred-config.schema.json",
-  "title": "pred_model config JSON (v0.1.0a8 documentation snapshot)",
-  "description": "Documentation-owned schema snapshot for the pred_model --config JSON in exact release v0.1.0a8. test_data reuses the nested test-data contract (single-source or multi-source). Not a canonical runtime definition. Forbidden top-level keys include wandb, loss, optimizer, max_epochs, early_stopping, init_checkpoint, and attribution*. Runtime also validates CUDA, array contents, and composition uniqueness.",
+  "$id": "https://haiyuan-yu-lab.github.io/xp-seq2func-model-docs/schemas/v0.1.0a9/pred-config.schema.json",
+  "title": "pred_model config JSON (v0.1.0a9 documentation snapshot)",
+  "description": "Documentation-owned schema snapshot for the pred_model --config JSON in exact release v0.1.0a9. test_data reuses the nested test-data contract (single-source or multi-source). Not a canonical runtime definition. Forbidden top-level keys include wandb, loss, optimizer, max_epochs, early_stopping, init_checkpoint, and attribution*. Runtime also validates CUDA, array contents, and composition uniqueness.",
   "type": "object",
   "additionalProperties": false,
   "required": [
