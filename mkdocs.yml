@@ -59,8 +59,11 @@ nav:
       - ConvSelfAttEncoder: models/conv-self-att-encoder.md
       - RCConvSelfAttEncoder: models/rc-conv-self-att-encoder.md
       - ClassPredictor: models/class-predictor.md
+      - RCClassPredictor: models/rc-class-predictor.md
       - RegressPredictor: models/regress-predictor.md
+      - RCRegressPredictor: models/rc-regress-predictor.md
       - ProfilePredictor: models/profile-predictor.md
+      - RCProfilePredictor: models/rc-profile-predictor.md
       - Profile reconstruction: profiles.md
   - Data Contracts:
       - Arrays: data/arrays.md

@@ -63,7 +63,29 @@
             "additionalProperties": false,
             "required": ["model_type", "model_config"],
             "properties": {
+              "model_type": { "const": "RCClassPredictor" },
+              "model_config": {
+                "$ref": "defs.schema.json#/$defs/classPredictorModelConfig"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["model_type", "model_config"],
+            "properties": {
               "model_type": { "const": "RegressPredictor" },
+              "model_config": {
+                "$ref": "defs.schema.json#/$defs/identityModelConfig"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["model_type", "model_config"],
+            "properties": {
+              "model_type": { "const": "RCRegressPredictor" },
               "model_config": {
                 "$ref": "defs.schema.json#/$defs/identityModelConfig"
               }
@@ -77,6 +99,17 @@
               "model_type": { "const": "ProfilePredictor" },
               "model_config": {
                 "$ref": "defs.schema.json#/$defs/profilePredictorModelConfig"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["model_type", "model_config"],
+            "properties": {
+              "model_type": { "const": "RCProfilePredictor" },
+              "model_config": {
+                "$ref": "defs.schema.json#/$defs/rcProfilePredictorModelConfig"
               }
             }
           }

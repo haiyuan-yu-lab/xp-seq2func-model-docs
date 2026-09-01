@@ -12,7 +12,7 @@ prediction heads nest under that tree; they are never valid top-level CLI
 | --- | --- | --- |
 | Top-level model | `EncoderPredictor` | CLI `model_type` / `model_config` |
 | Encoder (nestable) | `ConvEncoder`, `RCConvEncoder`, `ConvSelfAttEncoder`, `RCConvSelfAttEncoder` | `model_config.encoder` only |
-| Prediction head (nestable) | `ClassPredictor`, `RegressPredictor`, `ProfilePredictor` | `model_config.predictor` map only |
+| Prediction head (nestable) | `ClassPredictor`, `RCClassPredictor`, `RegressPredictor`, `RCRegressPredictor`, `ProfilePredictor`, `RCProfilePredictor` | `model_config.predictor` map only |
 
 Nested components always use the exact reference shape
 `{ "model_type", "model_config" }` — no other keys.
@@ -53,9 +53,48 @@ one-hot (B, 4, L)
 | `C` | Channel width (`n_channels` after inheritance) |
 
 All prediction heads under one `EncoderPredictor` consume the same trimmed
-embedding.
+embedding. Ordinary and RC-aware heads may appear together in one `predictor`
+map; encoder choice does not restrict which head types may be nested.
 
-## Valid example
+Mixing head types does **not** add automatic reverse-complement sequence
+augmentation, an RC consistency loss or metric, or an attribution guarantee
+that input-space attributions transform under reverse complement. Each head
+keeps its own embedding-level contract on the shared trimmed embedding.
+
+## Mixed-head example
+
+<!-- schema: schemas/v0.1.0a8/encoder-predictor-model-config.schema.json -->
+```json
+{
+  "model_name": "ep_main",
+  "embedding_trimming": 0,
+  "encoder": {
+    "model_type": "RCConvEncoder",
+    "model_config": { "model_name": "enc" }
+  },
+  "predictor": {
+    "cls": {
+      "model_type": "ClassPredictor",
+      "model_config": { "model_name": "cls_head", "n_class": 2 }
+    },
+    "rc_reg": {
+      "model_type": "RCRegressPredictor",
+      "model_config": { "model_name": "rc_reg_head" }
+    },
+    "prof": {
+      "model_type": "RCProfilePredictor",
+      "model_config": {
+        "model_name": "rc_prof_head",
+        "track_names": ["track0", "track1"],
+        "bin_size": 1,
+        "track_transform": "preserve"
+      }
+    }
+  }
+}
+```
+
+## Valid example (scalar heads)
 
 <!-- schema: schemas/v0.1.0a8/encoder-predictor-model-config.schema.json -->
 ```json
@@ -118,8 +157,10 @@ Predictor map keys must not contain `:`:
 - [ConvSelfAttEncoder](conv-self-att-encoder.md)
 - [RCConvSelfAttEncoder](rc-conv-self-att-encoder.md)
 - [ClassPredictor](class-predictor.md)
+- [RCClassPredictor](rc-class-predictor.md)
+- [RCRegressPredictor](rc-regress-predictor.md)
 - [RegressPredictor](regress-predictor.md)
-- [ProfilePredictor](profile-predictor.md) / [Profile reconstruction](../profiles.md)
+- [ProfilePredictor](profile-predictor.md) / [RCProfilePredictor](rc-profile-predictor.md) / [Profile reconstruction](../profiles.md)
 - [Model configuration](../configuration/model.md)
 - [Hyperparameters](../configuration/hyperparameters.md)
 - [Schemas](../reference/schemas.md)

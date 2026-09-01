@@ -14,7 +14,7 @@ summary: [`pred_model`](../cli/pred_model.md).
 | Mode | CLI | Behavior |
 | --- | --- | --- |
 | Off | omit `--attribution` | Prediction arrays only; no `attr_*.npy` |
-| Legacy | `--attribution METHOD` only | One `attr_{method}.npy` per `ClassPredictor` / `RegressPredictor` head; **rejected** if any `ProfilePredictor` is present |
+| Legacy | `--attribution METHOD` only | One `attr_{method}.npy` per `ClassPredictor` / `RCClassPredictor` / `RegressPredictor` / `RCRegressPredictor` head; **rejected** if any `ProfilePredictor` / `RCProfilePredictor` is present |
 | Explicit | `--attribution METHOD --attribution-target TARGET` | Exactly one target-qualified `attr_*.npy` for the selected head |
 
 `--attribution-target` requires `--attribution` and accepts exactly one value
@@ -54,7 +54,7 @@ Structural snapshot (patterns only):
 Runtime validation remains authoritative for class ranges, track membership,
 bin counts, leading zeros, and head-type compatibility.
 
-### ClassPredictor forms
+### Classification head forms (`ClassPredictor` / `RCClassPredictor`)
 
 | Form | Output domain | Row dependence | Filename qualifier |
 | --- | --- | --- | --- |
@@ -67,7 +67,7 @@ bin counts, leading zeros, and head-type compatibility.
 (except the digit `0` itself). For logit-difference, `p` and `n` must be
 distinct and both in `[0, n_class)`.
 
-### ProfilePredictor forms
+### Profile head forms (`ProfilePredictor` / `RCProfilePredictor`)
 
 | Form | Output domain | Row dependence | Filename qualifier |
 | --- | --- | --- | --- |
@@ -86,8 +86,8 @@ arrays; see [Profiles](../profiles.md) and
 ### Profile incompatibility of legacy mode
 
 Targetless legacy attribution is invalid whenever the model tree contains any
-`ProfilePredictor`. Models with profile heads must pass an explicit
-`--attribution-target`. The same rule is recorded on
+`ProfilePredictor` or `RCProfilePredictor`. Models with profile heads must
+pass an explicit `--attribution-target`. The same rule is recorded on
 [`pred_model`](../cli/pred_model.md#attribution-flags-summary) and
 [Profiles](../profiles.md#attribution).
 
@@ -99,11 +99,11 @@ Rejected conditions (exact exception text is not stabilized):
 | --- | --- |
 | `--attribution-target` without `--attribution` | Target requires a method |
 | More than one `--attribution-target` value | Exactly one target per run |
-| Legacy mode with any `ProfilePredictor` | Profile scalars need an explicit target |
+| Legacy mode with any `ProfilePredictor` / `RCProfilePredictor` | Profile scalars need an explicit target |
 | Unknown `<head>` map key | Head must exist in `predictor` |
-| Class domain on a non-`ClassPredictor` head | Class forms are classification-only |
-| Profile domain on a non-`ProfilePredictor` head | Profile forms are profile-only |
-| Explicit target on `RegressPredictor` | Regression has no explicit-target form |
+| Class domain on a non-classification head | Class forms require `ClassPredictor` or `RCClassPredictor` |
+| Profile domain on a non-profile head | Profile forms require `ProfilePredictor` or `RCProfilePredictor` |
+| Explicit target on `RegressPredictor` / `RCRegressPredictor` | Regression has no explicit-target form |
 | Class / bin index out of range | Must fit `n_class` or `P` |
 | Unknown track name | Must be in that head's `track_names` |
 | Logit-difference with `p == n` | Positive and negative must differ |

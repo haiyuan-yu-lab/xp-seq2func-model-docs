@@ -11,14 +11,17 @@ labels.
 | Head type | Released field(s) |
 | --- | --- |
 | `ClassPredictor` | `label_npy` |
+| `RCClassPredictor` | `label_npy` |
 | `RegressPredictor` | `label_npy` |
+| `RCRegressPredictor` | `label_npy` |
 | `ProfilePredictor` | `profile_npy`, `count_npy`, optional `mask_npy` (train/val only) |
+| `RCProfilePredictor` | `profile_npy`, `count_npy`, optional `mask_npy` (train/val only) |
 
 Scalar heads consistently use **`label_npy`**. Do not use a bare `label` key
 on a predictor payload (`encoder.label` is a separate field that must be
 `null`).
 
-## Classification labels (`ClassPredictor`)
+## Classification labels (`ClassPredictor` / `RCClassPredictor`)
 
 | Property | Contract |
 | --- | --- |
@@ -30,7 +33,7 @@ on a predictor payload (`encoder.label` is a separate field that must be
 | Alignment | Same `S` and per-source `N_s` as `encoder.ohe_npy` |
 | Cross-source | Trailing shape `(n_class,)` must match across sources |
 
-## Regression labels (`RegressPredictor`)
+## Regression labels (`RegressPredictor` / `RCRegressPredictor`)
 
 | Property | Contract |
 | --- | --- |
@@ -42,7 +45,7 @@ on a predictor payload (`encoder.label` is a separate field that must be
 | Alignment | Same `S` and per-source `N_s` as `encoder.ohe_npy` |
 | Cross-source | Trailing shape `(1,)` must match across sources |
 
-## Profile labels (`ProfilePredictor`)
+## Profile labels (`ProfilePredictor` / `RCProfilePredictor`)
 
 | Field | Train/val | Test | Shape | dtype / values |
 | --- | --- | --- | --- | --- |
@@ -136,6 +139,8 @@ Describe conditions only; exact exception strings are not stabilized.
 - [Splits](splits.md)
 - [Arrays](arrays.md)
 - [ClassPredictor](../models/class-predictor.md)
+- [RCClassPredictor](../models/rc-class-predictor.md)
+- [RCRegressPredictor](../models/rc-regress-predictor.md)
 - [RegressPredictor](../models/regress-predictor.md)
 - [Profiles](../profiles.md)
 - [Masks](masks.md)

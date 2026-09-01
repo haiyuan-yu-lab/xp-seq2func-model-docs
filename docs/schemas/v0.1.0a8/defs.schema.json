@@ -187,6 +187,37 @@
       },
       "description": "Nestable ProfilePredictor model_config: ordered track_names and bin_size \u2265 1."
     },
+    "rcProfilePredictorModelConfig": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "model_name",
+        "track_names",
+        "bin_size",
+        "track_transform"
+      ],
+      "properties": {
+        "model_name": {
+          "$ref": "#/$defs/modelName"
+        },
+        "track_names": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/profileTrackName"
+          }
+        },
+        "bin_size": {
+          "$ref": "#/$defs/positiveInteger"
+        },
+        "track_transform": {
+          "type": "string",
+          "enum": ["preserve", "swap_pair"]
+        }
+      },
+      "description": "Nestable RCProfilePredictor model_config: preserve or strand-coupled swap_pair track semantics."
+    },
     "convEncoderHparams": {
       "type": "object",
       "additionalProperties": false,

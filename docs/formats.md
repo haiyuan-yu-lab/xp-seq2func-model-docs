@@ -32,8 +32,9 @@ mask.
 ## Checkpoints (`.pth`)
 
 Training and tuning write PyTorch checkpoints under `--opath` (a parent file
-plus per-catalogued-module files). Format constant `seq2func_ckpt_v1`. Full
-contract: [Checkpoints](artifacts/checkpoints.md).
+plus per-catalogued-module files). New writes use format constant
+`seq2func_ckpt_v2`; loaders also accept legacy `seq2func_ckpt_v1` for
+ordinary-model trees. Full contract: [Checkpoints](artifacts/checkpoints.md).
 `pred_model` loads the **top-level / parent** checkpoint via `--checkpoint`.
 
 Train/tune configs may set optional `init_checkpoint` to load listed modules

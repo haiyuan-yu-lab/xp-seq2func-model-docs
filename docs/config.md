@@ -18,13 +18,15 @@ Required keys:
 | Key | Type | Notes |
 | --- | --- | --- |
 | `model_name` | string | Unique across the composition tree |
-| `encoder` | object | `{ "model_type": "ConvEncoder"\|"ConvSelfAttEncoder", "model_config": {...} }` |
-| `predictor` | object | Map of head name → `{ "model_type": "ClassPredictor"\|"RegressPredictor"\|"ProfilePredictor", "model_config": {...} }` |
+| `encoder` | object | `{ "model_type": "ConvEncoder"\|"RCConvEncoder"\|"ConvSelfAttEncoder"\|"RCConvSelfAttEncoder", "model_config": {...} }` |
+| `predictor` | object | Map of head name → `{ "model_type": "ClassPredictor"\|"RCClassPredictor"\|"RegressPredictor"\|"RCRegressPredictor"\|"ProfilePredictor"\|"RCProfilePredictor", "model_config": {...} }` |
 | `embedding_trimming` | integer ≥ 0 | Trim applied to encoder embedding |
 
-All `model_name` values in the tree must be unique. `ProfilePredictor`
-`model_config` also requires ordered `track_names` and `bin_size` (≥ 1). See
-[Profiles](profiles.md). Full nesting tables and validated examples:
+All `model_name` values in the tree must be unique. `ProfilePredictor` /
+`RCProfilePredictor` `model_config` also requires ordered `track_names` and
+`bin_size` (≥ 1); `RCProfilePredictor` additionally requires
+`track_transform` (`preserve` or `swap_pair`). See [Profiles](profiles.md).
+Full nesting tables and validated examples:
 [Model composition](models/composition.md).
 
 Head loss objects live in hparams (not the CLI config). Canonical loss
@@ -85,7 +87,7 @@ Documentation schema:
 
 | Key | Type | Notes |
 | --- | --- | --- |
-| `path` | non-empty string | Path to a `seq2func_ckpt_v1` `.pth` (parent or submodule artifact) |
+| `path` | non-empty string | Path to a checkpoint `.pth` (`seq2func_ckpt_v2` or compatible legacy `seq2func_ckpt_v1`; parent or submodule artifact) |
 | `modules` | non-empty string array | Catalogued `model_name` values to load; no duplicates |
 
 Each entry in `modules` must match a `model_name` in the constructed tree
@@ -132,8 +134,8 @@ Predictor payload fields by head type:
 
 | Head type | Train/val payload | Test notes |
 | --- | --- | --- |
-| `ClassPredictor` / `RegressPredictor` | `{ "label_npy": <path or path array> }` | Optional; omit for unlabeled inference |
-| `ProfilePredictor` | `{ "profile_npy": ..., "count_npy": ..., "mask_npy"?: ... }` | Both profile and count required together when supplied; `mask_npy` forbidden |
+| `ClassPredictor` / `RCClassPredictor` / `RegressPredictor` / `RCRegressPredictor` | `{ "label_npy": <path or path array> }` | Optional; omit for unlabeled inference |
+| `ProfilePredictor` / `RCProfilePredictor` | `{ "profile_npy": ..., "count_npy": ..., "mask_npy"?: ... }` | Both profile and count required together when supplied; `mask_npy` forbidden |
 
 Train/val require labels for every head declared in `model_config.predictor`.
 Prediction may omit labels. Classification labels are `(N, n_class)`;

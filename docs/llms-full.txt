@@ -240,16 +240,24 @@ The only top-level model type in **v0.1.0a8** is `EncoderPredictor`.
 
 It composes:
 
-1. An **encoder** — either `ConvEncoder` or `ConvSelfAttEncoder` — that maps
-   one-hot sequence tensors to an embedding
+1. An **encoder** — `ConvEncoder`, `RCConvEncoder`, `ConvSelfAttEncoder`, or
+   `RCConvSelfAttEncoder` — that maps one-hot sequence tensors to an embedding
 2. Optional **embedding trimming** (integer ≥ 0) applied to that embedding
-3. One or more **prediction heads** — each head is a `ClassPredictor`
-   (classification), `RegressPredictor` (scalar regression), or
-   `ProfilePredictor` (named track distributions plus paired counts)
+3. One or more **prediction heads** — each head is one of the six catalogued
+   types: `ClassPredictor`, `RCClassPredictor`, `RegressPredictor`,
+   `RCRegressPredictor`, `ProfilePredictor`, or `RCProfilePredictor`
 
-Nested components (`ConvEncoder`, `ConvSelfAttEncoder`, `ClassPredictor`,
-`RegressPredictor`, `ProfilePredictor`) are nestable-only: they cannot be set
-as the top-level `model_type` on a CLI config.
+Nested components are nestable-only: they cannot be set as the top-level
+`model_type` on a CLI config. One `EncoderPredictor` may mix ordinary and
+RC-aware heads in the same `predictor` map; encoder choice does not restrict
+which head types may appear.
+
+Mixing head types does **not** add automatic reverse-complement sequence
+augmentation, an RC consistency loss or metric, or an attribution guarantee
+that input-space attributions transform under reverse complement. RC-aware
+heads define their own behavior on the shared embedding; end-to-end
+sequence-to-output RC properties still depend on the chosen encoder and head
+mixture.
 
 Profile heads use component weights (`profile_alpha`, `count_alpha`) instead
 of a single `alpha`. See [Profiles](profiles.md).
@@ -287,10 +295,10 @@ full restore and does not resume optimizer state. See
 
 Train and tune both write checkpoints under `--opath` (parent and per-module
 artifacts). Prediction loads a parent `.pth` checkpoint and writes per-head
-arrays (`.pred_class.npy` for `ClassPredictor`, `.pred.npy` for
-`RegressPredictor`, paired `.profile.npy` / `.count.npy` for
-`ProfilePredictor`). With `--attribution`, it also writes attribution arrays
-(legacy per-head files, or one explicit `--attribution-target` file).
+arrays (`.pred_class.npy` for classification heads, `.pred.npy` for
+regression heads, paired `.profile.npy` / `.count.npy` for profile heads).
+With `--attribution`, it also writes attribution arrays (legacy per-head files,
+or one explicit `--attribution-target` file).
 
 ## Weights & Biases
 
@@ -1130,7 +1138,7 @@ Object shape and schema snapshot:
 | Not map keys | Predictor map keys (for example `"cls"`) are **not** module names |
 | List | Non-empty; unique strings; required when `init_checkpoint` is present |
 | Authoritative | The config `modules` list decides what loads; the checkpoint is cross-checked only |
-| Path | Parent or child `seq2func_ckpt_v1` `.pth` that contains `states` for every listed name |
+| Path | Parent or child checkpoint `.pth` (`seq2func_ckpt_v2` or compatible legacy `seq2func_ckpt_v1`) that contains `states` for every listed name |
 | Unlisted | Modules not named in `modules` keep post-construction (random) init |
 
 Catalogued names cover the top-level `EncoderPredictor`, the nested encoder,
@@ -1150,6 +1158,12 @@ Selective initialization is **not** an ordinary training resume and is **not**
 the prediction full-restore path. Omitting `init_checkpoint` leaves every
 module at post-construction initialization.
 
+Typed v2 checkpoints may initialize compatible scalar heads across ordinary and
+RC-aware counterparts (`ClassPredictor` ↔ `RCClassPredictor`,
+`RegressPredictor` ↔ `RCRegressPredictor`). The target module keeps its own
+`model_type` and forward behavior; profile ↔ RC profile init remains rejected.
+See [Checkpoints: scalar counterpart init](../artifacts/checkpoints.md#v2-scalar-counterpart-init-traintune-only).
+
 ## Validation and failure conditions
 
 Described without stabilizing exact exception text:
@@ -1157,7 +1171,10 @@ Described without stabilizing exact exception text:
 | Condition | Outcome |
 | --- | --- |
 | Missing / unreadable `path` | Fail closed |
-| Payload not a `seq2func_ckpt_v1` dict | Fail closed |
+| Payload not a supported checkpoint dict (`seq2func_ckpt_v2` or compatible legacy `seq2func_ckpt_v1`) | Fail closed |
+| v1 checkpoint into a target tree with an RC-aware predictor head | Fail closed |
+| v2 `model_type` mismatch for a listed module | Fail closed, except v2 scalar counterpart init pairs (`ClassPredictor` ↔ `RCClassPredictor`, `RegressPredictor` ↔ `RCRegressPredictor`) with compatible tensors and architecture |
+| v2 profile ↔ RC profile init for a listed module | Fail closed even when public shapes match |
 | Empty `modules`, duplicates, or unknown `model_name` | Fail closed |
 | Listed name missing from checkpoint `states` | Fail closed |
 | Tensor key / shape mismatch for a listed module | Fail closed |
@@ -1811,7 +1828,7 @@ summary: [`pred_model`](../cli/pred_model.md).
 | Mode | CLI | Behavior |
 | --- | --- | --- |
 | Off | omit `--attribution` | Prediction arrays only; no `attr_*.npy` |
-| Legacy | `--attribution METHOD` only | One `attr_{method}.npy` per `ClassPredictor` / `RegressPredictor` head; **rejected** if any `ProfilePredictor` is present |
+| Legacy | `--attribution METHOD` only | One `attr_{method}.npy` per `ClassPredictor` / `RCClassPredictor` / `RegressPredictor` / `RCRegressPredictor` head; **rejected** if any `ProfilePredictor` / `RCProfilePredictor` is present |
 | Explicit | `--attribution METHOD --attribution-target TARGET` | Exactly one target-qualified `attr_*.npy` for the selected head |
 
 `--attribution-target` requires `--attribution` and accepts exactly one value
@@ -1851,7 +1868,7 @@ Structural snapshot (patterns only):
 Runtime validation remains authoritative for class ranges, track membership,
 bin counts, leading zeros, and head-type compatibility.
 
-### ClassPredictor forms
+### Classification head forms (`ClassPredictor` / `RCClassPredictor`)
 
 | Form | Output domain | Row dependence | Filename qualifier |
 | --- | --- | --- | --- |
@@ -1864,7 +1881,7 @@ bin counts, leading zeros, and head-type compatibility.
 (except the digit `0` itself). For logit-difference, `p` and `n` must be
 distinct and both in `[0, n_class)`.
 
-### ProfilePredictor forms
+### Profile head forms (`ProfilePredictor` / `RCProfilePredictor`)
 
 | Form | Output domain | Row dependence | Filename qualifier |
 | --- | --- | --- | --- |
@@ -1883,8 +1900,8 @@ arrays; see [Profiles](../profiles.md) and
 ### Profile incompatibility of legacy mode
 
 Targetless legacy attribution is invalid whenever the model tree contains any
-`ProfilePredictor`. Models with profile heads must pass an explicit
-`--attribution-target`. The same rule is recorded on
+`ProfilePredictor` or `RCProfilePredictor`. Models with profile heads must
+pass an explicit `--attribution-target`. The same rule is recorded on
 [`pred_model`](../cli/pred_model.md#attribution-flags-summary) and
 [Profiles](../profiles.md#attribution).
 
@@ -1896,11 +1913,11 @@ Rejected conditions (exact exception text is not stabilized):
 | --- | --- |
 | `--attribution-target` without `--attribution` | Target requires a method |
 | More than one `--attribution-target` value | Exactly one target per run |
-| Legacy mode with any `ProfilePredictor` | Profile scalars need an explicit target |
+| Legacy mode with any `ProfilePredictor` / `RCProfilePredictor` | Profile scalars need an explicit target |
 | Unknown `<head>` map key | Head must exist in `predictor` |
-| Class domain on a non-`ClassPredictor` head | Class forms are classification-only |
-| Profile domain on a non-`ProfilePredictor` head | Profile forms are profile-only |
-| Explicit target on `RegressPredictor` | Regression has no explicit-target form |
+| Class domain on a non-classification head | Class forms require `ClassPredictor` or `RCClassPredictor` |
+| Profile domain on a non-profile head | Profile forms require `ProfilePredictor` or `RCProfilePredictor` |
+| Explicit target on `RegressPredictor` / `RCRegressPredictor` | Regression has no explicit-target form |
 | Class / bin index out of range | Must fit `n_class` or `P` |
 | Unknown track name | Must be in that head's `track_names` |
 | Logit-difference with `p == n` | Positive and negative must differ |
@@ -2056,8 +2073,8 @@ prediction heads nest under that tree; they are never valid top-level CLI
 | Role | Allowed `model_type` | Where it appears |
 | --- | --- | --- |
 | Top-level model | `EncoderPredictor` | CLI `model_type` / `model_config` |
-| Encoder (nestable) | `ConvEncoder`, `ConvSelfAttEncoder` | `model_config.encoder` only |
-| Prediction head (nestable) | `ClassPredictor`, `RegressPredictor`, `ProfilePredictor` | `model_config.predictor` map only |
+| Encoder (nestable) | `ConvEncoder`, `RCConvEncoder`, `ConvSelfAttEncoder`, `RCConvSelfAttEncoder` | `model_config.encoder` only |
+| Prediction head (nestable) | `ClassPredictor`, `RCClassPredictor`, `RegressPredictor`, `RCRegressPredictor`, `ProfilePredictor`, `RCProfilePredictor` | `model_config.predictor` map only |
 
 Nested components always use the exact reference shape
 `{ "model_type", "model_config" }` — no other keys.
@@ -2067,7 +2084,7 @@ Nested components always use the exact reference shape
 | Key | Type | Notes |
 | --- | --- | --- |
 | `model_name` | non-empty string | Unique across the whole composition tree |
-| `encoder` | nested ref | One encoder (`ConvEncoder` or `ConvSelfAttEncoder`) |
+| `encoder` | nested ref | One encoder (`ConvEncoder`, `RCConvEncoder`, `ConvSelfAttEncoder`, or `RCConvSelfAttEncoder`) |
 | `predictor` | object map | One or more prediction heads |
 | `embedding_trimming` | integer ≥ 0 | Required; bases trimmed from each end of the encoder embedding |
 
@@ -2098,9 +2115,48 @@ one-hot (B, 4, L)
 | `C` | Channel width (`n_channels` after inheritance) |
 
 All prediction heads under one `EncoderPredictor` consume the same trimmed
-embedding.
+embedding. Ordinary and RC-aware heads may appear together in one `predictor`
+map; encoder choice does not restrict which head types may be nested.
 
-## Valid example
+Mixing head types does **not** add automatic reverse-complement sequence
+augmentation, an RC consistency loss or metric, or an attribution guarantee
+that input-space attributions transform under reverse complement. Each head
+keeps its own embedding-level contract on the shared trimmed embedding.
+
+## Mixed-head example
+
+<!-- schema: schemas/v0.1.0a8/encoder-predictor-model-config.schema.json -->
+```json
+{
+  "model_name": "ep_main",
+  "embedding_trimming": 0,
+  "encoder": {
+    "model_type": "RCConvEncoder",
+    "model_config": { "model_name": "enc" }
+  },
+  "predictor": {
+    "cls": {
+      "model_type": "ClassPredictor",
+      "model_config": { "model_name": "cls_head", "n_class": 2 }
+    },
+    "rc_reg": {
+      "model_type": "RCRegressPredictor",
+      "model_config": { "model_name": "rc_reg_head" }
+    },
+    "prof": {
+      "model_type": "RCProfilePredictor",
+      "model_config": {
+        "model_name": "rc_prof_head",
+        "track_names": ["track0", "track1"],
+        "bin_size": 1,
+        "track_transform": "preserve"
+      }
+    }
+  }
+}
+```
+
+## Valid example (scalar heads)
 
 <!-- schema: schemas/v0.1.0a8/encoder-predictor-model-config.schema.json -->
 ```json
@@ -2159,10 +2215,14 @@ Predictor map keys must not contain `:`:
 ## Related pages
 
 - [ConvEncoder](conv-encoder.md)
+- [RCConvEncoder](rc-conv-encoder.md)
 - [ConvSelfAttEncoder](conv-self-att-encoder.md)
+- [RCConvSelfAttEncoder](rc-conv-self-att-encoder.md)
 - [ClassPredictor](class-predictor.md)
+- [RCClassPredictor](rc-class-predictor.md)
+- [RCRegressPredictor](rc-regress-predictor.md)
 - [RegressPredictor](regress-predictor.md)
-- [ProfilePredictor](profile-predictor.md) / [Profile reconstruction](../profiles.md)
+- [ProfilePredictor](profile-predictor.md) / [RCProfilePredictor](rc-profile-predictor.md) / [Profile reconstruction](../profiles.md)
 - [Model configuration](../configuration/model.md)
 - [Hyperparameters](../configuration/hyperparameters.md)
 - [Schemas](../reference/schemas.md)
@@ -2245,6 +2305,116 @@ Under each data block's `encoder` key:
 ## Related pages
 
 - [ConvSelfAttEncoder](conv-self-att-encoder.md)
+- [RCConvEncoder](rc-conv-encoder.md)
+- [Model composition](composition.md)
+- [Hyperparameters](../configuration/hyperparameters.md)
+- [Arrays](../data/arrays.md)
+
+
+
+========================================================================
+# SOURCE: models/rc-conv-encoder.md
+# URL: https://haiyuan-yu-lab.github.io/xp-seq2func-model-docs/models/rc-conv-encoder/
+========================================================================
+
+
+# RCConvEncoder
+
+Reverse-complement-equivariant convolutional encoder component for **v0.1.0a8**.
+
+Nestable only under `EncoderPredictor.encoder`. Cannot be used as top-level
+CLI `model_type`. See [Model composition](composition.md).
+
+## Configuration
+
+Nested `model_config` is identity-only:
+
+| Key | Type | Notes |
+| --- | --- | --- |
+| `model_name` | non-empty string | Unique across the composition tree |
+
+Architecture lives in hyperparameters, not in `model_config`.
+
+```json
+{
+  "model_type": "RCConvEncoder",
+  "model_config": { "model_name": "enc" }
+}
+```
+
+## Hyperparameters
+
+Under top-level hparams `encoder` (pre-inheritance):
+
+| Key | Type | Notes |
+| --- | --- | --- |
+| `n_layers` | integer ≥ 1 | Required |
+| `kernel_size` | odd integer ≥ 1 | Required |
+| `dilation` | array of integers ≥ 1 | Required; length ≥ `n_layers` (prefix used) |
+| `batch_size` | integer ≥ 1 | Optional; inherits from parent when omitted |
+| `learning_rate` | number ≥ 0 | Optional; `0` freezes this encoder |
+| `n_channels` | even integer ≥ 2 | Optional; inherits from parent when omitted |
+
+`n_channels` is the actual output width. Odd widths are rejected because the
+encoder uses a regular latent representation with reverse-channel pairing.
+
+Unknown keys fail closed. Inheritance rules live on
+[Hyperparameters](../configuration/hyperparameters.md).
+
+```json
+{
+  "n_layers": 2,
+  "kernel_size": 3,
+  "dilation": [1, 2]
+}
+```
+
+## Inputs and outputs
+
+| Tensor | Shape | Notes |
+| --- | --- | --- |
+| Input | `(B, 4, L)` | One-hot bases in channel order A, C, G, T |
+| Output | `(B, C, L)` | Regular embedding before top-level trimming |
+
+`EncoderPredictor` then trims `embedding_trimming` bases from each end so heads
+see `(B, C, L_embed)` with `L_embed = L - 2T > 0`.
+
+## Embedding reverse-complement transform
+
+For a channel-first embedding `y` with shape `(B, C, L)`, the embedding
+reverse-complement transform reverses both the channel order and the
+sequence-position order while preserving shape.
+
+In evaluation mode (and in training mode when encoder dropout is zero), the
+encoder satisfies:
+
+```text
+encode(RC(x)) ≈ RC_embed(encode(x))
+```
+
+where `RC` reverses channel and position order on one-hot inputs, and
+`RC_embed` applies the same reversal on embeddings. Numerical tolerance depends
+on dtype and device.
+
+Ordinary prediction heads (`ClassPredictor`, `RegressPredictor`,
+`ProfilePredictor`) can consume this embedding, but they do **not** inherit an
+end-to-end reverse-complement guarantee. Only the encoder output transform is
+guaranteed.
+
+## Nested data payload
+
+Under each data block's `encoder` key:
+
+| Key | Value |
+| --- | --- |
+| `ohe_npy` | Path string or non-empty path array |
+| `label` | Must be `null` |
+
+## Related pages
+
+- [ConvEncoder](conv-encoder.md)
+- [ConvSelfAttEncoder](conv-self-att-encoder.md)
+- [RCConvSelfAttEncoder](rc-conv-self-att-encoder.md)
 - [Model composition](composition.md)
 - [Hyperparameters](../configuration/hyperparameters.md)
 - [Arrays](../data/arrays.md)
@@ -2338,6 +2508,136 @@ Under each data block's `encoder` key:
 ## Related pages
 
 - [ConvEncoder](conv-encoder.md)
+- [RCConvEncoder](rc-conv-encoder.md)
+- [RCConvSelfAttEncoder](rc-conv-self-att-encoder.md)
+- [Model composition](composition.md)
+- [Hyperparameters](../configuration/hyperparameters.md)
+- [Arrays](../data/arrays.md)
+
+
+
+========================================================================
+# SOURCE: models/rc-conv-self-att-encoder.md
+# URL: https://haiyuan-yu-lab.github.io/xp-seq2func-model-docs/models/rc-conv-self-att-encoder/
+========================================================================
+
+
+# RCConvSelfAttEncoder
+
+Reverse-complement-equivariant convolutional self-attention encoder component for
+**v0.1.0a8**.
+
+Nestable only under `EncoderPredictor.encoder`. Cannot be used as top-level
+CLI `model_type`. See [Model composition](composition.md).
+
+## Configuration
+
+Nested `model_config` is identity-only:
+
+| Key | Type | Notes |
+| --- | --- | --- |
+| `model_name` | non-empty string | Unique across the composition tree |
+
+Architecture lives in hyperparameters, not in `model_config`.
+
+```json
+{
+  "model_type": "RCConvSelfAttEncoder",
+  "model_config": { "model_name": "enc_rc_attn" }
+}
+```
+
+## Hyperparameters
+
+Under top-level hparams `encoder` (pre-inheritance). Includes every
+`RCConvEncoder` architecture key plus attention stack settings:
+
+| Key | Type | Notes |
+| --- | --- | --- |
+| `n_layers` | integer ≥ 1 | Required |
+| `kernel_size` | odd integer ≥ 1 | Required |
+| `dilation` | array of integers ≥ 1 | Required; length ≥ `n_layers` (prefix used) |
+| `n_attn_layers` | integer ≥ 0 | Required |
+| `n_heads` | integer ≥ 1 | Required; after inheritance `n_channels % n_heads == 0` |
+| `dropout` | number in `[0, 1)` | Required |
+| `ffn_mult` | integer ≥ 1 | Required |
+| `activation` | `relu` \| `gelu` \| `silu` | Required |
+| `batch_size` | integer ≥ 1 | Optional; inherits from parent when omitted |
+| `learning_rate` | number ≥ 0 | Optional; `0` freezes this encoder |
+| `n_channels` | even integer ≥ 2 | Optional; inherits from parent when omitted |
+
+`n_channels` is the actual output width. Odd widths are rejected because the
+encoder uses a regular latent representation with reverse-channel pairing.
+
+When `n_attn_layers` is zero, no attention or feed-forward parameters are
+created and the encoder matches `RCConvEncoder` after aligning convolutional
+state.
+
+Unknown keys fail closed. Inheritance rules live on
+[Hyperparameters](../configuration/hyperparameters.md).
+
+```json
+{
+  "n_layers": 2,
+  "kernel_size": 3,
+  "dilation": [1, 1],
+  "n_attn_layers": 1,
+  "n_heads": 2,
+  "dropout": 0.0,
+  "ffn_mult": 2,
+  "activation": "relu"
+}
+```
+
+## Inputs and outputs
+
+| Tensor | Shape | Notes |
+| --- | --- | --- |
+| Input | `(B, 4, L)` | One-hot bases in channel order A, C, G, T |
+| Output | `(B, C, L)` | Regular embedding before top-level trimming |
+
+`EncoderPredictor` then trims `embedding_trimming` bases from each end so heads
+see `(B, C, L_embed)` with `L_embed = L - 2T > 0`.
+
+## Embedding reverse-complement transform
+
+For a channel-first embedding `y` with shape `(B, C, L)`, the embedding
+reverse-complement transform reverses both the channel order and the
+sequence-position order while preserving shape.
+
+In evaluation mode (and in training mode when encoder dropout is zero), the
+encoder satisfies:
+
+```text
+encode(RC(x)) ≈ RC_embed(encode(x))
+```
+
+where `RC` reverses channel and position order on one-hot inputs, and
+`RC_embed` applies the same reversal on embeddings. Numerical tolerance depends
+on dtype and device.
+
+With nonzero training dropout, the encoder is equivariant in distribution: each
+forward draw is valid, but independently randomized calls are not expected to
+match pathwise.
+
+Ordinary prediction heads (`ClassPredictor`, `RegressPredictor`,
+`ProfilePredictor`) can consume this embedding, but they do **not** inherit an
+end-to-end reverse-complement guarantee. Only the encoder output transform is
+guaranteed.
+
+## Nested data payload
+
+Under each data block's `encoder` key:
+
+| Key | Value |
+| --- | --- |
+| `ohe_npy` | Path string or non-empty path array |
+| `label` | Must be `null` |
+
+## Related pages
+
+- [RCConvEncoder](rc-conv-encoder.md)
+- [ConvSelfAttEncoder](conv-self-att-encoder.md)
 - [Model composition](composition.md)
 - [Hyperparameters](../configuration/hyperparameters.md)
 - [Arrays](../data/arrays.md)
@@ -2443,6 +2743,131 @@ Prediction may omit labels.
 
 
 ========================================================================
+# SOURCE: models/rc-class-predictor.md
+# URL: https://haiyuan-yu-lab.github.io/xp-seq2func-model-docs/models/rc-class-predictor/
+========================================================================
+
+
+# RCClassPredictor
+
+Reverse-complement-aware classification head for **v0.1.0a8**.
+
+Nestable only under `EncoderPredictor.predictor`. It preserves the same
+external role as `ClassPredictor` — class probabilities, one-hot labels,
+`*.pred_class.npy` artifacts, scalar-head loss wrapper, and classification
+attribution targets — while making class identities invariant under the
+embedding reverse-complement transform in evaluation mode.
+
+See [Model composition](composition.md) and
+[ClassPredictor](class-predictor.md) for the ordinary counterpart.
+
+## Configuration
+
+| Key | Type | Notes |
+| --- | --- | --- |
+| `model_name` | non-empty string | Unique across the composition tree; used in artifact filenames |
+| `n_class` | integer ≥ 2 | Number of classes |
+
+```json
+{
+  "model_type": "RCClassPredictor",
+  "model_config": { "model_name": "rc_cls_head", "n_class": 3 }
+}
+```
+
+## Hyperparameters
+
+Each `hparams.predictor.<head_key>` entry uses the same scalar wrapper as
+`ClassPredictor` (`alpha`, `loss`, `predictor_config`):
+
+| Key | Type | Notes |
+| --- | --- | --- |
+| `alpha` | integer ≥ 0 | Head weight in the combined loss |
+| `loss` | `{ "type", "params" }` | Recommend `categorical_cross_entropy` with `params: {}` |
+| `predictor_config` | object | FC stack settings (below) |
+
+`predictor_config` fields match `ClassPredictor`, with one extra constraint:
+
+| Key | Type | Notes |
+| --- | --- | --- |
+| `n_fc_layers` | integer ≥ 1 | Required |
+| `fc_hidden_dims` | array of integers ≥ 1 | Length ≥ `n_fc_layers - 1` (prefix used) |
+| `dropout` | number in `[0, 1)` | Required |
+| `activation` | `relu` \| `gelu` \| `silu` | Required |
+| `pooling_methods` | `GAP` \| `GMP` | Required |
+| `batch_size` | integer ≥ 1 | Optional; inherits from parent when omitted |
+| `learning_rate` | number ≥ 0 | Optional; `0` freezes this head |
+| `n_channels` | **even** integer ≥ 2 | Optional; inherits from parent when omitted |
+
+Canonical wrapper, inheritance, and freeze rules:
+[Hyperparameters](../configuration/hyperparameters.md). Loss object contract:
+[Losses](../configuration/losses.md).
+
+<!-- schema: schemas/v0.1.0a8/scalar-head-hparams-wrapper.schema.json -->
+```json
+{
+  "alpha": 1,
+  "loss": { "type": "categorical_cross_entropy", "params": {} },
+  "predictor_config": {
+    "n_fc_layers": 2,
+    "fc_hidden_dims": [128],
+    "dropout": 0.1,
+    "activation": "relu",
+    "pooling_methods": "GAP"
+  }
+}
+```
+
+## Forward behavior
+
+The head applies one shared global-pool + FC stack to the trimmed embedding
+and to its embedding reverse-complement (channel and length axes reversed on
+`(B, C, L)` tensors). Pre-softmax logits are the average of the two branch
+logits; `forward` returns the softmax of that average.
+
+| Mode | Behavior |
+| --- | --- |
+| Eval (`dropout` off) | Logits and probabilities agree under embedding RC within floating-point tolerance; class order is unchanged |
+| Train (`dropout` > 0) | Dropout is applied independently on each branch; separate forward calls need not match pathwise |
+
+There is no required encoder family pairing. This head may sit behind ordinary
+or RC encoders.
+
+## Inputs and outputs
+
+| Tensor | Shape | Notes |
+| --- | --- | --- |
+| Input | `(B, C, L_embed)` | Shared trimmed encoder embedding; `C` must be even |
+| Predictions | `(N, n_class)` | Class probabilities |
+
+## Labels and artifacts
+
+| Surface | Contract |
+| --- | --- |
+| Data key | `label_npy` (path or path array aligned to OHE sources) |
+| Prediction artifact | `{job}.{encoder_predictor}.{head_model_name}.pred_class.npy` |
+
+Train/val require `label_npy` for every declared classification head.
+Prediction may omit labels.
+
+## Checkpoints
+
+New training runs write typed `seq2func_ckpt_v2` checkpoints with
+`model_type: RCClassPredictor` in `contracts`. Legacy `seq2func_ckpt_v1`
+checkpoints cannot load into a composition tree that contains this head type.
+
+## Related pages
+
+- [ClassPredictor](class-predictor.md)
+- [RCConvEncoder](rc-conv-encoder.md) / [RCConvSelfAttEncoder](rc-conv-self-att-encoder.md)
+- [Model composition](composition.md)
+- [Labels](../data/labels.md)
+- [Prediction artifacts](../artifacts/predictions.md)
+- [Checkpoints](../artifacts/checkpoints.md)
+
+
+
+========================================================================
 # SOURCE: models/regress-predictor.md
 # URL: https://haiyuan-yu-lab.github.io/xp-seq2func-model-docs/models/regress-predictor/
 ========================================================================
@@ -2539,6 +2964,131 @@ may omit labels.
 - [Labels](../data/labels.md)
 - [Prediction artifacts](../artifacts/predictions.md)
 - [Losses](../configuration/losses.md)
+
+
+
+========================================================================
+# SOURCE: models/rc-regress-predictor.md
+# URL: https://haiyuan-yu-lab.github.io/xp-seq2func-model-docs/models/rc-regress-predictor/
+========================================================================
+
+
+# RCRegressPredictor
+
+Reverse-complement-aware scalar regression head for **v0.1.0a8**.
+
+Nestable only under `EncoderPredictor.predictor`. It preserves the same
+external role as `RegressPredictor` — continuous labels, `*.pred.npy`
+artifacts, scalar-head loss wrapper, and legacy attribution channel `0` —
+while making raw scalar predictions invariant under the embedding
+reverse-complement transform in evaluation mode.
+
+See [Model composition](composition.md) and
+[RegressPredictor](regress-predictor.md) for the ordinary counterpart.
+
+## Configuration
+
+| Key | Type | Notes |
+| --- | --- | --- |
+| `model_name` | non-empty string | Unique across the composition tree; used in artifact filenames |
+
+```json
+{
+  "model_type": "RCRegressPredictor",
+  "model_config": { "model_name": "rc_reg_head" }
+}
+```
+
+## Hyperparameters
+
+Each `hparams.predictor.<head_key>` entry uses the same scalar wrapper as
+`RegressPredictor` (`alpha`, `loss`, `predictor_config`):
+
+| Key | Type | Notes |
+| --- | --- | --- |
+| `alpha` | integer ≥ 0 | Head weight in the combined loss |
+| `loss` | `{ "type", "params" }` | Recommend `mse` with `params: {}` |
+| `predictor_config` | object | FC stack settings (below) |
+
+`predictor_config` fields match `RegressPredictor`, with one extra constraint:
+
+| Key | Type | Notes |
+| --- | --- | --- |
+| `n_fc_layers` | integer ≥ 1 | Required |
+| `fc_hidden_dims` | array of integers ≥ 1 | Length ≥ `n_fc_layers - 1` (prefix used) |
+| `dropout` | number in `[0, 1)` | Required |
+| `activation` | `relu` \| `gelu` \| `silu` | Required |
+| `pooling_methods` | `GAP` \| `GMP` | Required |
+| `batch_size` | integer ≥ 1 | Optional; inherits from parent when omitted |
+| `learning_rate` | number ≥ 0 | Optional; `0` freezes this head |
+| `n_channels` | **even** integer ≥ 2 | Optional; inherits from parent when omitted |
+
+Canonical wrapper, inheritance, and freeze rules:
+[Hyperparameters](../configuration/hyperparameters.md). Loss object contract:
+[Losses](../configuration/losses.md).
+
+<!-- schema: schemas/v0.1.0a8/scalar-head-hparams-wrapper.schema.json -->
+```json
+{
+  "alpha": 1,
+  "loss": { "type": "mse", "params": {} },
+  "predictor_config": {
+    "n_fc_layers": 1,
+    "fc_hidden_dims": [],
+    "dropout": 0.0,
+    "activation": "relu",
+    "pooling_methods": "GMP"
+  }
+}
+```
+
+## Forward behavior
+
+The head applies one shared global-pool + FC stack to the trimmed embedding
+and to its embedding reverse-complement (channel and length axes reversed on
+`(B, C, L)` tensors). The returned scalar is the average of the two branch
+outputs with no post-activation on the final linear.
+
+| Mode | Behavior |
+| --- | --- |
+| Eval (`dropout` off) | Raw scalars agree under embedding RC within floating-point tolerance |
+| Train (`dropout` > 0) | Dropout is applied independently on each branch; separate forward calls need not match pathwise |
+
+There is no required encoder family pairing. This head may sit behind ordinary
+or RC encoders.
+
+## Inputs and outputs
+
+| Tensor | Shape | Notes |
+| --- | --- | --- |
+| Input | `(B, C, L_embed)` | Shared trimmed encoder embedding; `C` must be even |
+| Predictions | `(N, 1)` | Raw scalar regression outputs |
+
+## Labels and artifacts
+
+| Surface | Contract |
+| --- | --- |
+| Data key | `label_npy` (path or path array aligned to OHE sources) |
+| Label geometry | Trailing width 1 — shape `(N, 1)` per source array |
+| Prediction artifact | `{job}.{encoder_predictor}.{head_model_name}.pred.npy` |
+
+Train/val require `label_npy` for every declared regression head.
+Prediction may omit labels.
+
+## Checkpoints
+
+New training runs write typed `seq2func_ckpt_v2` checkpoints with
+`model_type: RCRegressPredictor` in `contracts`. Legacy `seq2func_ckpt_v1`
+checkpoints cannot load into a composition tree that contains this head type.
+
+## Related pages
+
+- [RegressPredictor](regress-predictor.md)
+- [RCConvEncoder](rc-conv-encoder.md) / [RCConvSelfAttEncoder](rc-conv-self-att-encoder.md)
+- [Model composition](composition.md)
+- [Labels](../data/labels.md)
+- [Prediction artifacts](../artifacts/predictions.md)
+- [Checkpoints](../artifacts/checkpoints.md)
 
 
 
@@ -2698,6 +3248,188 @@ together; `mask_npy` is rejected on test. Full shape/dtype tables:
 - [Profile masks](../workflows/profile-masks.md)
 - [Prediction artifacts](../artifacts/predictions.md)
 - [Losses](../configuration/losses.md)
+
+
+
+========================================================================
+# SOURCE: models/rc-profile-predictor.md
+# URL: https://haiyuan-yu-lab.github.io/xp-seq2func-model-docs/models/rc-profile-predictor/
+========================================================================
+
+
+# RCProfilePredictor
+
+Reverse-complement-aware profile head for **v0.1.0a8** (`preserve` and `swap_pair`
+modes).
+
+Nestable only under `EncoderPredictor.predictor`. It preserves the same
+external role as `ProfilePredictor` — profile/count labels, component losses,
+Pearson metrics, `*.profile.npy` / `*.count.npy` artifacts, and explicit
+profile/count attribution targets — while making profile and count outputs
+follow the selected `track_transform` under the embedding reverse-complement
+transform.
+
+See [Model composition](composition.md) and
+[ProfilePredictor](profile-predictor.md) for the ordinary counterpart.
+
+## Configuration
+
+| Key | Type | Notes |
+| --- | --- | --- |
+| `model_name` | non-empty string | Unique across the composition tree; used in artifact filenames |
+| `track_names` | non-empty array of unique strings | Ordered profile-track identities; each must match `[A-Za-z0-9][A-Za-z0-9._-]*` |
+| `bin_size` | integer ≥ 1 | Contiguous retained bases per profile bin |
+| `track_transform` | `"preserve"` \| `"swap_pair"` | Required; `swap_pair` requires exactly two tracks (names arbitrary) |
+
+`T = len(track_names)`. Retained length `L_embed` after `embedding_trimming`
+must be positive and exactly divisible by `bin_size`; then
+`P = L_embed / bin_size`.
+
+### Preserve mode
+
+Track order is unchanged under embedding RC; profile bins reverse.
+
+```json
+{
+  "model_name": "atac_profile",
+  "track_names": ["short", "mono"],
+  "bin_size": 10,
+  "track_transform": "preserve"
+}
+```
+
+### Strand-coupled (`swap_pair`) mode
+
+Exactly two tracks. Under embedding RC, profile bins reverse **and** the two
+track slots swap; counts swap track slots only (no position axis).
+
+```json
+{
+  "model_name": "strand_profile",
+  "track_names": ["alpha", "beta"],
+  "bin_size": 10,
+  "track_transform": "swap_pair"
+}
+```
+
+Nested reference under `predictor`:
+
+```json
+{
+  "model_type": "RCProfilePredictor",
+  "model_config": {
+    "model_name": "atac_profile",
+    "track_names": ["short", "mono"],
+    "bin_size": 10,
+    "track_transform": "preserve"
+  }
+}
+```
+
+<!-- schema: schemas/v0.1.0a8/rc-profile-predictor-model-config.schema.json -->
+
+## Hyperparameters
+
+Each `hparams.predictor.<head_key>` entry uses the same profile wrapper as
+`ProfilePredictor` (`profile_alpha`, `profile_loss`, `count_alpha`,
+`count_loss`, `predictor_config`).
+
+`predictor_config` fields match `ProfilePredictor`, with extra constraints:
+
+| Key | Type | Notes |
+| --- | --- | --- |
+| `n_fc_layers` | integer ≥ 1 | Required; final layer maps to width `T` |
+| `fc_hidden_dims` | array of integers ≥ 1 | Length ≥ `n_fc_layers - 1` (prefix used); every entry must be **even** when `track_transform` is `swap_pair` |
+| `dropout` | number in `[0, 1)` | Required |
+| `activation` | `relu` \| `gelu` \| `silu` | Required |
+| `pooling_methods` | `GAP` \| `GMP` | Required; count branch only |
+| `batch_size` | integer ≥ 1 | Optional; inherits from parent when omitted |
+| `learning_rate` | number ≥ 0 | Optional; `0` freezes both branches |
+| `n_channels` | **even** integer ≥ 2 | Optional; inherits from parent when omitted |
+
+Canonical wrapper, inheritance, and freeze rules:
+[Hyperparameters](../configuration/hyperparameters.md). Loss object contract:
+[Losses](../configuration/losses.md).
+
+## Forward behavior
+
+### Profile branch
+
+After the same fixed `AvgPool1d` binning as `ProfilePredictor`, a
+representation-aware pointwise projection maps even regular channels to
+`T` track logits.
+
+| `track_transform` | Projection | Eval-mode RC behavior |
+| --- | --- | --- |
+| `preserve` | Independent Reg→scalar map per track | Flip bin axis only |
+| `swap_pair` | Single Reg→one-regular-pair map (`T = 2`) | Flip bins and swap track slots |
+
+Softmax still normalizes over bins independently per row/track.
+
+| Mode | Profile behavior |
+| --- | --- |
+| Eval | Equivariance per table above |
+| Train | No profile dropout in this revision |
+
+### Count branch
+
+| `track_transform` | Stack | Eval-mode RC behavior |
+| --- | --- | --- |
+| `preserve` | Ordinary pooled FC, then average both embedding orientations | Invariant |
+| `swap_pair` | Regular-equivariant pooled FC (even hidden widths) | Swap the two track slots |
+
+**Preserve** symmetrization:
+
+```text
+log_counts(x) = 0.5 × ( f(x) + f(RC_embed(x)) )
+counts = expm1(max(log_counts, 0))
+```
+
+**Swap pair** (no orientation average):
+
+```text
+log_counts(x) = g(x)
+counts = expm1(max(log_counts, 0))
+```
+
+| Mode | Count behavior |
+| --- | --- |
+| Eval | Per table above |
+| Train | Dropout applied in-distribution (successive calls need not match) |
+
+There is no required encoder family pairing.
+
+## Inputs and outputs
+
+| Tensor | Shape | Notes |
+| --- | --- | --- |
+| Input | `(B, C, L_embed)` | Shared trimmed encoder embedding; `C` must be even |
+| Profile distributions | `(N, T, P)` | Softmax over `P` independently per row/track |
+| Profile counts | `(N, T)` | Nonnegative reconstructed totals |
+
+Labels, masks, losses, metrics, and artifacts remain in configured `track_names`
+order for both modes.
+
+## Labels and artifacts
+
+Same contracts as [ProfilePredictor](profile-predictor.md): `profile_npy`,
+`count_npy`, optional train/val `mask_npy`, and paired prediction artifacts
+`*.profile.npy` / `*.count.npy`.
+
+## Checkpoints
+
+New training runs write typed `seq2func_ckpt_v2` checkpoints with
+`model_type: RCProfilePredictor` and `track_transform` (`preserve` or
+`swap_pair`) in `contracts`. Legacy `seq2func_ckpt_v1` checkpoints cannot load
+into a composition tree that contains this head type.
+
+## Related pages
+
+- [ProfilePredictor](profile-predictor.md)
+- [RCRegressPredictor](rc-regress-predictor.md)
+- [Model composition](composition.md)
+- [Profile reconstruction](../profiles.md)
+- [Checkpoints](../artifacts/checkpoints.md)
 
 
 
@@ -3427,14 +4159,17 @@ labels.
 | Head type | Released field(s) |
 | --- | --- |
 | `ClassPredictor` | `label_npy` |
+| `RCClassPredictor` | `label_npy` |
 | `RegressPredictor` | `label_npy` |
+| `RCRegressPredictor` | `label_npy` |
 | `ProfilePredictor` | `profile_npy`, `count_npy`, optional `mask_npy` (train/val only) |
+| `RCProfilePredictor` | `profile_npy`, `count_npy`, optional `mask_npy` (train/val only) |
 
 Scalar heads consistently use **`label_npy`**. Do not use a bare `label` key
 on a predictor payload (`encoder.label` is a separate field that must be
 `null`).
 
-## Classification labels (`ClassPredictor`)
+## Classification labels (`ClassPredictor` / `RCClassPredictor`)
 
 | Property | Contract |
 | --- | --- |
@@ -3446,7 +4181,7 @@ on a predictor payload (`encoder.label` is a separate field that must be
 | Alignment | Same `S` and per-source `N_s` as `encoder.ohe_npy` |
 | Cross-source | Trailing shape `(n_class,)` must match across sources |
 
-## Regression labels (`RegressPredictor`)
+## Regression labels (`RegressPredictor` / `RCRegressPredictor`)
 
 | Property | Contract |
 | --- | --- |
@@ -3458,7 +4193,7 @@ on a predictor payload (`encoder.label` is a separate field that must be
 | Alignment | Same `S` and per-source `N_s` as `encoder.ohe_npy` |
 | Cross-source | Trailing shape `(1,)` must match across sources |
 
-## Profile labels (`ProfilePredictor`)
+## Profile labels (`ProfilePredictor` / `RCProfilePredictor`)
 
 | Field | Train/val | Test | Shape | dtype / values |
 | --- | --- | --- | --- | --- |
@@ -3552,6 +4287,8 @@ Describe conditions only; exact exception strings are not stabilized.
 - [Splits](splits.md)
 - [Arrays](arrays.md)
 - [ClassPredictor](../models/class-predictor.md)
+- [RCClassPredictor](../models/rc-class-predictor.md)
+- [RCRegressPredictor](../models/rc-regress-predictor.md)
 - [RegressPredictor](../models/regress-predictor.md)
 - [Profiles](../profiles.md)
 - [Masks](masks.md)
@@ -3744,8 +4481,9 @@ mask.
 ## Checkpoints (`.pth`)
 
 Training and tuning write PyTorch checkpoints under `--opath` (a parent file
-plus per-catalogued-module files). Format constant `seq2func_ckpt_v1`. Full
-contract: [Checkpoints](artifacts/checkpoints.md).
+plus per-catalogued-module files). New writes use format constant
+`seq2func_ckpt_v2`; loaders also accept legacy `seq2func_ckpt_v1` for
+ordinary-model trees. Full contract: [Checkpoints](artifacts/checkpoints.md).
 `pred_model` loads the **top-level / parent** checkpoint via `--checkpoint`.
 
 Train/tune configs may set optional `init_checkpoint` to load listed modules
@@ -3860,13 +4598,15 @@ Required keys:
 | Key | Type | Notes |
 | --- | --- | --- |
 | `model_name` | string | Unique across the composition tree |
-| `encoder` | object | `{ "model_type": "ConvEncoder"\|"ConvSelfAttEncoder", "model_config": {...} }` |
-| `predictor` | object | Map of head name → `{ "model_type": "ClassPredictor"\|"RegressPredictor"\|"ProfilePredictor", "model_config": {...} }` |
+| `encoder` | object | `{ "model_type": "ConvEncoder"\|"RCConvEncoder"\|"ConvSelfAttEncoder"\|"RCConvSelfAttEncoder", "model_config": {...} }` |
+| `predictor` | object | Map of head name → `{ "model_type": "ClassPredictor"\|"RCClassPredictor"\|"RegressPredictor"\|"RCRegressPredictor"\|"ProfilePredictor"\|"RCProfilePredictor", "model_config": {...} }` |
 | `embedding_trimming` | integer ≥ 0 | Trim applied to encoder embedding |
 
-All `model_name` values in the tree must be unique. `ProfilePredictor`
-`model_config` also requires ordered `track_names` and `bin_size` (≥ 1). See
-[Profiles](profiles.md). Full nesting tables and validated examples:
+All `model_name` values in the tree must be unique. `ProfilePredictor` /
+`RCProfilePredictor` `model_config` also requires ordered `track_names` and
+`bin_size` (≥ 1); `RCProfilePredictor` additionally requires
+`track_transform` (`preserve` or `swap_pair`). See [Profiles](profiles.md).
+Full nesting tables and validated examples:
 [Model composition](models/composition.md).
 
 Head loss objects live in hparams (not the CLI config). Canonical loss
@@ -3927,7 +4667,7 @@ Documentation schema:
 
 | Key | Type | Notes |
 | --- | --- | --- |
-| `path` | non-empty string | Path to a `seq2func_ckpt_v1` `.pth` (parent or submodule artifact) |
+| `path` | non-empty string | Path to a checkpoint `.pth` (`seq2func_ckpt_v2` or compatible legacy `seq2func_ckpt_v1`; parent or submodule artifact) |
 | `modules` | non-empty string array | Catalogued `model_name` values to load; no duplicates |
 
 Each entry in `modules` must match a `model_name` in the constructed tree
@@ -3974,8 +4714,8 @@ Predictor payload fields by head type:
 
 | Head type | Train/val payload | Test notes |
 | --- | --- | --- |
-| `ClassPredictor` / `RegressPredictor` | `{ "label_npy": <path or path array> }` | Optional; omit for unlabeled inference |
-| `ProfilePredictor` | `{ "profile_npy": ..., "count_npy": ..., "mask_npy"?: ... }` | Both profile and count required together when supplied; `mask_npy` forbidden |
+| `ClassPredictor` / `RCClassPredictor` / `RegressPredictor` / `RCRegressPredictor` | `{ "label_npy": <path or path array> }` | Optional; omit for unlabeled inference |
+| `ProfilePredictor` / `RCProfilePredictor` | `{ "profile_npy": ..., "count_npy": ..., "mask_npy"?: ... }` | Both profile and count required together when supplied; `mask_npy` forbidden |
 
 Train/val require labels for every head declared in `model_config.predictor`.
 Prediction may omit labels. Classification labels are `(N, n_class)`;
@@ -5383,15 +6123,71 @@ Each `.pth` is a dict payload with:
 
 | Key | Required | Notes |
 | --- | --- | --- |
-| `format` | yes | Constant `seq2func_ckpt_v1` |
+| `format` | yes | New writes use `seq2func_ckpt_v2`. Loaders also accept legacy `seq2func_ckpt_v1` under the compatibility rules below |
 | `root_model_name` | yes | Catalogued `model_name` this file is rooted at |
 | `states` | yes | Map of catalogued module name → owned parameter tensors |
-| `contracts` | optional | Present when the saved subtree includes a `ProfilePredictor`; omitted otherwise |
+| `contracts` | yes (v2) | Per-module identity metadata for every catalogued name in the saved subtree |
+
+### v2 contracts
+
+Every catalogued module in the saved subtree has a `contracts` entry:
+
+| Module kind | Entry shape |
+| --- | --- |
+| Non-profile modules (encoder, scalar heads, top-level container) | `{"model_type": "<Type>"}` only |
+| `ProfilePredictor` | `model_type`, ordered `track_names`, and `bin_size` |
+| `RCProfilePredictor` | `model_type`, ordered `track_names`, `bin_size`, and `track_transform` (`preserve` or `swap_pair`) |
+
+Loaders require an exact `model_type` match for each module in addition to
+tensor key/shape checks. Profile heads also require matching track order and
+bin geometry so same-shaped but semantically reordered heads fail to load.
+See [Profiles](../profiles.md).
+
+### v2 scalar counterpart init (train/tune only)
+
+`init_checkpoint` on train/tune may load compatible scalar-head weights across
+these bidirectional pairs when the checkpoint is `seq2func_ckpt_v2`:
+
+| Ordinary | RC-aware counterpart |
+| --- | --- |
+| `ClassPredictor` | `RCClassPredictor` |
+| `RegressPredictor` | `RCRegressPredictor` |
+
+Requirements:
+
+- Listed module names, tensor keys, and tensor shapes must match the constructed
+  target instance.
+- Architecture-defining fields implied by the target (for example `n_class` on
+  class heads and pooled-FC geometry such as `n_channels` and FC depth) must be
+  compatible.
+- Loaded weights seed the **target** module’s forward behavior; checkpoint
+  `contracts` keep the source `model_type`.
+
+Not permitted:
+
+- `ProfilePredictor` ↔ `RCProfilePredictor` init transfer (even when public
+  shapes match).
+- Counterpart transfer from legacy `seq2func_ckpt_v1` checkpoints.
+- Cross-type transfer on `pred_model --checkpoint` full restore (exact
+  `model_type` required throughout the tree).
+
+### Legacy v1 compatibility
+
+Checkpoints written by earlier software may use `seq2func_ckpt_v1`. Those
+payloads record profile semantics only (`track_names`, `bin_size` on profile
+heads) and omit `model_type` for other modules.
+
+| Scenario | Policy |
+| --- | --- |
+| Ordinary-model target tree (no RC-aware predictor heads) | v1 checkpoints load for full restore and selective init when tensor keys/shapes and profile contracts match |
+| v1 checkpoint into a target tree with an RC-aware predictor head (`RCClassPredictor`, `RCRegressPredictor`, …) | v1 checkpoints are **rejected** — use a typed v2 checkpoint |
+| v2 scalar counterpart init (`ClassPredictor` ↔ `RCClassPredictor`, `RegressPredictor` ↔ `RCRegressPredictor`) | Permitted on train/tune `init_checkpoint` only; see [Scalar counterpart init](#v2-scalar-counterpart-init-traintune-only) |
+
+`RCClassPredictor` and `RCRegressPredictor` are part of the public catalog in this release. Legacy v1
+checkpoints cannot initialize trees that include RC-aware predictor heads.
 
 Private tensor layouts inside `states` are not stabilized in this
-documentation. Profile `contracts` entries, when present, record each profile
-head's ordered `track_names` and `bin_size` so same-shaped but semantically
-reordered heads fail to load. See [Profiles](../profiles.md).
+documentation.
 
 ## Selection rules
 
@@ -5400,8 +6196,8 @@ reordered heads fail to load. See [Profiles](../profiles.md).
 | `pred_model` | Parent `{job}.{top_model_name}.pth` |
 | `init_checkpoint` | Parent or child `.pth` that contains `states` for the listed `modules` |
 
-Shape or key mismatches when loading listed modules fail closed. Exact error
-text is not stabilized here.
+Shape, key, `model_type`, or profile-contract mismatches when loading listed
+modules fail closed. Exact error text is not stabilized here.
 
 ## Related pages
 
@@ -5502,7 +6298,7 @@ Attribution arrays are separate artifacts; see
 | `{ep}` | Top-level `EncoderPredictor` `model_name` |
 | `{head}` | That head's `model_name` |
 
-## Classification (`ClassPredictor`)
+## Classification (`ClassPredictor` / `RCClassPredictor`)
 
 | Property | Contract |
 | --- | --- |
@@ -5516,7 +6312,7 @@ Attribution arrays are separate artifacts; see
 `n_class` matches that head's `model_config.n_class`. `N` is the number of
 test rows after deterministic multi-source ordering.
 
-## Regression (`RegressPredictor`)
+## Regression (`RegressPredictor` / `RCRegressPredictor`)
 
 | Property | Contract |
 | --- | --- |
@@ -5527,7 +6323,7 @@ test rows after deterministic multi-source ordering.
 | Producer | `pred_model` |
 | Consumers | Downstream regression analysis |
 
-## Profile (`ProfilePredictor`)
+## Profile (`ProfilePredictor` / `RCProfilePredictor`)
 
 Each profile prediction head writes **both** a profile-distribution array and a
 profile-count array. Masks used during training do not change these artifacts.
@@ -5573,8 +6369,11 @@ labels.
 - [Prediction configuration](../configuration/prediction.md)
 - [Formats overview](../formats.md)
 - [ClassPredictor](../models/class-predictor.md)
+- [RCClassPredictor](../models/rc-class-predictor.md)
 - [RegressPredictor](../models/regress-predictor.md)
+- [RCRegressPredictor](../models/rc-regress-predictor.md)
 - [ProfilePredictor](../models/profile-predictor.md)
+- [RCProfilePredictor](../models/rc-profile-predictor.md)
 - [Profiles](../profiles.md)
 - [Train to predict](../workflows/train-to-predict.md)
 
@@ -5941,6 +6740,39 @@ losses and metrics.
 
 Avoid: mappability mask, positional mask.
 
+## RC-aware predictor counterpart
+
+A separately catalogued prediction head that preserves an existing head's
+external role while adding reverse-complement-aware behavior defined for that
+head. The category does not imply one universal output transform or restrict
+which encoder family the head may consume.
+
+`RCClassPredictor` is the RC-aware counterpart to `ClassPredictor`.
+`RCRegressPredictor` is the RC-aware counterpart to `RegressPredictor`.
+`RCProfilePredictor` is the RC-aware counterpart to `ProfilePredictor`.
+`track_transform: preserve` reverses profile bins under embedding RC while
+keeping track order; counts are invariant. `track_transform: swap_pair`
+requires exactly two tracks and couples strand orientation (profile bins
+reverse and track slots swap; counts swap track slots only).
+
+Avoid: RCE predictor, equivariant predictor, invariant predictor (as generic
+synonyms for this catalog entry).
+
+## Regular embedding
+
+A length-preserving latent representation whose channels are organized in
+reverse-complement pairs.
+
+Avoid: equivariant tensor (when referring to this specific representation).
+
+## Embedding reverse-complement transform
+
+On channel-first `(B, C, L)` tensors, reverse both the channel axis and the
+sequence-length axis. Used by RC-aware modules to relate an embedding to its
+reverse-complement partner.
+
+Avoid: sequence RC (when referring to this channel-first embedding operation).
+
 
 
 ========================================================================
@@ -5965,6 +6797,10 @@ Alpha tags may change flags, configuration keys, array contracts, and artifact
 layouts without a migration guide. Do not assume that configs, checkpoints, or
 workflows written for an earlier or later alpha are compatible with
 **v0.1.0a8**, or the reverse.
+
+Within **v0.1.0a8**, new training runs write typed `seq2func_ckpt_v2`
+checkpoints. Loaders accept those files and legacy `seq2func_ckpt_v1` checkpoints
+for ordinary-model target trees; see [Checkpoints](../artifacts/checkpoints.md).
 
 Pin the `v0.1.0a8` tag when you need a fixed cut.
 
@@ -6019,11 +6855,14 @@ Each W&B agent worker is pinned to one device token from that variable. The
 token list must be non-empty, comma-separated, and free of duplicates. If you
 pass `--num-agents`, it must equal the token count.
 
-## Can I use ConvEncoder, ConvSelfAttEncoder, ClassPredictor, RegressPredictor, or ProfilePredictor as the top-level model_type?
+## Can I use ConvEncoder, ConvSelfAttEncoder, ClassPredictor, RegressPredictor, ProfilePredictor, or their RC-aware counterparts as the top-level model_type?
 
 No. In **v0.1.0a8** only `EncoderPredictor` is a top-level CLI model type.
-`ConvEncoder`, `ConvSelfAttEncoder`, `ClassPredictor`, `RegressPredictor`, and
-`ProfilePredictor` are nestable components inside `model_config`.
+Encoders (`ConvEncoder`, `RCConvEncoder`, `ConvSelfAttEncoder`,
+`RCConvSelfAttEncoder`) and prediction heads (`ClassPredictor`,
+`RCClassPredictor`, `RegressPredictor`, `RCRegressPredictor`,
+`ProfilePredictor`, `RCProfilePredictor`) are nestable components inside
+`model_config`.
 
 ## Where do prediction files go?
 
@@ -6036,8 +6875,9 @@ Under `--opath`, named by head type:
 {job_name}.{encoder_predictor_model_name}.{head_model_name}.count.npy
 ```
 
-(`ClassPredictor` → `.pred_class.npy`; `RegressPredictor` → `.pred.npy`;
-`ProfilePredictor` → paired `.profile.npy` / `.count.npy`.)
+(`ClassPredictor` / `RCClassPredictor` → `.pred_class.npy`; `RegressPredictor`
+/ `RCRegressPredictor` → `.pred.npy`; `ProfilePredictor` / `RCProfilePredictor`
+→ paired `.profile.npy` / `.count.npy`.)
 
 With `--attribution METHOD`, also:
 
@@ -6046,8 +6886,8 @@ With `--attribution METHOD`, also:
 ```
 
 Add `--attribution-target` to select one scalar and write a single
-target-qualified `attr_*.npy` instead: a `ClassPredictor` probability, logit,
-logit-difference, or predicted logit, or a `ProfilePredictor` profile bin
+target-qualified `attr_*.npy` instead: a classification head probability,
+logit, logit-difference, or predicted logit, or a profile head profile bin
 (`profile-probability` / `profile-logit`) or track count (`count` /
 `log1p-count`). Models containing a profile head require an explicit target.
 See [pred_model](cli/pred_model.md) and [Profiles](profiles.md).
@@ -6125,9 +6965,10 @@ behavior JSON Schema cannot express.
 | [`attribution-target-string.schema.json`](../schemas/v0.1.0a8/attribution-target-string.schema.json) | Structural patterns for `pred_model --attribution-target` strings |
 | [`encoder-predictor-model-config.schema.json`](../schemas/v0.1.0a8/encoder-predictor-model-config.schema.json) | Top-level `EncoderPredictor` `model_config` tree |
 | [`encoder-predictor-hparams.schema.json`](../schemas/v0.1.0a8/encoder-predictor-hparams.schema.json) | Top-level pre-inheritance fixed hyperparameters |
-| [`scalar-head-hparams-wrapper.schema.json`](../schemas/v0.1.0a8/scalar-head-hparams-wrapper.schema.json) | `ClassPredictor` / `RegressPredictor` hparams wrapper |
+| [`scalar-head-hparams-wrapper.schema.json`](../schemas/v0.1.0a8/scalar-head-hparams-wrapper.schema.json) | `ClassPredictor` / `RCClassPredictor` / `RegressPredictor` / `RCRegressPredictor` hparams wrapper |
 | [`profile-predictor-model-config.schema.json`](../schemas/v0.1.0a8/profile-predictor-model-config.schema.json) | Nestable `ProfilePredictor` `model_config` |
-| [`profile-head-hparams-wrapper.schema.json`](../schemas/v0.1.0a8/profile-head-hparams-wrapper.schema.json) | `ProfilePredictor` hparams wrapper |
+| [`rc-profile-predictor-model-config.schema.json`](../schemas/v0.1.0a8/rc-profile-predictor-model-config.schema.json) | Nestable `RCProfilePredictor` `model_config` |
+| [`profile-head-hparams-wrapper.schema.json`](../schemas/v0.1.0a8/profile-head-hparams-wrapper.schema.json) | `ProfilePredictor` / `RCProfilePredictor` hparams wrapper |
 | [`profile-label-payload.schema.json`](../schemas/v0.1.0a8/profile-label-payload.schema.json) | Train/val profile payload (`profile_npy` / `count_npy` / optional `mask_npy`) |
 | [`profile-test-label-payload.schema.json`](../schemas/v0.1.0a8/profile-test-label-payload.schema.json) | Test profile payload (no `mask_npy`) |
 | [`loss.schema.json`](../schemas/v0.1.0a8/loss.schema.json) | Loss object `{ type, params }` |
