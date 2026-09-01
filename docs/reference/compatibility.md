@@ -15,6 +15,10 @@ layouts without a migration guide. Do not assume that configs, checkpoints, or
 workflows written for an earlier or later alpha are compatible with
 **v0.1.0a8**, or the reverse.
 
+Within **v0.1.0a8**, new training runs write typed `seq2func_ckpt_v2`
+checkpoints. Loaders accept those files and legacy `seq2func_ckpt_v1` checkpoints
+for ordinary-model target trees; see [Checkpoints](../artifacts/checkpoints.md).
+
 Pin the `v0.1.0a8` tag when you need a fixed cut.
 
 ## Supported interface boundary

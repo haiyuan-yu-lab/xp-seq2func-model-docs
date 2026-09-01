@@ -11,11 +11,14 @@ Each W&B agent worker is pinned to one device token from that variable. The
 token list must be non-empty, comma-separated, and free of duplicates. If you
 pass `--num-agents`, it must equal the token count.
 
-## Can I use ConvEncoder, ConvSelfAttEncoder, ClassPredictor, RegressPredictor, or ProfilePredictor as the top-level model_type?
+## Can I use ConvEncoder, ConvSelfAttEncoder, ClassPredictor, RegressPredictor, ProfilePredictor, or their RC-aware counterparts as the top-level model_type?
 
 No. In **v0.1.0a8** only `EncoderPredictor` is a top-level CLI model type.
-`ConvEncoder`, `ConvSelfAttEncoder`, `ClassPredictor`, `RegressPredictor`, and
-`ProfilePredictor` are nestable components inside `model_config`.
+Encoders (`ConvEncoder`, `RCConvEncoder`, `ConvSelfAttEncoder`,
+`RCConvSelfAttEncoder`) and prediction heads (`ClassPredictor`,
+`RCClassPredictor`, `RegressPredictor`, `RCRegressPredictor`,
+`ProfilePredictor`, `RCProfilePredictor`) are nestable components inside
+`model_config`.
 
 ## Where do prediction files go?
 
@@ -28,8 +31,9 @@ Under `--opath`, named by head type:
 {job_name}.{encoder_predictor_model_name}.{head_model_name}.count.npy
 ```
 
-(`ClassPredictor` → `.pred_class.npy`; `RegressPredictor` → `.pred.npy`;
-`ProfilePredictor` → paired `.profile.npy` / `.count.npy`.)
+(`ClassPredictor` / `RCClassPredictor` → `.pred_class.npy`; `RegressPredictor`
+/ `RCRegressPredictor` → `.pred.npy`; `ProfilePredictor` / `RCProfilePredictor`
+→ paired `.profile.npy` / `.count.npy`.)
 
 With `--attribution METHOD`, also:
 
@@ -38,8 +42,8 @@ With `--attribution METHOD`, also:
 ```
 
 Add `--attribution-target` to select one scalar and write a single
-target-qualified `attr_*.npy` instead: a `ClassPredictor` probability, logit,
-logit-difference, or predicted logit, or a `ProfilePredictor` profile bin
+target-qualified `attr_*.npy` instead: a classification head probability,
+logit, logit-difference, or predicted logit, or a profile head profile bin
 (`profile-probability` / `profile-logit`) or track count (`count` /
 `log1p-count`). Models containing a profile head require an explicit target.
 See [pred_model](cli/pred_model.md) and [Profiles](profiles.md).

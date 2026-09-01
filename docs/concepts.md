@@ -15,16 +15,24 @@ The only top-level model type in **v0.1.0a8** is `EncoderPredictor`.
 
 It composes:
 
-1. An **encoder** — either `ConvEncoder` or `ConvSelfAttEncoder` — that maps
-   one-hot sequence tensors to an embedding
+1. An **encoder** — `ConvEncoder`, `RCConvEncoder`, `ConvSelfAttEncoder`, or
+   `RCConvSelfAttEncoder` — that maps one-hot sequence tensors to an embedding
 2. Optional **embedding trimming** (integer ≥ 0) applied to that embedding
-3. One or more **prediction heads** — each head is a `ClassPredictor`
-   (classification), `RegressPredictor` (scalar regression), or
-   `ProfilePredictor` (named track distributions plus paired counts)
+3. One or more **prediction heads** — each head is one of the six catalogued
+   types: `ClassPredictor`, `RCClassPredictor`, `RegressPredictor`,
+   `RCRegressPredictor`, `ProfilePredictor`, or `RCProfilePredictor`
 
-Nested components (`ConvEncoder`, `ConvSelfAttEncoder`, `ClassPredictor`,
-`RegressPredictor`, `ProfilePredictor`) are nestable-only: they cannot be set
-as the top-level `model_type` on a CLI config.
+Nested components are nestable-only: they cannot be set as the top-level
+`model_type` on a CLI config. One `EncoderPredictor` may mix ordinary and
+RC-aware heads in the same `predictor` map; encoder choice does not restrict
+which head types may appear.
+
+Mixing head types does **not** add automatic reverse-complement sequence
+augmentation, an RC consistency loss or metric, or an attribution guarantee
+that input-space attributions transform under reverse complement. RC-aware
+heads define their own behavior on the shared embedding; end-to-end
+sequence-to-output RC properties still depend on the chosen encoder and head
+mixture.
 
 Profile heads use component weights (`profile_alpha`, `count_alpha`) instead
 of a single `alpha`. See [Profiles](profiles.md).
@@ -62,10 +70,10 @@ full restore and does not resume optimizer state. See
 
 Train and tune both write checkpoints under `--opath` (parent and per-module
 artifacts). Prediction loads a parent `.pth` checkpoint and writes per-head
-arrays (`.pred_class.npy` for `ClassPredictor`, `.pred.npy` for
-`RegressPredictor`, paired `.profile.npy` / `.count.npy` for
-`ProfilePredictor`). With `--attribution`, it also writes attribution arrays
-(legacy per-head files, or one explicit `--attribution-target` file).
+arrays (`.pred_class.npy` for classification heads, `.pred.npy` for
+regression heads, paired `.profile.npy` / `.count.npy` for profile heads).
+With `--attribution`, it also writes attribution arrays (legacy per-head files,
+or one explicit `--attribution-target` file).
 
 ## Weights & Biases
 

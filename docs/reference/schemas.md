@@ -32,9 +32,10 @@ behavior JSON Schema cannot express.
 | [`attribution-target-string.schema.json`](../schemas/v0.1.0a8/attribution-target-string.schema.json) | Structural patterns for `pred_model --attribution-target` strings |
 | [`encoder-predictor-model-config.schema.json`](../schemas/v0.1.0a8/encoder-predictor-model-config.schema.json) | Top-level `EncoderPredictor` `model_config` tree |
 | [`encoder-predictor-hparams.schema.json`](../schemas/v0.1.0a8/encoder-predictor-hparams.schema.json) | Top-level pre-inheritance fixed hyperparameters |
-| [`scalar-head-hparams-wrapper.schema.json`](../schemas/v0.1.0a8/scalar-head-hparams-wrapper.schema.json) | `ClassPredictor` / `RegressPredictor` hparams wrapper |
+| [`scalar-head-hparams-wrapper.schema.json`](../schemas/v0.1.0a8/scalar-head-hparams-wrapper.schema.json) | `ClassPredictor` / `RCClassPredictor` / `RegressPredictor` / `RCRegressPredictor` hparams wrapper |
 | [`profile-predictor-model-config.schema.json`](../schemas/v0.1.0a8/profile-predictor-model-config.schema.json) | Nestable `ProfilePredictor` `model_config` |
-| [`profile-head-hparams-wrapper.schema.json`](../schemas/v0.1.0a8/profile-head-hparams-wrapper.schema.json) | `ProfilePredictor` hparams wrapper |
+| [`rc-profile-predictor-model-config.schema.json`](../schemas/v0.1.0a8/rc-profile-predictor-model-config.schema.json) | Nestable `RCProfilePredictor` `model_config` |
+| [`profile-head-hparams-wrapper.schema.json`](../schemas/v0.1.0a8/profile-head-hparams-wrapper.schema.json) | `ProfilePredictor` / `RCProfilePredictor` hparams wrapper |
 | [`profile-label-payload.schema.json`](../schemas/v0.1.0a8/profile-label-payload.schema.json) | Train/val profile payload (`profile_npy` / `count_npy` / optional `mask_npy`) |
 | [`profile-test-label-payload.schema.json`](../schemas/v0.1.0a8/profile-test-label-payload.schema.json) | Test profile payload (no `mask_npy`) |
 | [`loss.schema.json`](../schemas/v0.1.0a8/loss.schema.json) | Loss object `{ type, params }` |

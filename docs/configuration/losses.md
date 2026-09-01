@@ -28,16 +28,18 @@ non-empty `params` is rejected.
 
 | `type` | Typical head / component | `params` |
 | --- | --- | --- |
-| `categorical_cross_entropy` | `ClassPredictor` | `{}` |
-| `mse` | `RegressPredictor` | `{}` |
-| `profile_cross_entropy` | `ProfilePredictor` profile component | `{}` |
-| `log1p_mse` | `ProfilePredictor` count component | `{}` |
+| `categorical_cross_entropy` | `ClassPredictor` / `RCClassPredictor` | `{}` |
+| `mse` | `RegressPredictor` / `RCRegressPredictor` | `{}` |
+| `profile_cross_entropy` | `ProfilePredictor` / `RCProfilePredictor` profile component | `{}` |
+| `log1p_mse` | `ProfilePredictor` / `RCProfilePredictor` count component | `{}` |
 
 Recommendations for scalar heads: use `categorical_cross_entropy` with
-`ClassPredictor` and `mse` with `RegressPredictor`. Profile component losses
-are mandatory for their respective branches: `profile_cross_entropy` for the
-profile distribution and `log1p_mse` for the profile count. See
-[ProfilePredictor](../models/profile-predictor.md) and
+`ClassPredictor` / `RCClassPredictor` and `mse` with `RegressPredictor` /
+`RCRegressPredictor`. Profile component losses are mandatory for their
+respective branches: `profile_cross_entropy` for the profile distribution and
+`log1p_mse` for the profile count. See
+[ProfilePredictor](../models/profile-predictor.md),
+[RCProfilePredictor](../models/rc-profile-predictor.md), and
 [Profile reconstruction](../profiles.md). Masked profile-loss behavior:
 [Profile masks](../workflows/profile-masks.md).
 
@@ -71,7 +73,10 @@ profile distribution and `log1p_mse` for the profile count. See
 ## Related pages
 
 - [Hyperparameters](hyperparameters.md)
-- [ClassPredictor](../models/class-predictor.md)
-- [RegressPredictor](../models/regress-predictor.md)
-- [ProfilePredictor](../models/profile-predictor.md)
+- [ClassPredictor](../models/class-predictor.md) /
+  [RCClassPredictor](../models/rc-class-predictor.md)
+- [RegressPredictor](../models/regress-predictor.md) /
+  [RCRegressPredictor](../models/rc-regress-predictor.md)
+- [ProfilePredictor](../models/profile-predictor.md) /
+  [RCProfilePredictor](../models/rc-profile-predictor.md)
 - [Schemas](../reference/schemas.md)

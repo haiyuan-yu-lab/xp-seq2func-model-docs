@@ -24,7 +24,7 @@ Attribution arrays are separate artifacts; see
 | `{ep}` | Top-level `EncoderPredictor` `model_name` |
 | `{head}` | That head's `model_name` |
 
-## Classification (`ClassPredictor`)
+## Classification (`ClassPredictor` / `RCClassPredictor`)
 
 | Property | Contract |
 | --- | --- |
@@ -38,7 +38,7 @@ Attribution arrays are separate artifacts; see
 `n_class` matches that head's `model_config.n_class`. `N` is the number of
 test rows after deterministic multi-source ordering.
 
-## Regression (`RegressPredictor`)
+## Regression (`RegressPredictor` / `RCRegressPredictor`)
 
 | Property | Contract |
 | --- | --- |
@@ -49,7 +49,7 @@ test rows after deterministic multi-source ordering.
 | Producer | `pred_model` |
 | Consumers | Downstream regression analysis |
 
-## Profile (`ProfilePredictor`)
+## Profile (`ProfilePredictor` / `RCProfilePredictor`)
 
 Each profile prediction head writes **both** a profile-distribution array and a
 profile-count array. Masks used during training do not change these artifacts.
@@ -95,7 +95,10 @@ labels.
 - [Prediction configuration](../configuration/prediction.md)
 - [Formats overview](../formats.md)
 - [ClassPredictor](../models/class-predictor.md)
+- [RCClassPredictor](../models/rc-class-predictor.md)
 - [RegressPredictor](../models/regress-predictor.md)
+- [RCRegressPredictor](../models/rc-regress-predictor.md)
 - [ProfilePredictor](../models/profile-predictor.md)
+- [RCProfilePredictor](../models/rc-profile-predictor.md)
 - [Profiles](../profiles.md)
 - [Train to predict](../workflows/train-to-predict.md)

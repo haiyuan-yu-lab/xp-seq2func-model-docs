@@ -74,3 +74,36 @@ prediction head, where `true` marks a position as eligible for position-wise
 losses and metrics.
 
 Avoid: mappability mask, positional mask.
+
+## RC-aware predictor counterpart
+
+A separately catalogued prediction head that preserves an existing head's
+external role while adding reverse-complement-aware behavior defined for that
+head. The category does not imply one universal output transform or restrict
+which encoder family the head may consume.
+
+`RCClassPredictor` is the RC-aware counterpart to `ClassPredictor`.
+`RCRegressPredictor` is the RC-aware counterpart to `RegressPredictor`.
+`RCProfilePredictor` is the RC-aware counterpart to `ProfilePredictor`.
+`track_transform: preserve` reverses profile bins under embedding RC while
+keeping track order; counts are invariant. `track_transform: swap_pair`
+requires exactly two tracks and couples strand orientation (profile bins
+reverse and track slots swap; counts swap track slots only).
+
+Avoid: RCE predictor, equivariant predictor, invariant predictor (as generic
+synonyms for this catalog entry).
+
+## Regular embedding
+
+A length-preserving latent representation whose channels are organized in
+reverse-complement pairs.
+
+Avoid: equivariant tensor (when referring to this specific representation).
+
+## Embedding reverse-complement transform
+
+On channel-first `(B, C, L)` tensors, reverse both the channel axis and the
+sequence-length axis. Used by RC-aware modules to relate an embedding to its
+reverse-complement partner.
+
+Avoid: sequence RC (when referring to this channel-first embedding operation).

@@ -24,16 +24,18 @@ each predictor wrapper.
 ## Encoder subtree
 
 Shape depends on the nested encoder type. See
-[ConvEncoder](../models/conv-encoder.md) and
-[ConvSelfAttEncoder](../models/conv-self-att-encoder.md).
+[ConvEncoder](../models/conv-encoder.md),
+[RCConvEncoder](../models/rc-conv-encoder.md),
+[ConvSelfAttEncoder](../models/conv-self-att-encoder.md), and
+[RCConvSelfAttEncoder](../models/rc-conv-self-att-encoder.md).
 
 Missing inheritable keys (`batch_size`, `learning_rate`, `n_channels`) are
 filled from the parent. Nested `learning_rate: 0` freezes the encoder.
 
 ## Scalar prediction-head wrapper
 
-`ClassPredictor` and `RegressPredictor` entries under `predictor` use exactly
-these keys:
+`ClassPredictor`, `RCClassPredictor`, `RegressPredictor`, and
+`RCRegressPredictor` entries under `predictor` use exactly these keys:
 
 | Key | Type | Notes |
 | --- | --- | --- |
@@ -46,8 +48,8 @@ for classification, `mse` for regression.
 
 ## Profile prediction-head wrapper
 
-`ProfilePredictor` entries use component weights and losses instead of scalar
-`alpha` / `loss`:
+`ProfilePredictor` and `RCProfilePredictor` entries use component weights and
+losses instead of scalar `alpha` / `loss`:
 
 | Key | Type | Notes |
 | --- | --- | --- |
@@ -58,9 +60,10 @@ for classification, `mse` for regression.
 | `predictor_config` | object | Count-branch FC settings (same FC fields as scalar heads) |
 
 Mixing scalar wrapper keys with profile wrapper keys fails closed.
-`track_names` and `bin_size` stay in model config and must not appear in a tune
-space. Full geometry and count pairing:
-[ProfilePredictor](../models/profile-predictor.md) and
+`track_names`, `bin_size`, and (for `RCProfilePredictor`) `track_transform`
+stay in model config and must not appear in a tune space. Full geometry and
+count pairing: [ProfilePredictor](../models/profile-predictor.md),
+[RCProfilePredictor](../models/rc-profile-predictor.md), and
 [Profile reconstruction](../profiles.md).
 
 <!-- schema: schemas/v0.1.0a8/profile-head-hparams-wrapper.schema.json -->
@@ -113,7 +116,8 @@ trainable module fails when the optimizer is built. Adam itself is not
 configurable beyond these learning rates (no top-level `optimizer` key).
 
 Pair freezing with optional `init_checkpoint` to warm-start then hold modules.
-Freezing a `ProfilePredictor` freezes both of its branches. See
+Freezing a `ProfilePredictor` or `RCProfilePredictor` freezes both of its
+branches. See
 [Initialization and freezing](../workflows/initialization-and-freezing.md)
 and [Config: init_checkpoint](../config.md#init_checkpoint-train--tune).
 
@@ -205,6 +209,7 @@ and
 
 - [Losses](losses.md)
 - [Model composition](../models/composition.md)
-- [ProfilePredictor](../models/profile-predictor.md)
+- [ProfilePredictor](../models/profile-predictor.md) /
+  [RCProfilePredictor](../models/rc-profile-predictor.md)
 - [Concepts: learning rates and freezing](../concepts.md#learning-rates-and-freezing)
 - [Schemas](../reference/schemas.md)

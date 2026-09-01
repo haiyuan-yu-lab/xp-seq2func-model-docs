@@ -30,7 +30,7 @@ Object shape and schema snapshot:
 | Not map keys | Predictor map keys (for example `"cls"`) are **not** module names |
 | List | Non-empty; unique strings; required when `init_checkpoint` is present |
 | Authoritative | The config `modules` list decides what loads; the checkpoint is cross-checked only |
-| Path | Parent or child `seq2func_ckpt_v1` `.pth` that contains `states` for every listed name |
+| Path | Parent or child checkpoint `.pth` (`seq2func_ckpt_v2` or compatible legacy `seq2func_ckpt_v1`) that contains `states` for every listed name |
 | Unlisted | Modules not named in `modules` keep post-construction (random) init |
 
 Catalogued names cover the top-level `EncoderPredictor`, the nested encoder,
@@ -50,6 +50,12 @@ Selective initialization is **not** an ordinary training resume and is **not**
 the prediction full-restore path. Omitting `init_checkpoint` leaves every
 module at post-construction initialization.
 
+Typed v2 checkpoints may initialize compatible scalar heads across ordinary and
+RC-aware counterparts (`ClassPredictor` ↔ `RCClassPredictor`,
+`RegressPredictor` ↔ `RCRegressPredictor`). The target module keeps its own
+`model_type` and forward behavior; profile ↔ RC profile init remains rejected.
+See [Checkpoints: scalar counterpart init](../artifacts/checkpoints.md#v2-scalar-counterpart-init-traintune-only).
+
 ## Validation and failure conditions
 
 Described without stabilizing exact exception text:
@@ -57,7 +63,10 @@ Described without stabilizing exact exception text:
 | Condition | Outcome |
 | --- | --- |
 | Missing / unreadable `path` | Fail closed |
-| Payload not a `seq2func_ckpt_v1` dict | Fail closed |
+| Payload not a supported checkpoint dict (`seq2func_ckpt_v2` or compatible legacy `seq2func_ckpt_v1`) | Fail closed |
+| v1 checkpoint into a target tree with an RC-aware predictor head | Fail closed |
+| v2 `model_type` mismatch for a listed module | Fail closed, except v2 scalar counterpart init pairs (`ClassPredictor` ↔ `RCClassPredictor`, `RegressPredictor` ↔ `RCRegressPredictor`) with compatible tensors and architecture |
+| v2 profile ↔ RC profile init for a listed module | Fail closed even when public shapes match |
 | Empty `modules`, duplicates, or unknown `model_name` | Fail closed |
 | Listed name missing from checkpoint `states` | Fail closed |
 | Tensor key / shape mismatch for a listed module | Fail closed |
