@@ -124,8 +124,15 @@ outcomes.
 | Mode | CLI | Writes |
 | --- | --- | --- |
 | Off | omit `--attribution` | Prediction arrays only |
-| Legacy | `--attribution METHOD` only | One `attr_{METHOD}.npy` per head; rejected if any profile head is present |
+| Legacy | `--attribution METHOD` only | One `attr_{METHOD}.npy` per `ClassPredictor` / `RegressPredictor` head; **rejected** if any `ProfilePredictor` is present |
 | Explicit | `--attribution METHOD --attribution-target TARGET` | One target-qualified `attr_*.npy` for the selected head |
+
+Legacy classification uses **predicted-class attribution** (row-dependent).
+Fixed explicit class / profile / count targets are row-independent;
+`logit:predicted` remains row-dependent. Full grammar, invalid combinations,
+and methods: [Attribution](../workflows/attribution.md). Filenames and shapes:
+[Attributions](../artifacts/attributions.md). Profile constraint also:
+[Profiles](../profiles.md#attribution).
 
 `--attribution-target` forms (exactly one value):
 
@@ -141,8 +148,8 @@ outcomes.
 ```
 
 Predictor map keys must not contain `:`. Ordinary prediction arrays for all
-heads are unchanged when attribution is enabled. See
-[Attribution](../workflows/attribution.md).
+heads are unchanged when attribution is enabled. Structural string snapshot:
+[attribution-target-string.schema.json](../schemas/v0.1.0a8/attribution-target-string.schema.json).
 
 ## Minimal example
 

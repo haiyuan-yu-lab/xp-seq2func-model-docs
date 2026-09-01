@@ -22,7 +22,7 @@ diagnosis.
 | Data arrays | Shape, dtype, alignment, or value-domain failures |
 | Profile payloads | Missing profile/count pair, `mask_npy` on test, non-boolean masks, `L_embed` not divisible by `bin_size` |
 | Checkpoints | Missing modules, incompatible state keys or shapes, profile `contracts` mismatch |
-| Attribution | Invalid target syntax, profile models without an explicit target |
+| Attribution | Invalid target syntax, profile models without an explicit target, head-type / range mismatches ([Attribution](../workflows/attribution.md#invalid-combinations)) |
 
 ## Exit outcomes
 

@@ -159,8 +159,10 @@ Full producer/consumer tables: [Predictions](artifacts/predictions.md).
 ## Attribution
 
 Models that contain any `ProfilePredictor` require an explicit
-`--attribution-target` when `--attribution` is set. Targetless legacy mode is
-rejected for profile-containing trees. Supported forms:
+`--attribution-target` when `--attribution` is set. Targetless legacy
+**predicted-class attribution** is rejected for profile-containing trees
+(legacy mode only covers `ClassPredictor` / `RegressPredictor` heads).
+Supported profile forms:
 
 ```text
 <head>:profile-probability:<track>,<bin>
@@ -172,7 +174,9 @@ rejected for profile-containing trees. Supported forms:
 Each invocation writes one target-qualified `(N, 4, L_input)` float32 array
 while still writing ordinary predictions for every head. Profile and count
 attributions need separate invocations. Masks do not change attribution
-arrays.
+arrays. Full grammar and artifact tables:
+[Attribution workflow](workflows/attribution.md) and
+[Attributions](artifacts/attributions.md).
 
 ## Checkpoints
 

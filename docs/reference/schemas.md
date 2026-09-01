@@ -29,6 +29,7 @@ behavior JSON Schema cannot express.
 | [`tune-config.schema.json`](../schemas/v0.1.0a8/tune-config.schema.json) | Complete `tune_model --config` JSON |
 | [`tune-space.schema.json`](../schemas/v0.1.0a8/tune-space.schema.json) | Complete `tune_model --tune-space` JSON |
 | [`pred-config.schema.json`](../schemas/v0.1.0a8/pred-config.schema.json) | Complete `pred_model --config` JSON |
+| [`attribution-target-string.schema.json`](../schemas/v0.1.0a8/attribution-target-string.schema.json) | Structural patterns for `pred_model --attribution-target` strings |
 | [`encoder-predictor-model-config.schema.json`](../schemas/v0.1.0a8/encoder-predictor-model-config.schema.json) | Top-level `EncoderPredictor` `model_config` tree |
 | [`encoder-predictor-hparams.schema.json`](../schemas/v0.1.0a8/encoder-predictor-hparams.schema.json) | Top-level pre-inheritance fixed hyperparameters |
 | [`scalar-head-hparams-wrapper.schema.json`](../schemas/v0.1.0a8/scalar-head-hparams-wrapper.schema.json) | `ClassPredictor` / `RegressPredictor` hparams wrapper |
@@ -155,6 +156,25 @@ Complete prediction-config examples live on
 [pred-config.schema.json](../schemas/v0.1.0a8/pred-config.schema.json).
 Test-data-only examples validate against
 [test-data.schema.json](../schemas/v0.1.0a8/test-data.schema.json).
+
+## Example: attribution-target strings
+
+Structural string examples live on
+[Attribution workflow](../workflows/attribution.md) and validate against
+[attribution-target-string.schema.json](../schemas/v0.1.0a8/attribution-target-string.schema.json).
+Artifact filename contracts:
+[Attributions](../artifacts/attributions.md). Runtime remains authoritative for
+class ranges, track membership, bin counts, and head-type checks.
+
+<!-- schema: schemas/v0.1.0a8/attribution-target-string.schema.json -->
+```json
+"cls:probability:1"
+```
+
+<!-- schema: schemas/v0.1.0a8/attribution-target-string.schema.json -->
+```json
+"prof:profile-logit:short,0"
+```
 
 ## Example: tune config and tune-space
 
