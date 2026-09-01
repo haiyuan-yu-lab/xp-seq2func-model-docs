@@ -51,7 +51,7 @@ used in training do not change these arrays.
 | Mode | CLI | Files | Target meaning |
 | --- | --- | --- | --- |
 | Off | omit `--attribution` | None | — |
-| Legacy | `--attribution METHOD` only | One file per `ClassPredictor` / `RegressPredictor` head | Classification: **predicted-class attribution** (row-dependent argmax). Regression: channel `0`. Rejected if any `ProfilePredictor` is present. |
+| Legacy | `--attribution METHOD` only | One file per `ClassPredictor` / `RCClassPredictor` / `RegressPredictor` / `RCRegressPredictor` head | Classification: **predicted-class attribution** (row-dependent argmax). Regression: channel `0`. Rejected if any `ProfilePredictor` / `RCProfilePredictor` is present. |
 | Explicit | `--attribution METHOD --attribution-target TARGET` | Exactly one target-qualified file | Scalar named by `TARGET`; fixed class / profile / count targets are row-independent; `logit:predicted` is row-dependent |
 
 ## Legacy filenames

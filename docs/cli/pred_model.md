@@ -124,7 +124,7 @@ outcomes.
 | Mode | CLI | Writes |
 | --- | --- | --- |
 | Off | omit `--attribution` | Prediction arrays only |
-| Legacy | `--attribution METHOD` only | One `attr_{METHOD}.npy` per `ClassPredictor` / `RegressPredictor` head; **rejected** if any `ProfilePredictor` is present |
+| Legacy | `--attribution METHOD` only | One `attr_{METHOD}.npy` per `ClassPredictor` / `RCClassPredictor` / `RegressPredictor` / `RCRegressPredictor` head; **rejected** if any `ProfilePredictor` / `RCProfilePredictor` is present |
 | Explicit | `--attribution METHOD --attribution-target TARGET` | One target-qualified `attr_*.npy` for the selected head |
 
 Legacy classification uses **predicted-class attribution** (row-dependent).

@@ -85,7 +85,8 @@ Loader keys live on the split (`shuffle`, `num_workers`, `pin_memory`,
 
 ### Profile-specific validation
 
-When `model_config.predictor` includes a `ProfilePredictor`:
+When `model_config.predictor` includes a `ProfilePredictor` or
+`RCProfilePredictor`:
 
 | Check | Behavior |
 | --- | --- |

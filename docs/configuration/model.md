@@ -11,8 +11,10 @@ validated examples — lives on
 
 - Top-level CLI `model_type` must be `EncoderPredictor`
 - Nested refs are exactly `{ "model_type", "model_config" }`
-- Encoder slot: `ConvEncoder` or `ConvSelfAttEncoder`
-- Predictor map: `ClassPredictor`, `RegressPredictor`, and/or `ProfilePredictor`
+- Encoder slot: `ConvEncoder`, `RCConvEncoder`, `ConvSelfAttEncoder`, or
+  `RCConvSelfAttEncoder`
+- Predictor map: `ClassPredictor`, `RCClassPredictor`, `RegressPredictor`,
+  `RCRegressPredictor`, `ProfilePredictor`, and/or `RCProfilePredictor`
 - Every `model_config` needs a unique non-empty `model_name`
 - `embedding_trimming` is required on the top-level config (integer ≥ 0)
 
