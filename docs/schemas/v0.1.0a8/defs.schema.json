@@ -244,6 +244,110 @@
         "predictor_config": { "$ref": "#/$defs/scalarPredictorConfig" }
       },
       "description": "Composition hook for ProfilePredictor hparams wrappers. Full profile contracts are documented separately."
+    },
+    "sourceFracs": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/positiveNumber" },
+      "description": "Positive source weights. Length must equal the number of OHE sources S. When S=1 the only valid value is [1]."
+    },
+    "earlyStopping": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["grace_epochs"],
+      "properties": {
+        "grace_epochs": { "$ref": "#/$defs/positiveInteger" }
+      },
+      "description": "Early-stopping object. grace_epochs is the patience (≥ 1)."
+    },
+    "wandbTrain": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["project", "mode"],
+      "properties": {
+        "project": { "type": "string" },
+        "mode": {
+          "type": "string",
+          "enum": ["online", "offline", "disabled"]
+        },
+        "entity": { "type": "string" },
+        "tags": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "notes": { "type": "string" }
+      },
+      "description": "Train-config Weights & Biases block. name / sweep_id / sweep_name are forbidden."
+    },
+    "encoderDataBlock": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["ohe_npy", "label"],
+      "properties": {
+        "ohe_npy": { "$ref": "#/$defs/pathOrPathArray" },
+        "label": { "type": "null" }
+      },
+      "description": "Encoder split payload: ohe_npy path(s) and label must be null."
+    },
+    "scalarLabelPayload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["label_npy"],
+      "properties": {
+        "label_npy": { "$ref": "#/$defs/pathOrPathArray" }
+      },
+      "description": "ClassPredictor / RegressPredictor train/val label payload. Field name is label_npy."
+    },
+    "profileLabelPayload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["profile_npy", "count_npy"],
+      "properties": {
+        "profile_npy": { "$ref": "#/$defs/pathOrPathArray" },
+        "count_npy": { "$ref": "#/$defs/pathOrPathArray" },
+        "mask_npy": { "$ref": "#/$defs/pathOrPathArray" }
+      },
+      "description": "ProfilePredictor train/val payload. mask_npy is optional on train/val and forbidden on test."
+    },
+    "splitDataBlock": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "encoder",
+        "predictor",
+        "shuffle",
+        "num_workers",
+        "pin_memory",
+        "source_fracs"
+      ],
+      "properties": {
+        "encoder": { "$ref": "#/$defs/encoderDataBlock" },
+        "predictor": {
+          "type": "object",
+          "minProperties": 1,
+          "propertyNames": { "$ref": "#/$defs/predictorMapKey" },
+          "additionalProperties": {
+            "oneOf": [
+              { "$ref": "#/$defs/scalarLabelPayload" },
+              { "$ref": "#/$defs/profileLabelPayload" }
+            ]
+          }
+        },
+        "shuffle": { "type": "boolean" },
+        "num_workers": { "$ref": "#/$defs/nonNegativeInteger" },
+        "pin_memory": { "type": "boolean" },
+        "source_fracs": { "$ref": "#/$defs/sourceFracs" },
+        "persistent_workers": {
+          "type": ["boolean", "null"]
+        },
+        "prefetch_factor": {
+          "oneOf": [
+            { "$ref": "#/$defs/positiveInteger" },
+            { "type": "null" }
+          ]
+        }
+      },
+      "description": "Train/val split data block. batch_size lives in hparams, not here. Runtime also enforces S alignment and array geometry."
     }
   }
 }

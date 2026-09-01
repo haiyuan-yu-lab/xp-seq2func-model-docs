@@ -18,8 +18,12 @@ behavior JSON Schema cannot express.
 
 | Schema | Purpose |
 | --- | --- |
-| [`defs.schema.json`](../schemas/v0.1.0a8/defs.schema.json) | Reusable `$defs` for paths, numbers, strings, losses, and nested fragments |
+| [`defs.schema.json`](../schemas/v0.1.0a8/defs.schema.json) | Reusable `$defs` for paths, numbers, strings, losses, data blocks, and nested fragments |
 | [`init-checkpoint.schema.json`](../schemas/v0.1.0a8/init-checkpoint.schema.json) | Optional train/tune `init_checkpoint` object |
+| [`early-stopping.schema.json`](../schemas/v0.1.0a8/early-stopping.schema.json) | Train/tune `early_stopping` object |
+| [`wandb-train.schema.json`](../schemas/v0.1.0a8/wandb-train.schema.json) | Train-config `wandb` block |
+| [`data-source.schema.json`](../schemas/v0.1.0a8/data-source.schema.json) | Train/val split data block (`train_data` / `val_data`) |
+| [`train-config.schema.json`](../schemas/v0.1.0a8/train-config.schema.json) | Complete `train_model --config` JSON |
 | [`encoder-predictor-model-config.schema.json`](../schemas/v0.1.0a8/encoder-predictor-model-config.schema.json) | Top-level `EncoderPredictor` `model_config` tree |
 | [`encoder-predictor-hparams.schema.json`](../schemas/v0.1.0a8/encoder-predictor-hparams.schema.json) | Top-level pre-inheritance fixed hyperparameters |
 | [`scalar-head-hparams-wrapper.schema.json`](../schemas/v0.1.0a8/scalar-head-hparams-wrapper.schema.json) | `ClassPredictor` / `RegressPredictor` hparams wrapper |
@@ -70,3 +74,11 @@ See also [Config: init_checkpoint](../config.md#init_checkpoint-train--tune).
 
 See [Model composition](../models/composition.md) and
 [Hyperparameters](../configuration/hyperparameters.md).
+
+## Example: train config (excerpt association)
+
+Complete train-config examples live on
+[Train configuration](../configuration/train.md) and validate against
+[train-config.schema.json](../schemas/v0.1.0a8/train-config.schema.json).
+Split-only examples validate against
+[data-source.schema.json](../schemas/v0.1.0a8/data-source.schema.json).

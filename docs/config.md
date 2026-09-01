@@ -32,6 +32,9 @@ contract: [Losses](configuration/losses.md).
 
 ## Train config (`train_model --config`)
 
+Canonical field tables, complete examples, and schema snapshots:
+[Train configuration](configuration/train.md).
+
 Required: `model_type`, `model_config`, `train_data`, `val_data`, `job_name`,
 `random_seed`, `max_epochs`, `early_stopping`, `wandb`.
 
@@ -39,7 +42,7 @@ Forbidden at top level: `optimizer`, `loss`.
 
 | Key | Notes |
 | --- | --- |
-| `job_name` | Non-empty string; also used as the W&B run name |
+| `job_name` | Non-empty string; artifact stem and W&B run name |
 | `max_epochs` | Integer ≥ 1 |
 | `early_stopping` | `{ "grace_epochs": <int ≥ 1> }` |
 | `wandb` | Requires `project` and `mode` (`online` \| `offline` \| `disabled`). Optional: `entity`, `tags`, `notes`. Do not set `name`, `sweep_id`, or `sweep_name`. |
@@ -96,17 +99,22 @@ Forbidden: `wandb`, `loss`, `optimizer`, `max_epochs`, `early_stopping`.
 
 ## Data blocks (`train_data` / `val_data` / `test_data`)
 
+Canonical train/val split tables: [Splits](data/splits.md). Array and label
+geometry: [Arrays](data/arrays.md), [Labels](data/labels.md).
+
 Common required keys: `encoder`, `shuffle`, `num_workers`, `pin_memory`,
-`source_fracs`.
+`source_fracs`. Train/val also require `predictor`.
 
 | Key | Notes |
 | --- | --- |
-| `encoder.ohe_npy` | Path string or non-empty path array |
+| `encoder.ohe_npy` | Path string or non-empty path array; arrays shaped `(N, 4, L)` with channels A, C, G, T |
 | `encoder.label` | Must be `null` |
-| `predictor` | Map of head → typed label payload (required for train/val; omitted for unlabeled pred) |
+| `predictor` | Map of head → typed label payload (required for train/val; optional for unlabeled pred) |
 | `source_fracs` | Positive weights; length equals number of OHE sources; single-source must be `[1]` |
 | `persistent_workers` | Optional bool or null |
 | `prefetch_factor` | Optional int ≥ 1 or null |
+
+`batch_size` belongs in hparams, not in the data block.
 
 Predictor payload fields by head type:
 
@@ -116,5 +124,5 @@ Predictor payload fields by head type:
 | `ProfilePredictor` | `{ "profile_npy": ..., "count_npy": ..., "mask_npy"?: ... }` |
 
 Train/val require labels for every head declared in `model_config.predictor`.
-`RegressPredictor` labels must have trailing width 1 (shape `(N, 1)` per
-source array). Profile payload details: [Profiles](profiles.md).
+Classification labels are `(N, n_class)`; regression labels are `(N, 1)`
+(rank-1 fails). Profile payload details: [Profiles](profiles.md).
