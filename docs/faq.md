@@ -61,5 +61,12 @@ freeze the loaded modules. See
 
 ## Is there a PyPI package?
 
-Not for this alpha. Install from the `v0.1.0a8` git tag as described in
-[Install](install.md).
+No. **v0.1.0a8** is not published to PyPI and is not anonymously installable.
+Source installation requires repository access and authentication. See
+[Install](install.md) and [Compatibility](reference/compatibility.md).
+
+## Are Python imports a supported API?
+
+No. For **v0.1.0a8**, the supported public interface is the three CLIs and their
+configuration, data, and artifact contracts. See the [Home](index.md) page and
+[Compatibility](reference/compatibility.md).

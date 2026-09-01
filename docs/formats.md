@@ -71,7 +71,7 @@ config instead).
 
 ## Prediction outputs
 
-For each predictor head, `pred_model` writes under `--opath`:
+For each prediction head, `pred_model` writes under `--opath`:
 
 | Head type | Filename suffix |
 | --- | --- |

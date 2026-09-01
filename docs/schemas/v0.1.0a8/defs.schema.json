@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://haiyuan-yu-lab.github.io/xp-seq2func-model-docs/schemas/v0.1.0a8/defs.schema.json",
+  "title": "Reusable definitions for xp-seq2func-model docs (v0.1.0a8)",
+  "description": "Documentation-owned reusable $defs for exact release v0.1.0a8. These schemas are documentation artifacts, not canonical runtime validators.",
+  "$defs": {
+    "nonEmptyString": {
+      "type": "string",
+      "minLength": 1
+    },
+    "pathString": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Filesystem path treated as an opaque string in documentation examples."
+    },
+    "pathOrPathArray": {
+      "oneOf": [
+        { "$ref": "#/$defs/pathString" },
+        {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/pathString" }
+        }
+      ]
+    },
+    "positiveNumber": {
+      "type": "number",
+      "exclusiveMinimum": 0
+    },
+    "nonNegativeNumber": {
+      "type": "number",
+      "minimum": 0
+    },
+    "positiveInteger": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "nonNegativeInteger": {
+      "type": "integer",
+      "minimum": 0
+    }
+  }
+}

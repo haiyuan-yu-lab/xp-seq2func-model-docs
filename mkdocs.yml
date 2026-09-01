@@ -1,5 +1,5 @@
 site_name: xp-seq2func-model
-site_description: User docs for train, tune, and pred CLIs (release 0.1.0a8)
+site_description: User docs for train, tune, and pred CLI contracts (exact release v0.1.0a8)
 site_url: https://haiyuan-yu-lab.github.io/xp-seq2func-model-docs/
 repo_url: https://github.com/haiyuan-yu-lab/xp-seq2func-model
 repo_name: haiyuan-yu-lab/xp-seq2func-model
@@ -22,7 +22,9 @@ theme:
   features:
     - navigation.sections
     - navigation.expand
+    - navigation.indexes
     - content.code.copy
+    - toc.follow
 
 markdown_extensions:
   - admonition
@@ -34,14 +36,56 @@ markdown_extensions:
 
 nav:
   - Home: index.md
-  - Install: install.md
-  - Concepts: concepts.md
-  - Profiles: profiles.md
-  - Formats: formats.md
-  - Config: config.md
-  - CLI:
+  - Getting Started:
+      - Installation: install.md
+      - Quickstart: getting-started/quickstart.md
+      - Core concepts: concepts.md
+  - CLI Reference:
       - Overview: cli/index.md
       - train_model: cli/train_model.md
       - tune_model: cli/tune_model.md
       - pred_model: cli/pred_model.md
-  - FAQ: faq.md
+  - Workflows:
+      - Train to predict: workflows/train-to-predict.md
+      - Tuning: workflows/tuning.md
+      - Initialization and freezing: workflows/initialization-and-freezing.md
+      - Multi-source data: workflows/multi-source-data.md
+      - Profile masks: workflows/profile-masks.md
+      - Attribution: workflows/attribution.md
+  - Models:
+      - Composition: models/composition.md
+      - ConvEncoder: models/conv-encoder.md
+      - ConvSelfAttEncoder: models/conv-self-att-encoder.md
+      - ClassPredictor: models/class-predictor.md
+      - RegressPredictor: models/regress-predictor.md
+      - ProfilePredictor: models/profile-predictor.md
+      - Profile reconstruction: profiles.md
+  - Data Contracts:
+      - Arrays: data/arrays.md
+      - Splits: data/splits.md
+      - Multi-source: data/multi-source.md
+      - Labels: data/labels.md
+      - Masks: data/masks.md
+      - Geometry: data/geometry.md
+      - Formats overview: formats.md
+  - Configuration:
+      - Overview: config.md
+      - Train config: configuration/train.md
+      - Tune config: configuration/tune.md
+      - Prediction config: configuration/prediction.md
+      - Model configuration: configuration/model.md
+      - Hyperparameters: configuration/hyperparameters.md
+      - Tuning spaces: configuration/tuning-spaces.md
+      - Losses: configuration/losses.md
+  - Artifacts:
+      - Checkpoints: artifacts/checkpoints.md
+      - Sidecars: artifacts/sidecars.md
+      - Predictions: artifacts/predictions.md
+      - Attributions: artifacts/attributions.md
+      - Metrics: artifacts/metrics.md
+  - Reference:
+      - Validation and errors: reference/validation-and-errors.md
+      - Glossary: reference/glossary.md
+      - Compatibility: reference/compatibility.md
+      - FAQ: faq.md
+      - Schemas: reference/schemas.md

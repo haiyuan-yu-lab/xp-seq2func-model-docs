@@ -1,15 +1,24 @@
 # Concepts
 
+Core ideas for release **v0.1.0a8**. Terminology follows the
+[Glossary](reference/glossary.md).
+
+## Public interface
+
+Callers interact with **v0.1.0a8** through the `train_model`, `tune_model`, and
+`pred_model` CLIs and the configuration, data, and artifact contracts those
+commands define. Python imports are not a supported public API.
+
 ## EncoderPredictor
 
-The only top-level model type in **0.1.0a8** is `EncoderPredictor`.
+The only top-level model type in **v0.1.0a8** is `EncoderPredictor`.
 
 It composes:
 
 1. An **encoder** — either `ConvEncoder` or `ConvSelfAttEncoder` — that maps
    one-hot sequence tensors to an embedding
 2. Optional **embedding trimming** (integer ≥ 0) applied to that embedding
-3. One or more **predictor heads** — each head is a `ClassPredictor`
+3. One or more **prediction heads** — each head is a `ClassPredictor`
    (classification), `RegressPredictor` (scalar regression), or
    `ProfilePredictor` (named track distributions plus paired counts)
 
@@ -23,7 +32,7 @@ of a single `alpha`. See [Profiles](profiles.md).
 ## Learning rates and freezing
 
 Hyperparameters include a top-level `learning_rate` and nested rates on the
-encoder and each predictor head.
+encoder and each prediction head.
 
 | Location | Allowed values | Effect of `0` |
 | --- | --- | --- |
@@ -65,3 +74,9 @@ arrays (`.pred_class.npy` for `ClassPredictor`, `.pred.npy` for
 
 Tune optimizes on validation loss. Epoch metrics expose `val_loss` with a W&B
 `min` summary for sweep selection.
+
+## Related pages
+
+- [Model composition](models/composition.md)
+- [Workflows](workflows/train-to-predict.md)
+- [Compatibility](reference/compatibility.md)

@@ -66,16 +66,20 @@ Forbidden at top level: `optimizer`, `loss`, `job_name`, `num_agents`,
 <a id="init_checkpoint-train--tune"></a>
 ### init_checkpoint (train and tune)
 
-Optional object on the train or tune config (not in hparams or tune-space):
+Optional object on the train or tune config (not in hparams or tune-space).
+The object value matches the documentation schema snapshot below:
 
+<!-- schema: schemas/v0.1.0a8/init-checkpoint.schema.json -->
 ```json
 {
-  "init_checkpoint": {
-    "path": "/path/to/checkpoint.pth",
-    "modules": ["encoder_model_name"]
-  }
+  "path": "/path/to/checkpoint.pth",
+  "modules": ["encoder_model_name"]
 }
 ```
+
+Place that object under the `init_checkpoint` key of the train or tune config.
+Documentation schema:
+[init-checkpoint.schema.json](schemas/v0.1.0a8/init-checkpoint.schema.json).
 
 | Key | Type | Notes |
 | --- | --- | --- |
@@ -83,7 +87,7 @@ Optional object on the train or tune config (not in hparams or tune-space):
 | `modules` | non-empty string array | Catalogued `model_name` values to load; no duplicates |
 
 Each entry in `modules` must match a `model_name` in the constructed tree
-(top-level, encoder, or a predictor head). The checkpoint must contain
+(top-level, encoder, or a prediction head). The checkpoint must contain
 `states` for those names; other modules keep random init. Shape / key
 mismatches fail with a clear error. Combine with nested `learning_rate: 0` to
 freeze loaded modules.
