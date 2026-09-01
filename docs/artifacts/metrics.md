@@ -39,9 +39,14 @@ stabilized.
 Train `wandb.mode` may be `online`, `offline`, or `disabled`. When `disabled`,
 metrics still print to the console at verbosity ≥ 1, but no W&B run is created.
 
+Tune `wandb.mode` must be `online` or `offline` (sweeps only). See
+[Tuning workflow](../workflows/tuning.md).
+
 ## Related pages
 
 - [`train_model`](../cli/train_model.md)
+- [`tune_model`](../cli/tune_model.md)
 - [Train configuration](../configuration/train.md)
+- [Tune configuration](../configuration/tune.md)
 - [Concepts: Weights & Biases](../concepts.md#weights-biases)
 - [Checkpoints](checkpoints.md)

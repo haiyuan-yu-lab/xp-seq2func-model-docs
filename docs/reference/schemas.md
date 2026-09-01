@@ -95,3 +95,13 @@ Complete prediction-config examples live on
 [pred-config.schema.json](../schemas/v0.1.0a8/pred-config.schema.json).
 Test-data-only examples validate against
 [test-data.schema.json](../schemas/v0.1.0a8/test-data.schema.json).
+
+## Example: tune config and tune-space
+
+Complete tune-config and tune-space examples live on
+[Tune configuration](../configuration/tune.md) and
+[Tuning spaces](../configuration/tuning-spaces.md). They validate against
+[tune-config.schema.json](../schemas/v0.1.0a8/tune-config.schema.json) and
+[tune-space.schema.json](../schemas/v0.1.0a8/tune-space.schema.json).
+Tune `wandb` fragments use
+[wandb-tune.schema.json](../schemas/v0.1.0a8/wandb-tune.schema.json).

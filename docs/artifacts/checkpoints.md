@@ -12,7 +12,7 @@ Checkpoint artifacts written and consumed in **v0.1.0a8**.
 
 ## Filenames
 
-Let `{job}` be `job_name` (train) or the trial stem (tune),
+Let `{job}` be `job_name` (train) or the W&B trial `run_id` (tune),
 `{top_model_name}` the top-level `EncoderPredictor.model_name`, and
 `{child_model_name}` each nested catalogued `model_name` (encoder and heads).
 
