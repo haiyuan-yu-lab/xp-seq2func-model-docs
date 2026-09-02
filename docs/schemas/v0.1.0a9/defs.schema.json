@@ -250,7 +250,7 @@
           "$ref": "#/$defs/positiveInteger"
         }
       },
-      "description": "Pre-inheritance ConvEncoder hparams. dilation length must be \u2265 n_layers (prefix used). Inheritable keys may be omitted."
+      "description": "Pre-inheritance ConvEncoder or RCConvEncoder hparams. dilation length must be \u2265 n_layers (prefix used). Inheritable keys may be omitted. Runtime requires even effective n_channels when RCConvEncoder is selected."
     },
     "convSelfAttEncoderHparams": {
       "type": "object",
