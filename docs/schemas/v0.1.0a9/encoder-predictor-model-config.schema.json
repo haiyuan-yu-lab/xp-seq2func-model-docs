@@ -31,6 +31,17 @@
           "additionalProperties": false,
           "required": ["model_type", "model_config"],
           "properties": {
+            "model_type": { "const": "RCConvEncoder" },
+            "model_config": {
+              "$ref": "defs.schema.json#/$defs/identityModelConfig"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["model_type", "model_config"],
+          "properties": {
             "model_type": { "const": "ConvSelfAttEncoder" },
             "model_config": {
               "$ref": "defs.schema.json#/$defs/identityModelConfig"
